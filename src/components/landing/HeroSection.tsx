@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -32,12 +31,6 @@ const HeroSection = () => {
               >
                 <Calendar className="h-4 w-4 mr-2" />
                 Beratung vereinbaren
-              </Button>
-              <Button 
-                size="sm"
-                onClick={() => window.location.href = '/app'}
-              >
-                Zur App
               </Button>
             </div>
           </div>
