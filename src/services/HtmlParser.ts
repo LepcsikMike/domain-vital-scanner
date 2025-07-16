@@ -13,36 +13,45 @@ export interface ParsedHtmlData {
 }
 
 export class HtmlParser {
+  // Optimized CORS proxies matching DomainAnalyzer
   private corsProxies = [
-    'https://api.allorigins.win/get?url=',
-    'https://corsproxy.io/?',
-    'https://cors-anywhere.herokuapp.com/'
+    { url: 'https://api.codetabs.com/v1/proxy?quest=', name: 'codetabs', timeout: 6000 },
+    { url: 'https://api.allorigins.win/get?url=', name: 'allorigins', timeout: 8000 },
+    { url: 'https://corsproxy.io/?', name: 'corsproxy', timeout: 7000 },
+    { url: 'https://thingproxy.freeboard.io/fetch/', name: 'thingproxy', timeout: 6000 }
   ];
   
   async parseWebsite(domain: string): Promise<ParsedHtmlData> {
     const startTime = Date.now();
-    console.log(`Parsing website: ${domain}`);
+    console.log(`Starting optimized parsing for: ${domain}`);
     
     try {
-      // Normalize the domain to prevent double protocol issues
       const cleanUrl = getDomainUrl(domain);
       console.log(`Normalized URL for parsing: ${cleanUrl}`);
       
-      // Try multiple proxies until one works
+      // Try proxies with early exit strategy
       for (let proxyIndex = 0; proxyIndex < this.corsProxies.length; proxyIndex++) {
+        const proxy = this.corsProxies[proxyIndex];
+        
         try {
-          const result = await this.tryParseWithProxy(cleanUrl, proxyIndex, startTime);
-          if (result) {
-            console.log(`Successfully parsed ${domain} with proxy ${proxyIndex + 1}`);
+          const result = await this.tryParseWithProxy(cleanUrl, proxy, startTime);
+          if (result && result.contentSize > 100) {
+            console.log(`Successfully parsed ${domain} with ${proxy.name}`);
             return result;
           }
         } catch (error) {
-          console.warn(`Proxy ${proxyIndex + 1} failed for ${domain}:`, error);
+          console.warn(`Proxy ${proxy.name} failed for ${domain}:`, error);
+          
+          // Don't retry on certain errors
+          if (error.message?.includes('403') || error.message?.includes('404')) {
+            console.log(`Skipping remaining proxies due to ${error.message}`);
+            break;
+          }
+          
           continue;
         }
       }
       
-      // If all proxies failed
       console.error(`All proxies failed for ${domain}`);
       return this.getEmptyParsedData(Date.now() - startTime);
       
@@ -52,14 +61,12 @@ export class HtmlParser {
     }
   }
   
-  private async tryParseWithProxy(url: string, proxyIndex: number, startTime: number): Promise<ParsedHtmlData | null> {
-    const corsProxy = this.corsProxies[proxyIndex];
-    const proxyUrl = corsProxy + encodeURIComponent(url);
-    
-    console.log(`Trying to parse ${url} with proxy ${proxyIndex + 1}`);
+  private async tryParseWithProxy(url: string, proxy: { url: string; name: string; timeout: number }, startTime: number): Promise<ParsedHtmlData | null> {
+    const proxyUrl = proxy.url + encodeURIComponent(url);
+    console.log(`Trying to parse ${url} with ${proxy.name} (timeout: ${proxy.timeout}ms)`);
     
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 15000);
+    const timeoutId = setTimeout(() => controller.abort(), proxy.timeout);
     
     try {
       const response = await fetch(proxyUrl, {
@@ -74,22 +81,38 @@ export class HtmlParser {
       clearTimeout(timeoutId);
       
       if (!response.ok) {
-        console.warn(`Proxy ${proxyIndex + 1} returned ${response.status}`);
+        console.warn(`${proxy.name} returned ${response.status}`);
+        
+        // Throw specific error for certain status codes
+        if (response.status === 403 || response.status === 404) {
+          throw new Error(`${response.status}`);
+        }
+        
         return null;
       }
       
-      const data = await response.json();
+      let data;
+      try {
+        data = await response.json();
+      } catch (parseError) {
+        console.warn(`Failed to parse JSON from ${proxy.name}:`, parseError);
+        return null;
+      }
       
       // Handle different proxy response formats
       let html = '';
-      if (corsProxy.includes('allorigins')) {
+      if (proxy.name === 'allorigins') {
         html = data.contents || '';
+      } else if (proxy.name === 'codetabs') {
+        html = data || '';
+      } else if (proxy.name === 'thingproxy') {
+        html = data || '';
       } else {
         html = data.contents || data.body || data.data || '';
       }
       
       if (!html || html.length < 100) {
-        console.warn(`Proxy ${proxyIndex + 1} returned insufficient content`);
+        console.warn(`${proxy.name} returned insufficient content (${html.length} chars)`);
         return null;
       }
       
@@ -100,9 +123,14 @@ export class HtmlParser {
       clearTimeout(timeoutId);
       
       if (error.name === 'AbortError') {
-        console.warn(`Request timeout for ${url} via proxy ${proxyIndex + 1}`);
+        console.warn(`Timeout for ${proxy.name} (${proxy.timeout}ms)`);
       } else {
-        console.warn(`Network error for ${url} via proxy ${proxyIndex + 1}:`, error);
+        console.warn(`Network error for ${proxy.name}:`, error);
+      }
+      
+      // Re-throw specific errors to stop trying other proxies
+      if (error.message === '403' || error.message === '404') {
+        throw error;
       }
       
       return null;
@@ -110,36 +138,27 @@ export class HtmlParser {
   }
   
   private extractDataFromHtml(html: string, responseTime: number): ParsedHtmlData {
-    // Create a temporary DOM parser
     const parser = new DOMParser();
     const doc = parser.parseFromString(html, 'text/html');
     
-    // Extract title
     const title = doc.querySelector('title')?.textContent?.trim() || null;
     
-    // Extract meta description
     const metaDescription = doc.querySelector('meta[name="description"]')?.getAttribute('content')?.trim() || null;
     
-    // Extract H1 tags
     const h1Elements = doc.querySelectorAll('h1');
     const h1Tags = Array.from(h1Elements).map(h1 => h1.textContent?.trim() || '');
     
-    // Extract generator tags
     const generatorElements = doc.querySelectorAll('meta[name="generator"]');
     const generatorTags = Array.from(generatorElements).map(gen => gen.getAttribute('content') || '');
     
-    // Check for viewport meta tag
     const hasViewport = doc.querySelector('meta[name="viewport"]') !== null;
     
-    // Extract robots directives
     const robotsElement = doc.querySelector('meta[name="robots"]');
     const robotsDirectives = robotsElement ? 
       (robotsElement.getAttribute('content') || '').split(',').map(d => d.trim()) : [];
     
-    // Detect technologies
     const technologies = this.detectTechnologies(html, doc);
     
-    // Calculate content size
     const contentSize = new Blob([html]).size;
     
     return {
@@ -158,7 +177,6 @@ export class HtmlParser {
   private detectTechnologies(html: string, doc: Document): string[] {
     const technologies = [];
     
-    // Check for common CMS patterns
     if (html.includes('wp-content') || html.includes('wordpress')) {
       technologies.push('WordPress');
     }
@@ -175,7 +193,6 @@ export class HtmlParser {
       technologies.push('Drupal');
     }
     
-    // Check for outdated technologies
     const generatorContent = doc.querySelector('meta[name="generator"]')?.getAttribute('content') || '';
     
     if (generatorContent.includes('Dreamweaver')) {
@@ -186,7 +203,6 @@ export class HtmlParser {
       technologies.push('FrontPage (veraltet)');
     }
     
-    // Check for JavaScript frameworks
     if (html.includes('react') || html.includes('React')) {
       technologies.push('React');
     }
@@ -218,24 +234,35 @@ export class HtmlParser {
   
   async checkRobotsTxt(domain: string): Promise<{ exists: boolean; content: string | null }> {
     try {
-      // Normalize the domain for robots.txt check
       const cleanDomain = domain.replace(/^https?:\/\//, '').replace(/\/$/, '').trim();
       const robotsUrl = `https://${cleanDomain}/robots.txt`;
       console.log(`Checking robots.txt at: ${robotsUrl}`);
       
-      // Try multiple proxies for robots.txt check
-      for (let proxyIndex = 0; proxyIndex < this.corsProxies.length; proxyIndex++) {
+      // Use optimized proxy approach for robots.txt
+      for (const proxy of this.corsProxies) {
         try {
-          const corsProxy = this.corsProxies[proxyIndex];
-          const proxyUrl = corsProxy + encodeURIComponent(robotsUrl);
+          const proxyUrl = proxy.url + encodeURIComponent(robotsUrl);
+          
+          const controller = new AbortController();
+          const timeoutId = setTimeout(() => controller.abort(), proxy.timeout);
           
           const response = await fetch(proxyUrl, {
-            signal: AbortSignal.timeout(10000)
+            signal: controller.signal
           });
+          
+          clearTimeout(timeoutId);
           
           if (response.ok) {
             const data = await response.json();
-            const content = corsProxy.includes('allorigins') ? data.contents : data.contents || data.body || data.data;
+            let content = '';
+            
+            if (proxy.name === 'allorigins') {
+              content = data.contents || '';
+            } else if (proxy.name === 'codetabs') {
+              content = data || '';
+            } else {
+              content = data.contents || data.body || data.data || '';
+            }
             
             if (content && content.length > 0) {
               return {
@@ -245,7 +272,7 @@ export class HtmlParser {
             }
           }
         } catch (error) {
-          console.warn(`Robots.txt check failed with proxy ${proxyIndex + 1}:`, error);
+          console.warn(`Robots.txt check failed with ${proxy.name}:`, error);
           continue;
         }
       }

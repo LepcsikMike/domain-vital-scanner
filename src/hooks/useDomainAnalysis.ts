@@ -28,7 +28,7 @@ export const useDomainAnalysis = () => {
     checkPageSpeed: true,
     checkSEO: true,
     checkCrawling: true,
-    batchSize: 5, // Reduced for free service
+    batchSize: 5,
     timeout: 30,
     includeSubdomains: false
   });
@@ -53,7 +53,6 @@ export const useDomainAnalysis = () => {
         return;
       }
     } else {
-      // Use real domain discovery
       toast({
         title: "Domain-Suche läuft",
         description: "Suche nach echten .de Domains...",
@@ -84,7 +83,6 @@ export const useDomainAnalysis = () => {
           variant: "destructive",
         });
         
-        // Use fallback domains
         domainsToAnalyze = ['spiegel.de', 'zeit.de', 'focus.de'];
       }
     }
@@ -132,9 +130,9 @@ export const useDomainAnalysis = () => {
           const progressPercent = ((i + 1) / total) * 100;
           setProgress(progressPercent);
           
-          // Delay between requests to be respectful to free services
+          // Reduced delay between requests for optimized performance
           if (i < total - 1) {
-            await new Promise(resolve => setTimeout(resolve, 2000));
+            await new Promise(resolve => setTimeout(resolve, 1000));
           }
           
         } catch (error) {
@@ -250,7 +248,6 @@ export const useDomainAnalysis = () => {
   };
 };
 
-// Real domain discovery function
 const discoverRealDomains = async (options: DomainDiscoveryOptions): Promise<string[]> => {
   const discovery = new DomainDiscovery();
   
