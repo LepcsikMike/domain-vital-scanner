@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -11,6 +10,7 @@ import { DomainSearchForm } from '@/components/DomainSearchForm';
 import { AnalysisResults } from '@/components/AnalysisResults';
 import { DashboardStats } from '@/components/DashboardStats';
 import { AnalysisSettings } from '@/components/AnalysisSettings';
+import { CostTracker } from '@/components/CostTracker';
 import { useDomainAnalysis } from '@/hooks/useDomainAnalysis';
 
 const Index = () => {
@@ -19,6 +19,8 @@ const Index = () => {
     isAnalyzing,
     progress,
     results,
+    analysisCount,
+    successRate,
     startAnalysis,
     pauseAnalysis,
     exportResults,
@@ -38,10 +40,13 @@ const Index = () => {
               </div>
               <div>
                 <h1 className="text-2xl font-bold text-white">DomainAudit Pro</h1>
-                <p className="text-slate-400 text-sm">Technische Domain-Analyse & SEO-Audit Platform</p>
+                <p className="text-slate-400 text-sm">Kostenlose Echte Domain-Analyse & SEO-Audit Platform</p>
               </div>
             </div>
             <div className="flex items-center space-x-4">
+              <Badge variant="outline" className="border-green-500 text-green-400">
+                100% Kostenlos
+              </Badge>
               <Badge variant="outline" className="border-cyan-500 text-cyan-400">
                 Deutsche Domains (.de)
               </Badge>
@@ -63,12 +68,18 @@ const Index = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Left Sidebar - Search & Settings */}
           <div className="lg:col-span-1 space-y-6">
+            {/* Cost Tracker */}
+            <CostTracker 
+              analysisCount={analysisCount}
+              successRate={successRate}
+            />
+
             {/* Search Form */}
             <Card className="bg-slate-900/50 border-slate-700 backdrop-blur-sm">
               <CardHeader>
                 <CardTitle className="text-white flex items-center">
                   <Search className="h-5 w-5 mr-2 text-cyan-400" />
-                  Domain-Suche
+                  Echte Domain-Suche
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -102,7 +113,7 @@ const Index = () => {
                   <CardTitle className="text-white flex items-center justify-between">
                     <span className="flex items-center">
                       <Shield className="h-5 w-5 mr-2 text-green-400" />
-                      Analyse läuft
+                      Live-Analyse läuft
                     </span>
                     <Button
                       size="sm"
@@ -118,7 +129,7 @@ const Index = () => {
                   <div className="space-y-3">
                     <Progress value={progress} className="w-full" />
                     <p className="text-sm text-slate-400">
-                      {Math.round(progress)}% abgeschlossen
+                      {Math.round(progress)}% abgeschlossen - Echte Domains werden analysiert
                     </p>
                   </div>
                 </CardContent>
@@ -136,7 +147,7 @@ const Index = () => {
               <CardHeader>
                 <CardTitle className="text-white flex items-center">
                   <FileText className="h-5 w-5 mr-2 text-blue-400" />
-                  Analyse-Ergebnisse
+                  Live Analyse-Ergebnisse
                 </CardTitle>
               </CardHeader>
               <CardContent>
