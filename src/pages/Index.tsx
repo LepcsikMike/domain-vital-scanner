@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -19,7 +18,6 @@ import { UpgradeBanner } from '@/components/UpgradeBanner';
 import { PlanBadge } from '@/components/PlanBadge';
 import { usePlan } from '@/contexts/PlanContext';
 import { toast } from '@/hooks/use-toast';
-
 const Index = () => {
   const {
     domains,
@@ -34,31 +32,35 @@ const Index = () => {
     settings,
     updateSettings
   } = useDomainAnalysis();
-  
-  const { isEnterprise, canScan, dailyScansUsed, dailyScansLimit, incrementDailyScans, upgradeToPro, resetToFreePlan } = usePlan();
-  
+  const {
+    isEnterprise,
+    canScan,
+    dailyScansUsed,
+    dailyScansLimit,
+    incrementDailyScans,
+    upgradeToPro,
+    resetToFreePlan
+  } = usePlan();
+
   // Force free plan on /app route
   useEffect(() => {
     resetToFreePlan();
   }, [resetToFreePlan]);
-  
   const handleSearchStart = (domainList: string[], searchType: string, searchOptions?: any) => {
     if (!canScan) {
       toast({
         title: "Tägliches Limit erreicht",
         description: `Sie haben Ihr Limit von ${dailyScansLimit} Scan(s) pro Tag erreicht. Upgraden Sie auf Enterprise für unbegrenzte Scans.`,
-        variant: "destructive",
+        variant: "destructive"
       });
       return;
     }
-    
+
     // Increment daily scans for free plan
     incrementDailyScans();
     startAnalysis(domainList, searchType, searchOptions);
   };
-  
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-blue-950 to-slate-900">
+  return <div className="min-h-screen bg-gradient-to-br from-slate-950 via-blue-950 to-slate-900">
       {/* Header */}
       <div className="border-b border-slate-800 bg-slate-950/50 backdrop-blur-sm">
         <div className="container mx-auto px-4 py-6">
@@ -81,13 +83,7 @@ const Index = () => {
                 Basis-Version
               </Badge>
               
-              <Button 
-                onClick={() => window.open('/enterprise', '_blank')}
-                className="bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600"
-              >
-                <Crown className="h-4 w-4 mr-2" />
-                Enterprise Version
-              </Button>
+              
             </div>
           </div>
         </div>
@@ -114,14 +110,12 @@ const Index = () => {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                {!canScan && (
-                  <div className="mb-4 p-3 bg-red-500/10 border border-red-500/30 rounded-lg">
+                {!canScan && <div className="mb-4 p-3 bg-red-500/10 border border-red-500/30 rounded-lg">
                     <div className="flex items-center text-red-400 text-sm">
                       <AlertCircle className="h-4 w-4 mr-2" />
                       Tägliches Limit erreicht
                     </div>
-                  </div>
-                )}
+                  </div>}
                 <DomainSearchForm onSearchStart={handleSearchStart} isAnalyzing={isAnalyzing} />
               </CardContent>
             </Card>
@@ -165,10 +159,7 @@ const Index = () => {
                     <span>Erweiterte Analyse</span>
                   </div>
                 </div>
-                <Button 
-                  onClick={() => window.open('/enterprise', '_blank')}
-                  className="w-full bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 mt-4"
-                >
+                <Button onClick={() => window.open('/enterprise', '_blank')} className="w-full bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 mt-4">
                   <Crown className="h-4 w-4 mr-2" />
                   Auf Enterprise upgraden
                 </Button>
@@ -198,8 +189,7 @@ const Index = () => {
             <DashboardStats results={results} />
 
             {/* Progress */}
-            {isAnalyzing && (
-              <Card className="bg-slate-900/50 border-slate-700 backdrop-blur-sm transition-all duration-300 ease-in-out">
+            {isAnalyzing && <Card className="bg-slate-900/50 border-slate-700 backdrop-blur-sm transition-all duration-300 ease-in-out">
                 <CardHeader>
                   <CardTitle className="text-white flex items-center justify-between">
                     <span className="flex items-center">
@@ -219,8 +209,7 @@ const Index = () => {
                     </p>
                   </div>
                 </CardContent>
-              </Card>
-            )}
+              </Card>}
 
             {/* Analysis Results */}
             <Card className="bg-slate-900/50 border-slate-700 backdrop-blur-sm">
@@ -237,8 +226,6 @@ const Index = () => {
           </div>
         </div>
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default Index;
