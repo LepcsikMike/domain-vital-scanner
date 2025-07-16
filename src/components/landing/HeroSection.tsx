@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -24,9 +25,8 @@ const HeroSection = () => {
             </div>
             <div className="flex items-center space-x-4">
               <Button 
-                variant="outline" 
                 size="sm"
-                className="border-slate-600 text-slate-300 hover:bg-slate-800"
+                className="bg-gradient-to-r from-orange-500 to-pink-500 hover:from-orange-600 hover:to-pink-600 text-white font-semibold shadow-lg hover:shadow-xl transition-all"
                 onClick={() => window.open('https://calendly.com/hi-inspiroware/30min', '_blank')}
               >
                 <Calendar className="h-4 w-4 mr-2" />
