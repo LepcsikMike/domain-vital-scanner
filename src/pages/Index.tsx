@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -66,14 +67,8 @@ const Index = () => {
 
       <div className="container mx-auto px-4 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Left Sidebar - Search & Settings */}
+          {/* Left Sidebar - Search, Cost Tracker & Settings */}
           <div className="lg:col-span-1 space-y-6">
-            {/* Cost Tracker */}
-            <CostTracker 
-              analysisCount={analysisCount}
-              successRate={successRate}
-            />
-
             {/* Search Form */}
             <Card className="bg-slate-900/50 border-slate-700 backdrop-blur-sm">
               <CardHeader>
@@ -90,6 +85,12 @@ const Index = () => {
               </CardContent>
             </Card>
 
+            {/* Cost Tracker */}
+            <CostTracker 
+              analysisCount={analysisCount}
+              successRate={successRate}
+            />
+
             {/* Analysis Settings */}
             <Card className="bg-slate-900/50 border-slate-700 backdrop-blur-sm">
               <CardHeader>
@@ -105,10 +106,16 @@ const Index = () => {
                 />
               </CardContent>
             </Card>
+          </div>
 
-            {/* Progress */}
+          {/* Main Content */}
+          <div className="lg:col-span-2 space-y-6">
+            {/* Dashboard Stats */}
+            <DashboardStats results={results} />
+
+            {/* Progress - Only show when analyzing */}
             {isAnalyzing && (
-              <Card className="bg-slate-900/50 border-slate-700 backdrop-blur-sm">
+              <Card className="bg-slate-900/50 border-slate-700 backdrop-blur-sm transition-all duration-300 ease-in-out">
                 <CardHeader>
                   <CardTitle className="text-white flex items-center justify-between">
                     <span className="flex items-center">
@@ -119,7 +126,7 @@ const Index = () => {
                       size="sm"
                       variant="outline"
                       onClick={pauseAnalysis}
-                      className="border-slate-600 text-slate-300"
+                      className="border-slate-600 text-slate-300 hover:bg-slate-800"
                     >
                       <Pause className="h-4 w-4" />
                     </Button>
@@ -135,12 +142,6 @@ const Index = () => {
                 </CardContent>
               </Card>
             )}
-          </div>
-
-          {/* Main Content */}
-          <div className="lg:col-span-2 space-y-6">
-            {/* Dashboard Stats */}
-            <DashboardStats results={results} />
 
             {/* Analysis Results */}
             <Card className="bg-slate-900/50 border-slate-700 backdrop-blur-sm">
