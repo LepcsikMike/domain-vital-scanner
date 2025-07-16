@@ -9,7 +9,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Search, Upload, Globe, Target } from 'lucide-react';
 
 interface DomainSearchFormProps {
-  onSearchStart: (domains: string[], searchType: string) => void;
+  onSearchStart: (domains: string[], searchType: string, searchOptions?: any) => void;
   isAnalyzing: boolean;
 }
 
@@ -22,6 +22,7 @@ export const DomainSearchForm: React.FC<DomainSearchFormProps> = ({
   const [searchQuery, setSearchQuery] = useState('');
   const [industry, setIndustry] = useState('');
   const [location, setLocation] = useState('');
+  const [selectedTLD, setSelectedTLD] = useState('.de');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -36,9 +37,14 @@ export const DomainSearchForm: React.FC<DomainSearchFormProps> = ({
         onSearchStart(domains, 'manual');
       }
     } else if (searchType === 'automated') {
-      // Simuliere automatische Domain-Suche
-      const query = `${searchQuery} ${industry} ${location} site:.de`;
-      onSearchStart([query], 'automated');
+      const searchOptions = {
+        query: searchQuery,
+        industry,
+        location,
+        tld: selectedTLD,
+        maxResults: 10
+      };
+      onSearchStart([searchQuery], 'automated', searchOptions);
     }
   };
 
@@ -63,7 +69,7 @@ export const DomainSearchForm: React.FC<DomainSearchFormProps> = ({
             </Label>
             <Textarea
               id="domains"
-              placeholder="beispiel.de&#10;meine-website.de&#10;test-domain.de"
+              placeholder="beispiel.de&#10;meine-website.com&#10;test-domain.org"
               value={domainList}
               onChange={(e) => setDomainList(e.target.value)}
               className="mt-1 bg-slate-800 border-slate-600 text-white"
@@ -79,7 +85,7 @@ export const DomainSearchForm: React.FC<DomainSearchFormProps> = ({
             </Label>
             <Input
               id="query"
-              placeholder="handwerker, zahnarzt, restaurant..."
+              placeholder="medizin, handwerker, restaurant..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="bg-slate-800 border-slate-600 text-white"
@@ -96,11 +102,14 @@ export const DomainSearchForm: React.FC<DomainSearchFormProps> = ({
                   <SelectValue placeholder="Branche wählen" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="handwerk">Handwerk</SelectItem>
-                  <SelectItem value="gastronomie">Gastronomie</SelectItem>
-                  <SelectItem value="medizin">Medizin</SelectItem>
-                  <SelectItem value="einzelhandel">Einzelhandel</SelectItem>
-                  <SelectItem value="dienstleistung">Dienstleistung</SelectItem>
+                  <SelectItem value="medizin">Medizin & Gesundheit</SelectItem>
+                  <SelectItem value="handwerk">Handwerk & Bau</SelectItem>
+                  <SelectItem value="gastronomie">Gastronomie & Hotel</SelectItem>
+                  <SelectItem value="einzelhandel">Einzelhandel & E-Commerce</SelectItem>
+                  <SelectItem value="dienstleistung">Dienstleistung & Beratung</SelectItem>
+                  <SelectItem value="technologie">IT & Technologie</SelectItem>
+                  <SelectItem value="bildung">Bildung & Ausbildung</SelectItem>
+                  <SelectItem value="immobilien">Immobilien</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -117,6 +126,28 @@ export const DomainSearchForm: React.FC<DomainSearchFormProps> = ({
                 className="bg-slate-800 border-slate-600 text-white"
               />
             </div>
+          </div>
+
+          <div>
+            <Label htmlFor="tld" className="text-slate-300">
+              Top-Level-Domain (TLD)
+            </Label>
+            <Select value={selectedTLD} onValueChange={setSelectedTLD}>
+              <SelectTrigger className="bg-slate-800 border-slate-600 text-white">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value=".de">🇩🇪 .de (Deutschland)</SelectItem>
+                <SelectItem value=".com">🌍 .com (International)</SelectItem>
+                <SelectItem value=".org">🏛️ .org (Organisation)</SelectItem>
+                <SelectItem value=".net">🌐 .net (Netzwerk)</SelectItem>
+                <SelectItem value=".at">🇦🇹 .at (Österreich)</SelectItem>
+                <SelectItem value=".ch">🇨🇭 .ch (Schweiz)</SelectItem>
+                <SelectItem value=".eu">🇪🇺 .eu (Europa)</SelectItem>
+                <SelectItem value=".info">ℹ️ .info (Information)</SelectItem>
+                <SelectItem value=".biz">💼 .biz (Business)</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
         </TabsContent>
       </Tabs>

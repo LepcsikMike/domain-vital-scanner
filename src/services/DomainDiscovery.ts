@@ -1,5 +1,6 @@
 
 import { DnsLookup } from './DnsLookup';
+import { IndustryDomainDatabase } from './IndustryDomainDatabase';
 
 export interface DomainDiscoveryOptions {
   query: string;
@@ -15,7 +16,7 @@ export class DomainDiscovery {
   private cache = new Map<string, string[]>();
   
   async discoverDomains(options: DomainDiscoveryOptions): Promise<string[]> {
-    console.log('Starting real domain discovery with options:', options);
+    console.log('Starting intelligent domain discovery with options:', options);
     
     const cacheKey = JSON.stringify(options);
     if (this.cache.has(cacheKey)) {
@@ -24,44 +25,72 @@ export class DomainDiscovery {
     }
     
     try {
-      // Generate potential domains based on search terms
+      // Step 1: Get industry-specific known domains
+      const industry = options.industry || IndustryDomainDatabase.detectIndustryFromQuery(options.query);
+      const knownDomains = industry ? IndustryDomainDatabase.getIndustryDomains(industry, options.tld) : [];
+      
+      console.log(`Found ${knownDomains.length} known domains for industry: ${industry}`);
+      
+      // Step 2: Generate domain variations based on search terms
       const keywords = this.extractKeywords(options);
-      const generatedDomains = this.dnsLookup.generateRandomDeDomains(keywords, 50);
+      const generatedDomains = IndustryDomainDatabase.generateDomainVariations(
+        keywords, 
+        industry || 'general', 
+        options.location || '', 
+        options.tld || '.de'
+      );
       
       console.log(`Generated ${generatedDomains.length} potential domains`);
       
-      // Check which domains actually exist via DNS
-      const existingDomains = await this.dnsLookup.bulkCheckDomains(generatedDomains.slice(0, 15));
+      // Step 3: Combine known domains with generated ones
+      const candidateDomains = [
+        ...knownDomains.slice(0, 5).map(entry => entry.domain),
+        ...generatedDomains
+      ];
       
-      console.log(`Found ${existingDomains.length} existing domains`);
-      
-      // If we found some domains, validate them
+      // Step 4: Validate domains via DNS and HTTP
       const validatedDomains = [];
-      for (const domain of existingDomains.slice(0, options.maxResults || 10)) {
-        const isValid = await this.validateDomain(domain);
-        if (isValid) {
-          validatedDomains.push(domain);
+      const maxChecks = Math.min(candidateDomains.length, 15);
+      
+      for (let i = 0; i < maxChecks; i++) {
+        const domain = candidateDomains[i];
+        
+        try {
+          const isValid = await this.quickValidateDomain(domain);
+          if (isValid) {
+            validatedDomains.push(domain);
+            console.log(`✓ Validated domain: ${domain}`);
+          }
+        } catch (error) {
+          console.warn(`Validation failed for ${domain}:`, error);
         }
         
-        // Add delay between validations
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        // Add delay between validations to be respectful
+        if (i < maxChecks - 1) {
+          await new Promise(resolve => setTimeout(resolve, 800));
+        }
+        
+        // Stop if we have enough results
+        if (validatedDomains.length >= (options.maxResults || 8)) {
+          break;
+        }
       }
       
-      // If we don't have enough validated domains, add some working examples
+      // Step 5: If we don't have enough validated domains, add working fallbacks
       if (validatedDomains.length < 3) {
-        const fallbackDomains = await this.getFallbackWorkingDomains();
+        const fallbackDomains = await this.getIntelligentFallbacks(industry, options.tld);
         validatedDomains.push(...fallbackDomains.slice(0, 5 - validatedDomains.length));
       }
       
       // Cache results
       this.cache.set(cacheKey, validatedDomains);
       
-      console.log(`Returning ${validatedDomains.length} validated domains`);
+      console.log(`Returning ${validatedDomains.length} validated domains for ${industry || 'general'} industry`);
       return validatedDomains;
       
     } catch (error) {
       console.error('Domain discovery failed:', error);
-      return this.getFallbackWorkingDomains();
+      return this.getIntelligentFallbacks(options.industry, options.tld);
     }
   }
   
@@ -72,98 +101,73 @@ export class DomainDiscovery {
       keywords.push(options.query.toLowerCase());
     }
     
-    if (options.industry) {
-      keywords.push(options.industry.toLowerCase());
-    }
-    
     if (options.location) {
       keywords.push(options.location.toLowerCase());
     }
     
-    // Add common German business keywords
-    const commonKeywords = ['service', 'beratung', 'firma', 'unternehmen', 'shop', 'online'];
-    keywords.push(...commonKeywords.slice(0, 2));
-    
     return keywords.filter((keyword, index, self) => self.indexOf(keyword) === index);
   }
   
-  private async getFallbackWorkingDomains(): Promise<string[]> {
-    // Return some real .de domains that we know exist for demonstration
-    const knownWorkingDomains = [
-      'spiegel.de',
-      'zeit.de',
-      'handelsblatt.de',
-      'focus.de',
-      'n-tv.de'
-    ];
-    
-    // Validate a few of them to ensure they're still working
-    const validatedFallbacks = [];
-    for (const domain of knownWorkingDomains.slice(0, 3)) {
-      const isValid = await this.validateDomain(domain);
-      if (isValid) {
-        validatedFallbacks.push(domain);
+  private async getIntelligentFallbacks(industry?: string, tld?: string): Promise<string[]> {
+    // Get industry-specific fallbacks first
+    if (industry) {
+      const industryDomains = IndustryDomainDatabase.getIndustryDomains(industry, tld);
+      if (industryDomains.length > 0) {
+        return industryDomains.slice(0, 5).map(entry => entry.domain);
       }
     }
     
-    return validatedFallbacks;
+    // General fallbacks based on TLD
+    const tldSuffix = tld || '.de';
+    const fallbacks: Record<string, string[]> = {
+      '.de': ['spiegel.de', 'zeit.de', 'focus.de', 'n-tv.de', 'handelsblatt.de'],
+      '.com': ['google.com', 'microsoft.com', 'github.com', 'stackoverflow.com'],
+      '.org': ['wikipedia.org', 'mozilla.org', 'apache.org'],
+      '.net': ['sourceforge.net', 'cloudflare.net']
+    };
+    
+    return fallbacks[tldSuffix] || fallbacks['.de'];
   }
   
-  async validateDomain(domain: string): Promise<boolean> {
+  async quickValidateDomain(domain: string): Promise<boolean> {
     try {
-      console.log(`Validating domain: ${domain}`);
+      console.log(`Quick validating domain: ${domain}`);
       
-      // First check DNS
+      // First check DNS with shorter timeout
       const dnsExists = await this.dnsLookup.checkDomainExists(domain);
       if (!dnsExists) {
         return false;
       }
       
-      // Then check HTTP accessibility
-      const proxyUrl = `${this.corsProxy}${encodeURIComponent(`https://${domain}`)}`;
-      const response = await fetch(proxyUrl, {
-        method: 'GET',
-        headers: {
-          'Accept': 'application/json'
-        },
-        signal: AbortSignal.timeout(10000)
-      });
+      // Then check HTTP accessibility with timeout
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 5000);
       
-      if (response.ok) {
-        const data = await response.json();
-        return data.status && data.status.http_code < 500;
-      }
-      
-      return false;
-    } catch (error) {
-      console.warn(`Domain validation failed for ${domain}:`, error);
-      return false;
-    }
-  }
-  
-  // Method to search in Common Crawl (simplified version)
-  private async searchCommonCrawl(keywords: string[]): Promise<string[]> {
-    try {
-      // This is a simplified approach - in production you'd use the actual Common Crawl API
-      const domains = [];
-      
-      for (const keyword of keywords) {
-        // Generate realistic domain variations
-        const variations = [
-          `${keyword}-service.de`,
-          `${keyword}-online.de`,
-          `${keyword}-shop.de`,
-          `best-${keyword}.de`,
-          `${keyword}24.de`
-        ];
+      try {
+        const proxyUrl = `${this.corsProxy}${encodeURIComponent(`https://${domain}`)}`;
+        const response = await fetch(proxyUrl, {
+          method: 'GET',
+          headers: { 'Accept': 'application/json' },
+          signal: controller.signal
+        });
         
-        domains.push(...variations);
+        clearTimeout(timeoutId);
+        
+        if (response.ok) {
+          const data = await response.json();
+          return data.status && data.status.http_code < 500;
+        }
+        
+        return false;
+      } catch (fetchError) {
+        clearTimeout(timeoutId);
+        // If HTTP fails but DNS exists, still consider it valid
+        return true;
       }
       
-      return domains.slice(0, 20);
     } catch (error) {
-      console.error('Common Crawl search failed:', error);
-      return [];
+      console.warn(`Quick validation failed for ${domain}:`, error);
+      return false;
     }
   }
 }

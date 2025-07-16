@@ -33,7 +33,7 @@ export const useDomainAnalysis = () => {
     includeSubdomains: false
   });
 
-  const startAnalysis = useCallback(async (domainList: string[], searchType: string) => {
+  const startAnalysis = useCallback(async (domainList: string[], searchType: string, searchOptions?: any) => {
     setIsAnalyzing(true);
     setProgress(0);
     setResults([]);
@@ -53,11 +53,6 @@ export const useDomainAnalysis = () => {
         return;
       }
     } else {
-      toast({
-        title: "Domain-Suche läuft",
-        description: "Suche nach echten .de Domains...",
-      });
-      
       const searchTerms = domainList[0]?.trim();
       if (!searchTerms) {
         toast({
@@ -68,22 +63,42 @@ export const useDomainAnalysis = () => {
         setIsAnalyzing(false);
         return;
       }
+
+      toast({
+        title: "Intelligente Domain-Suche läuft",
+        description: `Suche nach ${searchOptions?.tld || '.de'} Domains für "${searchTerms}"...`,
+      });
       
       try {
-        domainsToAnalyze = await discoverRealDomains({
+        const discoveryOptions: DomainDiscoveryOptions = {
           query: searchTerms,
-          tld: '.de',
+          industry: searchOptions?.industry,
+          location: searchOptions?.location,
+          tld: searchOptions?.tld || '.de',
           maxResults: 8
-        });
+        };
+        
+        domainsToAnalyze = await discoverRealDomains(discoveryOptions);
+        
+        console.log('Discovered domains:', domainsToAnalyze);
+        
       } catch (error) {
         console.error('Domain discovery error:', error);
         toast({
-          title: "Suchfehler",
+          title: "Suchfehler", 
           description: "Fehler bei der Domain-Suche. Verwende Fallback-Domains.",
           variant: "destructive",
         });
         
-        domainsToAnalyze = ['spiegel.de', 'zeit.de', 'focus.de'];
+        // Intelligent fallbacks based on TLD
+        const tld = searchOptions?.tld || '.de';
+        const fallbacks: Record<string, string[]> = {
+          '.de': ['spiegel.de', 'zeit.de', 'focus.de'],
+          '.com': ['google.com', 'microsoft.com', 'github.com'],
+          '.org': ['wikipedia.org', 'mozilla.org'],
+          '.net': ['cloudflare.net']
+        };
+        domainsToAnalyze = fallbacks[tld] || fallbacks['.de'];
       }
     }
 
@@ -99,9 +114,10 @@ export const useDomainAnalysis = () => {
       return;
     }
     
+    const industryInfo = searchOptions?.industry ? ` (${searchOptions.industry})` : '';
     toast({
       title: "Domains gefunden",
-      description: `${domainsToAnalyze.length} Domains werden analysiert`,
+      description: `${domainsToAnalyze.length} ${searchOptions?.tld || '.de'} Domains werden analysiert${industryInfo}`,
     });
     
     try {
@@ -130,7 +146,6 @@ export const useDomainAnalysis = () => {
           const progressPercent = ((i + 1) / total) * 100;
           setProgress(progressPercent);
           
-          // Reduced delay between requests for optimized performance
           if (i < total - 1) {
             await new Promise(resolve => setTimeout(resolve, 1000));
           }
@@ -252,7 +267,7 @@ const discoverRealDomains = async (options: DomainDiscoveryOptions): Promise<str
   const discovery = new DomainDiscovery();
   
   try {
-    console.log('Starting domain discovery with:', options);
+    console.log('Starting intelligent domain discovery with:', options);
     const domains = await discovery.discoverDomains(options);
     console.log('Discovery completed, found domains:', domains);
     return domains;

@@ -11,11 +11,17 @@ export class DnsLookup {
       // Use DNS-over-HTTPS to check if domain exists
       for (const endpoint of this.dohEndpoints) {
         try {
+          const controller = new AbortController();
+          const timeoutId = setTimeout(() => controller.abort(), 3000);
+          
           const response = await fetch(`${endpoint}?name=${domain}&type=A`, {
             headers: {
               'Accept': 'application/dns-json'
-            }
+            },
+            signal: controller.signal
           });
+          
+          clearTimeout(timeoutId);
           
           if (response.ok) {
             const data = await response.json();
@@ -45,7 +51,7 @@ export class DnsLookup {
         }
         
         // Add delay to be respectful to DNS servers
-        await new Promise(resolve => setTimeout(resolve, 500));
+        await new Promise(resolve => setTimeout(resolve, 400));
       } catch (error) {
         console.warn(`Bulk check failed for ${domain}:`, error);
       }
@@ -54,34 +60,60 @@ export class DnsLookup {
     return validDomains;
   }
 
-  generateRandomDeDomains(keywords: string[], count: number = 20): string[] {
+  generateDomainVariations(keywords: string[], tld: string, count: number = 20): string[] {
     const domains = [];
-    const suffixes = ['service', 'online', '24', 'pro', 'direkt', 'express', 'plus', 'werk', 'haus', 'shop'];
-    const prefixes = ['best', 'top', 'premium', 'schnell', 'günstig', 'lokal', 'ihr', 'mein'];
+    const tldSuffix = tld.startsWith('.') ? tld : `.${tld}`;
+    
+    // TLD-specific suffixes and prefixes
+    const tldSpecific = this.getTldSpecificTerms(tldSuffix);
+    const { suffixes, prefixes } = tldSpecific;
     
     keywords.forEach(keyword => {
       // Direct keyword domains
-      domains.push(`${keyword}.de`);
+      domains.push(`${keyword}${tldSuffix}`);
       
       // With suffixes
       suffixes.forEach(suffix => {
-        domains.push(`${keyword}-${suffix}.de`);
-        domains.push(`${suffix}-${keyword}.de`);
+        domains.push(`${keyword}-${suffix}${tldSuffix}`);
+        domains.push(`${suffix}-${keyword}${tldSuffix}`);
       });
       
       // With prefixes
       prefixes.forEach(prefix => {
-        domains.push(`${prefix}-${keyword}.de`);
+        domains.push(`${prefix}-${keyword}${tldSuffix}`);
       });
       
       // Numbers
-      for (let i = 1; i <= 5; i++) {
-        domains.push(`${keyword}${i}.de`);
-        domains.push(`${keyword}-${i}.de`);
+      for (let i = 1; i <= 3; i++) {
+        domains.push(`${keyword}${i}${tldSuffix}`);
+        domains.push(`${keyword}-${i}${tldSuffix}`);
       }
     });
     
     // Shuffle and return limited count
     return domains.sort(() => Math.random() - 0.5).slice(0, count);
+  }
+
+  private getTldSpecificTerms(tld: string): { suffixes: string[], prefixes: string[] } {
+    const tldTerms: Record<string, { suffixes: string[], prefixes: string[] }> = {
+      '.de': {
+        suffixes: ['service', 'online', '24', 'direkt', 'express', 'plus', 'werk', 'haus', 'shop'],
+        prefixes: ['best', 'top', 'premium', 'schnell', 'günstig', 'lokal', 'ihr', 'mein']
+      },
+      '.com': {
+        suffixes: ['online', 'pro', 'hub', 'zone', 'world', 'global', 'tech', 'solutions'],
+        prefixes: ['best', 'top', 'premium', 'smart', 'fast', 'global', 'my', 'your']
+      },
+      '.org': {
+        suffixes: ['foundation', 'initiative', 'network', 'community', 'alliance'],
+        prefixes: ['united', 'international', 'global', 'national', 'local']
+      },
+      '.net': {
+        suffixes: ['network', 'systems', 'tech', 'solutions', 'services'],
+        prefixes: ['network', 'system', 'tech', 'digital', 'cyber']
+      }
+    };
+    
+    return tldTerms[tld] || tldTerms['.com'];
   }
 }
