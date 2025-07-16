@@ -21,9 +21,11 @@ import {
   CheckCircle, 
   XCircle,
   Search,
-  Filter
+  Filter,
+  ExternalLink
 } from 'lucide-react';
 import { DomainAnalysisResult } from '@/types/domain-analysis';
+import { getDomainUrl } from '@/utils/urlUtils';
 
 interface AnalysisResultsProps {
   results: DomainAnalysisResult[];
@@ -144,7 +146,15 @@ export const AnalysisResults: React.FC<AnalysisResultsProps> = ({ results }) => 
               <TableRow key={result.domain} className="border-slate-700 hover:bg-slate-800/30">
                 <TableCell className="font-medium text-white">
                   <div className="flex items-center space-x-2">
-                    <span>{result.domain}</span>
+                    <a 
+                      href={getDomainUrl(result.domain)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center space-x-1 text-blue-400 hover:text-blue-300 transition-colors"
+                    >
+                      <span>{result.domain}</span>
+                      <ExternalLink className="h-3 w-3" />
+                    </a>
                     {result.criticalIssues >= 2 && (
                       <AlertTriangle className="h-4 w-4 text-yellow-400" />
                     )}

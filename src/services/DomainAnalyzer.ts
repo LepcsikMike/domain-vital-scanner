@@ -1,5 +1,6 @@
 import { DomainAnalysisResult } from '@/types/domain-analysis';
 import { HtmlParser, ParsedHtmlData } from './HtmlParser';
+import { normalizeUrl } from '@/utils/urlUtils';
 
 interface AnalysisSettings {
   checkHTTPS: boolean;
@@ -103,9 +104,12 @@ export class DomainAnalyzer {
     console.log(`Checking real HTTPS for ${domain}`);
     
     try {
+      // Normalize URLs to prevent double protocol issues
+      const urls = normalizeUrl(domain);
+      
       // Test both HTTP and HTTPS
-      const httpsTest = await this.testConnection(`https://${domain}`);
-      const httpTest = await this.testConnection(`http://${domain}`);
+      const httpsTest = await this.testConnection(urls.https);
+      const httpTest = await this.testConnection(urls.http);
       
       return {
         valid: httpsTest.success,
@@ -137,11 +141,12 @@ export class DomainAnalyzer {
       const data = await response.json();
       
       return {
-        success: response.ok,
+        success: response.ok && data.status?.http_code < 400,
         statusCode: data.status?.http_code || 0,
         redirectsToHttps: url.startsWith('http://') && data.url?.startsWith('https://')
       };
     } catch (error) {
+      console.error(`Connection test failed for ${url}:`, error);
       return {
         success: false,
         statusCode: 0,
