@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -13,7 +12,6 @@ import { DashboardStats } from '@/components/DashboardStats';
 import { AnalysisSettings } from '@/components/AnalysisSettings';
 import { CostTracker } from '@/components/CostTracker';
 import { useDomainAnalysis } from '@/hooks/useDomainAnalysis';
-
 const Index = () => {
   const {
     domains,
@@ -28,9 +26,7 @@ const Index = () => {
     settings,
     updateSettings
   } = useDomainAnalysis();
-
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-blue-950 to-slate-900">
+  return <div className="min-h-screen bg-gradient-to-br from-slate-950 via-blue-950 to-slate-900">
       {/* Header */}
       <div className="border-b border-slate-800 bg-slate-950/50 backdrop-blur-sm">
         <div className="container mx-auto px-4 py-6">
@@ -48,15 +44,8 @@ const Index = () => {
               <Badge variant="outline" className="border-green-500 text-green-400">
                 100% Kostenlos
               </Badge>
-              <Badge variant="outline" className="border-cyan-500 text-cyan-400">
-                Deutsche Domains (.de)
-              </Badge>
-              <Button 
-                onClick={exportResults} 
-                variant="outline" 
-                className="border-slate-600 text-slate-300 hover:bg-slate-800"
-                disabled={results.length === 0}
-              >
+              
+              <Button onClick={exportResults} variant="outline" className="border-slate-600 text-slate-300 hover:bg-slate-800" disabled={results.length === 0}>
                 <Download className="h-4 w-4 mr-2" />
                 Export CSV
               </Button>
@@ -78,18 +67,12 @@ const Index = () => {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <DomainSearchForm 
-                  onSearchStart={startAnalysis}
-                  isAnalyzing={isAnalyzing}
-                />
+                <DomainSearchForm onSearchStart={startAnalysis} isAnalyzing={isAnalyzing} />
               </CardContent>
             </Card>
 
             {/* Cost Tracker */}
-            <CostTracker 
-              analysisCount={analysisCount}
-              successRate={successRate}
-            />
+            <CostTracker analysisCount={analysisCount} successRate={successRate} />
 
             {/* Analysis Settings */}
             <Card className="bg-slate-900/50 border-slate-700 backdrop-blur-sm">
@@ -100,10 +83,7 @@ const Index = () => {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <AnalysisSettings 
-                  settings={settings}
-                  onSettingsChange={updateSettings}
-                />
+                <AnalysisSettings settings={settings} onSettingsChange={updateSettings} />
               </CardContent>
             </Card>
           </div>
@@ -114,20 +94,14 @@ const Index = () => {
             <DashboardStats results={results} />
 
             {/* Progress - Only show when analyzing */}
-            {isAnalyzing && (
-              <Card className="bg-slate-900/50 border-slate-700 backdrop-blur-sm transition-all duration-300 ease-in-out">
+            {isAnalyzing && <Card className="bg-slate-900/50 border-slate-700 backdrop-blur-sm transition-all duration-300 ease-in-out">
                 <CardHeader>
                   <CardTitle className="text-white flex items-center justify-between">
                     <span className="flex items-center">
                       <Shield className="h-5 w-5 mr-2 text-green-400" />
                       Live-Analyse läuft
                     </span>
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      onClick={pauseAnalysis}
-                      className="border-slate-600 text-slate-300 hover:bg-slate-800"
-                    >
+                    <Button size="sm" variant="outline" onClick={pauseAnalysis} className="border-slate-600 text-slate-300 hover:bg-slate-800">
                       <Pause className="h-4 w-4" />
                     </Button>
                   </CardTitle>
@@ -140,8 +114,7 @@ const Index = () => {
                     </p>
                   </div>
                 </CardContent>
-              </Card>
-            )}
+              </Card>}
 
             {/* Analysis Results */}
             <Card className="bg-slate-900/50 border-slate-700 backdrop-blur-sm">
@@ -158,8 +131,6 @@ const Index = () => {
           </div>
         </div>
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default Index;
