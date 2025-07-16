@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { PlanProvider } from "./contexts/PlanContext";
 import LandingPage from "./pages/LandingPage";
 import Index from "./pages/Index";
+import EnterpriseApp from "./pages/EnterpriseApp";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -21,6 +22,8 @@ const App = () => (
           <Routes>
             <Route path="/" element={<LandingPage />} />
             <Route path="/app" element={<Index />} />
+            <Route path="/enterprise" element={<EnterpriseApp />} />
+            <Route path="/enterprise-app" element={<EnterpriseApp />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

@@ -11,6 +11,7 @@ interface PlanContextType {
   canScan: boolean;
   incrementDailyScans: () => void;
   upgradeToPro: () => void;
+  activateEnterprisePlan: () => void;
 }
 
 const PlanContext = createContext<PlanContextType | undefined>(undefined);
@@ -57,6 +58,12 @@ export const PlanProvider = ({ children }: PlanProviderProps) => {
     window.open('https://buy.stripe.com/7sYeVegbJekDdQbdjy8AE04', '_blank');
   };
 
+  const activateEnterprisePlan = () => {
+    setPlan('enterprise');
+    localStorage.setItem('userPlan', 'enterprise');
+    console.log('Enterprise plan activated');
+  };
+
   const canScan = plan === 'enterprise' || dailyScansUsed < dailyScansLimit;
 
   return (
@@ -69,6 +76,7 @@ export const PlanProvider = ({ children }: PlanProviderProps) => {
         canScan,
         incrementDailyScans,
         upgradeToPro,
+        activateEnterprisePlan,
       }}
     >
       {children}
