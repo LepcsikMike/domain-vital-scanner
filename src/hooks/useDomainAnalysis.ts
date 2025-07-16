@@ -41,19 +41,52 @@ export const useDomainAnalysis = () => {
     let domainsToAnalyze: string[] = [];
     
     if (searchType === 'manual') {
-      domainsToAnalyze = domainList;
+      domainsToAnalyze = domainList.filter(domain => domain.trim().length > 0);
+      
+      if (domainsToAnalyze.length === 0) {
+        toast({
+          title: "Keine Domains eingegeben",
+          description: "Bitte geben Sie mindestens eine Domain ein",
+          variant: "destructive",
+        });
+        setIsAnalyzing(false);
+        return;
+      }
     } else {
       // Use real domain discovery
       toast({
         title: "Domain-Suche läuft",
-        description: "Suche nach echten Domains...",
+        description: "Suche nach echten .de Domains...",
       });
       
-      domainsToAnalyze = await discoverRealDomains({
-        query: domainList[0],
-        tld: '.de',
-        maxResults: 10
-      });
+      const searchTerms = domainList[0]?.trim();
+      if (!searchTerms) {
+        toast({
+          title: "Suchbegriff fehlt",
+          description: "Bitte geben Sie einen Suchbegriff ein",
+          variant: "destructive",
+        });
+        setIsAnalyzing(false);
+        return;
+      }
+      
+      try {
+        domainsToAnalyze = await discoverRealDomains({
+          query: searchTerms,
+          tld: '.de',
+          maxResults: 8
+        });
+      } catch (error) {
+        console.error('Domain discovery error:', error);
+        toast({
+          title: "Suchfehler",
+          description: "Fehler bei der Domain-Suche. Verwende Fallback-Domains.",
+          variant: "destructive",
+        });
+        
+        // Use fallback domains
+        domainsToAnalyze = ['spiegel.de', 'zeit.de', 'focus.de'];
+      }
     }
 
     setDomains(domainsToAnalyze);
@@ -61,12 +94,17 @@ export const useDomainAnalysis = () => {
     if (domainsToAnalyze.length === 0) {
       toast({
         title: "Keine Domains gefunden",
-        description: "Versuche es mit anderen Suchbegriffen",
+        description: "Keine passenden Domains gefunden. Versuchen Sie andere Suchbegriffe.",
         variant: "destructive",
       });
       setIsAnalyzing(false);
       return;
     }
+    
+    toast({
+      title: "Domains gefunden",
+      description: `${domainsToAnalyze.length} Domains werden analysiert`,
+    });
     
     try {
       const analyzer = new DomainAnalyzer(settings);
@@ -78,7 +116,7 @@ export const useDomainAnalysis = () => {
         const domain = domainsToAnalyze[i];
         
         try {
-          console.log(`Analyzing real domain ${i + 1}/${total}: ${domain}`);
+          console.log(`Analyzing domain ${i + 1}/${total}: ${domain}`);
           
           const result = await analyzer.analyzeDomain(domain);
           newResults.push(result);
@@ -111,7 +149,7 @@ export const useDomainAnalysis = () => {
 
       toast({
         title: "Analyse abgeschlossen",
-        description: `${newResults.length} echte Domains analysiert (${successful} erfolgreich)`,
+        description: `${newResults.length} Domains analysiert (${successful} erfolgreich)`,
       });
 
     } catch (error) {
@@ -217,20 +255,12 @@ const discoverRealDomains = async (options: DomainDiscoveryOptions): Promise<str
   const discovery = new DomainDiscovery();
   
   try {
+    console.log('Starting domain discovery with:', options);
     const domains = await discovery.discoverDomains(options);
-    
-    // Validate discovered domains
-    const validDomains = [];
-    for (const domain of domains.slice(0, 5)) { // Limit for free service
-      const isValid = await discovery.validateDomain(domain);
-      if (isValid) {
-        validDomains.push(domain);
-      }
-    }
-    
-    return validDomains;
+    console.log('Discovery completed, found domains:', domains);
+    return domains;
   } catch (error) {
     console.error('Domain discovery failed:', error);
-    return [];
+    throw error;
   }
 };
