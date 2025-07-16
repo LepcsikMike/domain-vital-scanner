@@ -108,8 +108,7 @@ const Footer = () => {
               </div>
             </div>
             <div className="text-slate-400 text-sm">
-              <div className="mb-2">© 2025 Inspiroware OÜ. All rights reserved.</div>
-              <div>Made with ❤️ for web professionals</div>
+              <div>© 2025 Inspiroware OÜ. All rights reserved.</div>
             </div>
           </div>
         </div>
