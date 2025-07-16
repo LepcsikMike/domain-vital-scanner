@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, Download, FileImage, FileText } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 const Impressum = () => {
   return <div className="min-h-screen bg-gradient-to-br from-slate-950 via-blue-950 to-slate-900">
@@ -93,6 +93,92 @@ const Impressum = () => {
                 Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber der 
                 Seiten verantwortlich.
               </p>
+            </section>
+
+            <section>
+              <h2 className="text-2xl font-semibold text-white mb-4">Pressematerial & Logos</h2>
+              <p className="mb-6">
+                Hier können Sie unser Logo für redaktionelle Zwecke herunterladen. Bei kommerzieller 
+                Nutzung kontaktieren Sie uns bitte vorab.
+              </p>
+              
+              <div className="grid md:grid-cols-3 gap-4">
+                <div className="bg-slate-800/50 p-6 rounded border border-slate-600">
+                  <div className="flex items-center mb-3">
+                    <FileText className="h-5 w-5 text-cyan-400 mr-2" />
+                    <span className="font-semibold text-white">SVG Logo</span>
+                  </div>
+                  <p className="text-sm text-slate-400 mb-4">Vektor-Format, skalierbar</p>
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    className="w-full border-slate-600 hover:bg-slate-700 text-slate-50"
+                    onClick={() => {
+                      const link = document.createElement('a');
+                      link.href = '/logos/logo.svg';
+                      link.download = 'domainauditpro-logo.svg';
+                      link.click();
+                    }}
+                  >
+                    <Download className="h-4 w-4 mr-2" />
+                    Download SVG
+                  </Button>
+                </div>
+
+                <div className="bg-slate-800/50 p-6 rounded border border-slate-600">
+                  <div className="flex items-center mb-3">
+                    <FileImage className="h-5 w-5 text-cyan-400 mr-2" />
+                    <span className="font-semibold text-white">PNG Logo (HD)</span>
+                  </div>
+                  <p className="text-sm text-slate-400 mb-4">1200x1200px, für Print</p>
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    className="w-full border-slate-600 hover:bg-slate-700 text-slate-50"
+                    onClick={() => {
+                      const link = document.createElement('a');
+                      link.href = '/logos/logo.png';
+                      link.download = 'domainauditpro-logo-hd.png';
+                      link.click();
+                    }}
+                  >
+                    <Download className="h-4 w-4 mr-2" />
+                    Download PNG
+                  </Button>
+                </div>
+
+                <div className="bg-slate-800/50 p-6 rounded border border-slate-600">
+                  <div className="flex items-center mb-3">
+                    <FileImage className="h-5 w-5 text-cyan-400 mr-2" />
+                    <span className="font-semibold text-white">PNG Logo</span>
+                  </div>
+                  <p className="text-sm text-slate-400 mb-4">512x512px, für Web</p>
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    className="w-full border-slate-600 hover:bg-slate-700 text-slate-50"
+                    onClick={() => {
+                      const link = document.createElement('a');
+                      link.href = '/logos/logo-small.png';
+                      link.download = 'domainauditpro-logo.png';
+                      link.click();
+                    }}
+                  >
+                    <Download className="h-4 w-4 mr-2" />
+                    Download PNG
+                  </Button>
+                </div>
+              </div>
+
+              <div className="mt-6 p-4 bg-blue-950/30 border border-blue-800/50 rounded">
+                <h4 className="font-semibold text-white mb-2">Nutzungsrichtlinien</h4>
+                <ul className="text-sm text-slate-300 space-y-1">
+                  <li>• Redaktionelle Nutzung ist gestattet</li>
+                  <li>• Logo nicht verzerren oder farblich verändern</li>
+                  <li>• Für kommerzielle Nutzung kontaktieren Sie uns</li>
+                  <li>• Bei Fragen: <a href="mailto:hi@inspiroware.com" className="text-cyan-400 hover:underline">hi@inspiroware.com</a></li>
+                </ul>
+              </div>
             </section>
 
             <section>
