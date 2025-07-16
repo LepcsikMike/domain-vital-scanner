@@ -1,6 +1,7 @@
-
 import { DnsLookup } from './DnsLookup';
 import { IndustryDomainDatabase } from './IndustryDomainDatabase';
+import { GoogleCustomSearchService } from './GoogleCustomSearchService';
+import { CommonCrawlService } from './CommonCrawlService';
 
 export interface DomainDiscoveryOptions {
   query: string;
@@ -13,10 +14,12 @@ export interface DomainDiscoveryOptions {
 export class DomainDiscovery {
   private corsProxy = 'https://api.allorigins.win/get?url=';
   private dnsLookup = new DnsLookup();
+  private googleSearch = new GoogleCustomSearchService();
+  private commonCrawl = new CommonCrawlService();
   private cache = new Map<string, string[]>();
   
   async discoverDomains(options: DomainDiscoveryOptions): Promise<string[]> {
-    console.log('Starting intelligent domain discovery with options:', options);
+    console.log('Starting enhanced intelligent domain discovery with options:', options);
     
     const cacheKey = JSON.stringify(options);
     if (this.cache.has(cacheKey)) {
@@ -25,35 +28,84 @@ export class DomainDiscovery {
     }
     
     try {
-      // Step 1: Get industry-specific known domains
-      const industry = options.industry || IndustryDomainDatabase.detectIndustryFromQuery(options.query);
-      const knownDomains = industry ? IndustryDomainDatabase.getIndustryDomains(industry, options.tld) : [];
+      const discoveredDomains: string[] = [];
       
-      console.log(`Found ${knownDomains.length} known domains for industry: ${industry}`);
+      // Step 1: Try Google Custom Search if configured
+      if (this.googleSearch.hasCredentials()) {
+        console.log('Using Google Custom Search for domain discovery');
+        try {
+          const googleResult = await this.googleSearch.searchByIndustry(
+            options.industry || options.query,
+            options.location,
+            options.tld
+          );
+          
+          discoveredDomains.push(...googleResult.domains);
+          console.log(`Google Search found ${googleResult.domains.length} domains`);
+        } catch (error) {
+          console.warn('Google Custom Search failed:', error);
+        }
+      }
       
-      // Step 2: Generate domain variations based on search terms
-      const keywords = this.extractKeywords(options);
-      const generatedDomains = IndustryDomainDatabase.generateDomainVariations(
-        keywords, 
-        industry || 'general', 
-        options.location || '', 
-        options.tld || '.de'
-      );
+      // Step 2: Try Common Crawl for additional domains
+      if (discoveredDomains.length < 8) {
+        console.log('Enhancing with Common Crawl data');
+        try {
+          const crawlResult = await this.commonCrawl.searchByIndustry(
+            options.industry || options.query,
+            options.tld || '.de'
+          );
+          
+          // Add new domains not already found
+          crawlResult.domains.forEach(domain => {
+            if (!discoveredDomains.includes(domain)) {
+              discoveredDomains.push(domain);
+            }
+          });
+          
+          console.log(`Common Crawl added ${crawlResult.domains.length} additional domains`);
+        } catch (error) {
+          console.warn('Common Crawl search failed:', error);
+        }
+      }
       
-      console.log(`Generated ${generatedDomains.length} potential domains`);
+      // Step 3: Fallback to existing industry database
+      if (discoveredDomains.length < 5) {
+        console.log('Using fallback industry database');
+        const industry = options.industry || IndustryDomainDatabase.detectIndustryFromQuery(options.query);
+        const knownDomains = industry ? IndustryDomainDatabase.getIndustryDomains(industry, options.tld) : [];
+        
+        knownDomains.slice(0, 5).forEach(entry => {
+          if (!discoveredDomains.includes(entry.domain)) {
+            discoveredDomains.push(entry.domain);
+          }
+        });
+      }
       
-      // Step 3: Combine known domains with generated ones
-      const candidateDomains = [
-        ...knownDomains.slice(0, 5).map(entry => entry.domain),
-        ...generatedDomains
-      ];
+      // Step 4: Generate additional domains if still needed
+      if (discoveredDomains.length < 5) {
+        console.log('Generating additional domain variations');
+        const keywords = this.extractKeywords(options);
+        const generatedDomains = IndustryDomainDatabase.generateDomainVariations(
+          keywords, 
+          options.industry || 'general', 
+          options.location || '', 
+          options.tld || '.de'
+        );
+        
+        generatedDomains.slice(0, 5).forEach(domain => {
+          if (!discoveredDomains.includes(domain)) {
+            discoveredDomains.push(domain);
+          }
+        });
+      }
       
-      // Step 4: Validate domains via DNS and HTTP
+      // Step 5: Validate discovered domains
       const validatedDomains = [];
-      const maxChecks = Math.min(candidateDomains.length, 15);
+      const maxChecks = Math.min(discoveredDomains.length, 15);
       
       for (let i = 0; i < maxChecks; i++) {
-        const domain = candidateDomains[i];
+        const domain = discoveredDomains[i];
         
         try {
           const isValid = await this.quickValidateDomain(domain);
@@ -76,20 +128,24 @@ export class DomainDiscovery {
         }
       }
       
-      // Step 5: If we don't have enough validated domains, add working fallbacks
+      // Step 6: Ensure minimum results with intelligent fallbacks
       if (validatedDomains.length < 3) {
-        const fallbackDomains = await this.getIntelligentFallbacks(industry, options.tld);
-        validatedDomains.push(...fallbackDomains.slice(0, 5 - validatedDomains.length));
+        const fallbackDomains = await this.getIntelligentFallbacks(options.industry, options.tld);
+        fallbackDomains.forEach(domain => {
+          if (!validatedDomains.includes(domain)) {
+            validatedDomains.push(domain);
+          }
+        });
       }
       
       // Cache results
       this.cache.set(cacheKey, validatedDomains);
       
-      console.log(`Returning ${validatedDomains.length} validated domains for ${industry || 'general'} industry`);
-      return validatedDomains;
+      console.log(`Enhanced discovery completed: ${validatedDomains.length} validated domains`);
+      return validatedDomains.slice(0, options.maxResults || 8);
       
     } catch (error) {
-      console.error('Domain discovery failed:', error);
+      console.error('Enhanced domain discovery failed:', error);
       return this.getIntelligentFallbacks(options.industry, options.tld);
     }
   }

@@ -12,6 +12,8 @@ import { DashboardStats } from '@/components/DashboardStats';
 import { AnalysisSettings } from '@/components/AnalysisSettings';
 import { CostTracker } from '@/components/CostTracker';
 import { useDomainAnalysis } from '@/hooks/useDomainAnalysis';
+import { ApiKeySettings } from '@/components/ApiKeySettings';
+
 const Index = () => {
   const {
     domains,
@@ -26,7 +28,9 @@ const Index = () => {
     settings,
     updateSettings
   } = useDomainAnalysis();
-  return <div className="min-h-screen bg-gradient-to-br from-slate-950 via-blue-950 to-slate-900">
+  
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-blue-950 to-slate-900">
       {/* Header */}
       <div className="border-b border-slate-800 bg-slate-950/50 backdrop-blur-sm">
         <div className="container mx-auto px-4 py-6">
@@ -37,12 +41,12 @@ const Index = () => {
               </div>
               <div>
                 <h1 className="text-2xl font-bold text-white">DomainAudit Pro</h1>
-                <p className="text-slate-400 text-sm">Kostenlose Echte Domain-Analyse & SEO-Audit Platform</p>
+                <p className="text-slate-400 text-sm">Erweiterte Domain-Analyse mit Google APIs & Echten Daten</p>
               </div>
             </div>
             <div className="flex items-center space-x-4">
               <Badge variant="outline" className="border-green-500 text-green-400">
-                100% Kostenlos
+                API-Enhanced
               </Badge>
               
               <Button onClick={exportResults} variant="outline" className="border-slate-600 text-slate-300 hover:bg-slate-800" disabled={results.length === 0}>
@@ -56,20 +60,23 @@ const Index = () => {
 
       <div className="container mx-auto px-4 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Left Sidebar - Search, Cost Tracker & Settings */}
+          {/* Left Sidebar - Search, API Settings, Cost Tracker & Settings */}
           <div className="lg:col-span-1 space-y-6">
             {/* Search Form */}
             <Card className="bg-slate-900/50 border-slate-700 backdrop-blur-sm">
               <CardHeader>
                 <CardTitle className="text-white flex items-center">
                   <Search className="h-5 w-5 mr-2 text-cyan-400" />
-                  Echte Domain-Suche
+                  Multi-TLD Domain-Suche
                 </CardTitle>
               </CardHeader>
               <CardContent>
                 <DomainSearchForm onSearchStart={startAnalysis} isAnalyzing={isAnalyzing} />
               </CardContent>
             </Card>
+
+            {/* API Settings */}
+            <ApiKeySettings />
 
             {/* Cost Tracker */}
             <CostTracker analysisCount={analysisCount} successRate={successRate} />
@@ -79,7 +86,7 @@ const Index = () => {
               <CardHeader>
                 <CardTitle className="text-white flex items-center">
                   <Zap className="h-5 w-5 mr-2 text-yellow-400" />
-                  Analyse-Einstellungen
+                  Erweiterte Einstellungen
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -94,12 +101,13 @@ const Index = () => {
             <DashboardStats results={results} />
 
             {/* Progress - Only show when analyzing */}
-            {isAnalyzing && <Card className="bg-slate-900/50 border-slate-700 backdrop-blur-sm transition-all duration-300 ease-in-out">
+            {isAnalyzing && (
+              <Card className="bg-slate-900/50 border-slate-700 backdrop-blur-sm transition-all duration-300 ease-in-out">
                 <CardHeader>
                   <CardTitle className="text-white flex items-center justify-between">
                     <span className="flex items-center">
                       <Shield className="h-5 w-5 mr-2 text-green-400" />
-                      Live-Analyse läuft
+                      API-Enhanced Live-Analyse
                     </span>
                     <Button size="sm" variant="outline" onClick={pauseAnalysis} className="border-slate-600 text-slate-300 hover:bg-slate-800">
                       <Pause className="h-4 w-4" />
@@ -110,18 +118,19 @@ const Index = () => {
                   <div className="space-y-3">
                     <Progress value={progress} className="w-full" />
                     <p className="text-sm text-slate-400">
-                      {Math.round(progress)}% abgeschlossen - Echte Domains werden analysiert
+                      {Math.round(progress)}% abgeschlossen - Google APIs & intelligente Analyse
                     </p>
                   </div>
                 </CardContent>
-              </Card>}
+              </Card>
+            )}
 
             {/* Analysis Results */}
             <Card className="bg-slate-900/50 border-slate-700 backdrop-blur-sm">
               <CardHeader>
                 <CardTitle className="text-white flex items-center">
                   <FileText className="h-5 w-5 mr-2 text-blue-400" />
-                  Live Analyse-Ergebnisse
+                  Erweiterte Analyse-Ergebnisse
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -131,6 +140,8 @@ const Index = () => {
           </div>
         </div>
       </div>
-    </div>;
+    </div>
+  );
 };
+
 export default Index;

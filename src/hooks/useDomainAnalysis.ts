@@ -3,6 +3,7 @@ import { DomainAnalysisResult } from '@/types/domain-analysis';
 import { DomainAnalyzer } from '@/services/DomainAnalyzer';
 import { DomainDiscovery, DomainDiscoveryOptions } from '@/services/DomainDiscovery';
 import { toast } from '@/hooks/use-toast';
+import { EnhancedDomainAnalyzer } from '@/services/EnhancedDomainAnalyzer';
 
 interface AnalysisSettings {
   checkHTTPS: boolean;
@@ -65,8 +66,8 @@ export const useDomainAnalysis = () => {
       }
 
       toast({
-        title: "Intelligente Domain-Suche läuft",
-        description: `Suche nach ${searchOptions?.tld || '.de'} Domains für "${searchTerms}"...`,
+        title: "Erweiterte Domain-Suche läuft",
+        description: `Suche nach ${searchOptions?.tld || '.de'} Domains mit APIs und intelligenter Analyse...`,
       });
       
       try {
@@ -80,13 +81,13 @@ export const useDomainAnalysis = () => {
         
         domainsToAnalyze = await discoverRealDomains(discoveryOptions);
         
-        console.log('Discovered domains:', domainsToAnalyze);
+        console.log('Enhanced discovery result:', domainsToAnalyze);
         
       } catch (error) {
-        console.error('Domain discovery error:', error);
+        console.error('Enhanced domain discovery error:', error);
         toast({
           title: "Suchfehler", 
-          description: "Fehler bei der Domain-Suche. Verwende Fallback-Domains.",
+          description: "Fehler bei der erweiterten Domain-Suche. Verwende Fallback-Domains.",
           variant: "destructive",
         });
         
@@ -117,11 +118,12 @@ export const useDomainAnalysis = () => {
     const industryInfo = searchOptions?.industry ? ` (${searchOptions.industry})` : '';
     toast({
       title: "Domains gefunden",
-      description: `${domainsToAnalyze.length} ${searchOptions?.tld || '.de'} Domains werden analysiert${industryInfo}`,
+      description: `${domainsToAnalyze.length} ${searchOptions?.tld || '.de'} Domains werden mit APIs analysiert${industryInfo}`,
     });
     
     try {
-      const analyzer = new DomainAnalyzer(settings);
+      // Use enhanced analyzer with Google APIs
+      const analyzer = new EnhancedDomainAnalyzer(settings);
       const total = domainsToAnalyze.length;
       const newResults: DomainAnalysisResult[] = [];
       let successful = 0;
@@ -130,7 +132,7 @@ export const useDomainAnalysis = () => {
         const domain = domainsToAnalyze[i];
         
         try {
-          console.log(`Analyzing domain ${i + 1}/${total}: ${domain}`);
+          console.log(`Enhanced analysis ${i + 1}/${total}: ${domain}`);
           
           const result = await analyzer.analyzeDomain(domain);
           newResults.push(result);
@@ -147,29 +149,29 @@ export const useDomainAnalysis = () => {
           setProgress(progressPercent);
           
           if (i < total - 1) {
-            await new Promise(resolve => setTimeout(resolve, 1000));
+            await new Promise(resolve => setTimeout(resolve, 2000)); // Longer delay for API rate limiting
           }
           
         } catch (error) {
-          console.error(`Error analyzing ${domain}:`, error);
+          console.error(`Enhanced analysis error for ${domain}:`, error);
           toast({
             title: "Analyse-Fehler",
-            description: `Fehler bei der Analyse von ${domain}`,
+            description: `Fehler bei der erweiterten Analyse von ${domain}`,
             variant: "destructive",
           });
         }
       }
 
       toast({
-        title: "Analyse abgeschlossen",
-        description: `${newResults.length} Domains analysiert (${successful} erfolgreich)`,
+        title: "Erweiterte Analyse abgeschlossen",
+        description: `${newResults.length} Domains mit APIs analysiert (${successful} erfolgreich)`,
       });
 
     } catch (error) {
-      console.error('Analysis error:', error);
+      console.error('Enhanced analysis error:', error);
       toast({
         title: "Analyse-Fehler",
-        description: "Fehler bei der Domain-Analyse",
+        description: "Fehler bei der erweiterten Domain-Analyse",
         variant: "destructive",
       });
     } finally {
