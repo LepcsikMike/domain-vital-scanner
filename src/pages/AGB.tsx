@@ -1,20 +1,13 @@
-
 import React from 'react';
 import { ArrowLeft } from 'lucide-react';
 import { Button } from "@/components/ui/button";
-
 const AGB = () => {
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-blue-950 to-slate-900">
+  return <div className="min-h-screen bg-gradient-to-br from-slate-950 via-blue-950 to-slate-900">
       <div className="container mx-auto px-4 py-12">
         <div className="max-w-4xl mx-auto">
           {/* Header */}
           <div className="mb-8">
-            <Button 
-              variant="outline" 
-              className="mb-4 border-slate-600 text-slate-300 hover:bg-slate-800"
-              onClick={() => window.history.back()}
-            >
+            <Button variant="outline" onClick={() => window.history.back()} className="mb-4 border-slate-600 hover:bg-slate-800 text-slate-50">
               <ArrowLeft className="h-4 w-4 mr-2" />
               Zurück
             </Button>
@@ -195,8 +188,6 @@ const AGB = () => {
           </div>
         </div>
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default AGB;
