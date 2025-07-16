@@ -1,3 +1,4 @@
+import { normalizeUrl, getDomainUrl } from '@/utils/urlUtils';
 
 export interface ParsedHtmlData {
   title: string | null;
@@ -19,7 +20,11 @@ export class HtmlParser {
     console.log(`Parsing website: ${domain}`);
     
     try {
-      const proxyUrl = `${this.corsProxy}${encodeURIComponent(`https://${domain}`)}`;
+      // Normalize the domain to prevent double protocol issues
+      const cleanUrl = getDomainUrl(domain);
+      console.log(`Normalized URL for parsing: ${cleanUrl}`);
+      
+      const proxyUrl = `${this.corsProxy}${encodeURIComponent(cleanUrl)}`;
       
       const response = await fetch(proxyUrl, {
         method: 'GET',
@@ -153,7 +158,11 @@ export class HtmlParser {
   
   async checkRobotsTxt(domain: string): Promise<{ exists: boolean; content: string | null }> {
     try {
-      const robotsUrl = `https://${domain}/robots.txt`;
+      // Normalize the domain for robots.txt check
+      const cleanDomain = domain.replace(/^https?:\/\//, '').replace(/\/$/, '').trim();
+      const robotsUrl = `https://${cleanDomain}/robots.txt`;
+      console.log(`Checking robots.txt at: ${robotsUrl}`);
+      
       const proxyUrl = `${this.corsProxy}${encodeURIComponent(robotsUrl)}`;
       
       const response = await fetch(proxyUrl);

@@ -24,10 +24,12 @@ export class DomainAnalyzer {
   }
 
   async analyzeDomain(domain: string): Promise<DomainAnalysisResult> {
-    console.log(`Starting real analysis for domain: ${domain}`);
+    // Clean and normalize the input domain
+    const cleanDomain = this.cleanDomain(domain);
+    console.log(`Starting real analysis for domain: ${cleanDomain} (input was: ${domain})`);
     
     const result: DomainAnalysisResult = {
-      domain,
+      domain: cleanDomain,
       timestamp: new Date().toISOString(),
       httpsStatus: { valid: false, sslValid: false, redirectsToHttps: false },
       technologyAudit: { 
@@ -56,12 +58,12 @@ export class DomainAnalyzer {
       let parsedData: ParsedHtmlData | null = null;
       
       if (this.settings.checkSEO || this.settings.checkTechnology) {
-        parsedData = await this.htmlParser.parseWebsite(domain);
+        parsedData = await this.htmlParser.parseWebsite(cleanDomain);
       }
 
       // HTTPS & SSL Check
       if (this.settings.checkHTTPS) {
-        result.httpsStatus = await this.checkHTTPS(domain);
+        result.httpsStatus = await this.checkHTTPS(cleanDomain);
       }
 
       // Technology Audit
@@ -83,21 +85,30 @@ export class DomainAnalyzer {
 
       // Crawling Status
       if (this.settings.checkCrawling) {
-        result.crawlingStatus = await this.checkCrawlingStatus(domain, parsedData);
+        result.crawlingStatus = await this.checkCrawlingStatus(cleanDomain, parsedData);
       }
 
       // Calculate critical issues count
       result.criticalIssues = this.calculateCriticalIssues(result);
 
-      console.log(`Real analysis completed for ${domain}:`, result);
+      console.log(`Real analysis completed for ${cleanDomain}:`, result);
       return result;
 
     } catch (error) {
-      console.error(`Error analyzing ${domain}:`, error);
+      console.error(`Error analyzing ${cleanDomain}:`, error);
       // Return partial results even on error
       result.criticalIssues = 5; // Mark as highly problematic
       return result;
     }
+  }
+
+  private cleanDomain(domain: string): string {
+    // Remove any existing protocol, trailing slashes, and normalize
+    return domain
+      .replace(/^https?:\/\//, '') // Remove existing protocol
+      .replace(/\/$/, '') // Remove trailing slash
+      .replace(/^www\./, '') // Remove www prefix for consistency
+      .trim();
   }
 
   private async checkHTTPS(domain: string) {
@@ -106,10 +117,14 @@ export class DomainAnalyzer {
     try {
       // Normalize URLs to prevent double protocol issues
       const urls = normalizeUrl(domain);
+      console.log(`Testing URLs - HTTPS: ${urls.https}, HTTP: ${urls.http}`);
       
       // Test both HTTP and HTTPS
       const httpsTest = await this.testConnection(urls.https);
       const httpTest = await this.testConnection(urls.http);
+      
+      console.log(`HTTPS test result:`, httpsTest);
+      console.log(`HTTP test result:`, httpTest);
       
       return {
         valid: httpsTest.success,
@@ -132,17 +147,33 @@ export class DomainAnalyzer {
     redirectsToHttps: boolean;
   }> {
     try {
+      console.log(`Testing connection to: ${url}`);
       const proxyUrl = `${this.corsProxy}${encodeURIComponent(url)}`;
+      
       const response = await fetch(proxyUrl, {
-        method: 'HEAD',
-        signal: AbortSignal.timeout(10000) // 10 second timeout
+        method: 'GET',
+        signal: AbortSignal.timeout(15000) // 15 second timeout
       });
       
+      if (!response.ok) {
+        console.error(`Proxy response not ok: ${response.status} ${response.statusText}`);
+        return {
+          success: false,
+          statusCode: response.status,
+          redirectsToHttps: false
+        };
+      }
+      
       const data = await response.json();
+      console.log(`Proxy response data:`, data);
+      
+      // Check if the proxy was able to fetch the content
+      const statusCode = data.status?.http_code || 0;
+      const success = statusCode > 0 && statusCode < 400;
       
       return {
-        success: response.ok && data.status?.http_code < 400,
-        statusCode: data.status?.http_code || 0,
+        success,
+        statusCode,
         redirectsToHttps: url.startsWith('http://') && data.url?.startsWith('https://')
       };
     } catch (error) {
