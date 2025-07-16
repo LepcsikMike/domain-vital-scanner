@@ -105,6 +105,12 @@ const Footer = () => {
                 >
                   AGB
                 </a>
+                <a 
+                  href="/cookie-einstellungen" 
+                  className="hover:text-cyan-400 transition-colors"
+                >
+                  Cookie-Einstellungen
+                </a>
               </div>
             </div>
             <div className="text-slate-400 text-sm">
