@@ -36,8 +36,8 @@ export const DomainSearchForm: React.FC<DomainSearchFormProps> = ({
         onSearchStart(domains, 'manual');
       }
     } else if (searchType === 'automated') {
-      // Simuliere automatische Domain-Suche
-      const query = `${searchQuery} ${industry} ${location} site:.de`;
+      // Verbesserte automatische Domain-Suche
+      const query = searchQuery.trim() || industry || 'general';
       onSearchStart([query], 'automated');
     }
   };
@@ -79,11 +79,14 @@ export const DomainSearchForm: React.FC<DomainSearchFormProps> = ({
             </Label>
             <Input
               id="query"
-              placeholder="handwerker, zahnarzt, restaurant..."
+              placeholder="medizin, handwerker, restaurant, beratung..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="bg-slate-800 border-slate-600 text-white"
             />
+            <p className="text-xs text-slate-400 mt-1">
+              Geben Sie relevante Begriffe ein (z.B. "medizin", "arzt", "gesundheit")
+            </p>
           </div>
           
           <div className="grid grid-cols-2 gap-4">
@@ -96,27 +99,34 @@ export const DomainSearchForm: React.FC<DomainSearchFormProps> = ({
                   <SelectValue placeholder="Branche wählen" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="handwerk">Handwerk</SelectItem>
-                  <SelectItem value="gastronomie">Gastronomie</SelectItem>
-                  <SelectItem value="medizin">Medizin</SelectItem>
-                  <SelectItem value="einzelhandel">Einzelhandel</SelectItem>
-                  <SelectItem value="dienstleistung">Dienstleistung</SelectItem>
+                  <SelectItem value="medizin">Medizin & Gesundheit</SelectItem>
+                  <SelectItem value="handwerk">Handwerk & Bau</SelectItem>
+                  <SelectItem value="gastronomie">Gastronomie & Food</SelectItem>
+                  <SelectItem value="einzelhandel">Einzelhandel & E-Commerce</SelectItem>
+                  <SelectItem value="dienstleistung">Beratung & Dienstleistung</SelectItem>
                 </SelectContent>
               </Select>
             </div>
             
             <div>
               <Label htmlFor="location" className="text-slate-300">
-                Ort/Region
+                Ort/Region (optional)
               </Label>
               <Input
                 id="location"
-                placeholder="Berlin, München, NRW..."
+                placeholder="Berlin, München, Hamburg..."
                 value={location}
                 onChange={(e) => setLocation(e.target.value)}
                 className="bg-slate-800 border-slate-600 text-white"
               />
             </div>
+          </div>
+          
+          <div className="bg-slate-800/50 p-3 rounded-lg">
+            <p className="text-xs text-slate-400">
+              💡 <strong>Tipp:</strong> Die automatische Suche findet echte deutsche Domains 
+              basierend auf Ihrer Branche und Ihren Suchbegriffen.
+            </p>
           </div>
         </TabsContent>
       </Tabs>
@@ -124,17 +134,17 @@ export const DomainSearchForm: React.FC<DomainSearchFormProps> = ({
       <Button 
         type="submit" 
         className="w-full bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600"
-        disabled={isAnalyzing}
+        disabled={isAnalyzing || (searchType === 'automated' && !searchQuery && !industry)}
       >
         {isAnalyzing ? (
           <>
             <Search className="h-4 w-4 mr-2 animate-spin" />
-            Analysiere...
+            Analysiere echte Domains...
           </>
         ) : (
           <>
             <Search className="h-4 w-4 mr-2" />
-            Analyse starten
+            {searchType === 'automated' ? 'Echte Domains finden' : 'Analyse starten'}
           </>
         )}
       </Button>
