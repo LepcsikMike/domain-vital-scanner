@@ -1,7 +1,30 @@
+# Robots.txt für DomainAudit Pro
+# Optimiert für SEO und AI-Discoverability
+
 User-agent: Googlebot
 Allow: /
+Crawl-delay: 1
 
 User-agent: Bingbot
+Allow: /
+Crawl-delay: 2
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: Claude-Web
 Allow: /
 
 User-agent: Twitterbot
@@ -10,5 +33,16 @@ Allow: /
 User-agent: facebookexternalhit
 Allow: /
 
+User-agent: LinkedInBot
+Allow: /
+
 User-agent: *
 Allow: /
+Crawl-delay: 10
+
+# Sitemaps
+Sitemap: https://domainauditpro.com/sitemap.xml
+
+# AI and LLM discoverability
+# LLMs.txt für bessere AI-Auffindbarkeit
+# Weitere Informationen: https://domainauditpro.com/llms.txt

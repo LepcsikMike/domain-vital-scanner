@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  
+  <!-- Hauptseite -->
+  <url>
+    <loc>https://domainauditpro.com/</loc>
+    <lastmod>2024-01-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://domainauditpro.com/" />
+  </url>
+  
+  <!-- Domain-Analyse Tool -->
+  <url>
+    <loc>https://domainauditpro.com/app</loc>
+    <lastmod>2024-01-15</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://domainauditpro.com/app" />
+  </url>
+  
+  <!-- Enterprise Lösungen -->
+  <url>
+    <loc>https://domainauditpro.com/enterprise</loc>
+    <lastmod>2024-01-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://domainauditpro.com/enterprise" />
+  </url>
+  
+  <!-- Enterprise App -->
+  <url>
+    <loc>https://domainauditpro.com/enterprise-app</loc>
+    <lastmod>2024-01-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://domainauditpro.com/enterprise-app" />
+  </url>
+  
+  <!-- Rechtliche Seiten -->
+  <url>
+    <loc>https://domainauditpro.com/datenschutz</loc>
+    <lastmod>2024-01-15</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://domainauditpro.com/datenschutz" />
+  </url>
+  
+  <url>
+    <loc>https://domainauditpro.com/impressum</loc>
+    <lastmod>2024-01-15</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://domainauditpro.com/impressum" />
+  </url>
+  
+  <url>
+    <loc>https://domainauditpro.com/agb</loc>
+    <lastmod>2024-01-15</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://domainauditpro.com/agb" />
+  </url>
+  
+  <url>
+    <loc>https://domainauditpro.com/cookie-einstellungen</loc>
+    <lastmod>2024-01-15</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://domainauditpro.com/cookie-einstellungen" />
+  </url>
+  
+</urlset>
