@@ -4,6 +4,8 @@ import { DomainAnalyzer } from '@/services/DomainAnalyzer';
 import { DomainDiscovery, DomainDiscoveryOptions } from '@/services/DomainDiscovery';
 import { toast } from '@/hooks/use-toast';
 import { EnhancedDomainAnalyzer } from '@/services/EnhancedDomainAnalyzer';
+import { FreePlanAnalyzer } from '@/services/FreePlanAnalyzer';
+import { usePlan } from '@/contexts/PlanContext';
 
 interface AnalysisSettings {
   checkHTTPS: boolean;
@@ -17,6 +19,7 @@ interface AnalysisSettings {
 }
 
 export const useDomainAnalysis = () => {
+  const { isEnterprise } = usePlan();
   const [domains, setDomains] = useState<string[]>([]);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -65,41 +68,54 @@ export const useDomainAnalysis = () => {
         return;
       }
 
-      toast({
-        title: "Erweiterte Domain-Suche läuft",
-        description: `Suche nach ${searchOptions?.tld || '.de'} Domains mit APIs und intelligenter Analyse...`,
-      });
-      
-      try {
-        const discoveryOptions: DomainDiscoveryOptions = {
-          query: searchTerms,
-          industry: searchOptions?.industry,
-          location: searchOptions?.location,
-          tld: searchOptions?.tld || '.de',
-          maxResults: 8
-        };
-        
-        domainsToAnalyze = await discoverRealDomains(discoveryOptions);
-        
-        console.log('Enhanced discovery result:', domainsToAnalyze);
-        
-      } catch (error) {
-        console.error('Enhanced domain discovery error:', error);
+      if (isEnterprise) {
         toast({
-          title: "Suchfehler", 
-          description: "Fehler bei der erweiterten Domain-Suche. Verwende Fallback-Domains.",
-          variant: "destructive",
+          title: "Erweiterte Domain-Suche läuft",
+          description: `Suche nach ${searchOptions?.tld || '.de'} Domains mit APIs und intelligenter Analyse...`,
         });
         
-        // Intelligent fallbacks based on TLD
+        try {
+          const discoveryOptions: DomainDiscoveryOptions = {
+            query: searchTerms,
+            industry: searchOptions?.industry,
+            location: searchOptions?.location,
+            tld: searchOptions?.tld || '.de',
+            maxResults: 8
+          };
+          
+          domainsToAnalyze = await discoverRealDomains(discoveryOptions);
+          
+        } catch (error) {
+          console.error('Enhanced domain discovery error:', error);
+          toast({
+            title: "Suchfehler", 
+            description: "Fehler bei der erweiterten Domain-Suche. Verwende Fallback-Domains.",
+            variant: "destructive",
+          });
+          
+          const tld = searchOptions?.tld || '.de';
+          const fallbacks: Record<string, string[]> = {
+            '.de': ['spiegel.de', 'zeit.de', 'focus.de'],
+            '.com': ['google.com', 'microsoft.com', 'github.com'],
+            '.org': ['wikipedia.org', 'mozilla.org'],
+            '.net': ['cloudflare.net']
+          };
+          domainsToAnalyze = fallbacks[tld] || fallbacks['.de'];
+        }
+      } else {
+        // Free plan - simplified search with fallback domains
+        toast({
+          title: "Basis Domain-Suche",
+          description: "Analysiere Beispiel-Domains für Ihre Branche...",
+        });
+        
         const tld = searchOptions?.tld || '.de';
         const fallbacks: Record<string, string[]> = {
-          '.de': ['spiegel.de', 'zeit.de', 'focus.de'],
-          '.com': ['google.com', 'microsoft.com', 'github.com'],
-          '.org': ['wikipedia.org', 'mozilla.org'],
-          '.net': ['cloudflare.net']
+          '.de': ['example-website.de'],
+          '.com': ['example-website.com'],
+          '.org': ['example-website.org']
         };
-        domainsToAnalyze = fallbacks[tld] || fallbacks['.de'];
+        domainsToAnalyze = fallbacks[tld] || ['example-website.de'];
       }
     }
 
@@ -118,12 +134,15 @@ export const useDomainAnalysis = () => {
     const industryInfo = searchOptions?.industry ? ` (${searchOptions.industry})` : '';
     toast({
       title: "Domains gefunden",
-      description: `${domainsToAnalyze.length} ${searchOptions?.tld || '.de'} Domains werden mit APIs analysiert${industryInfo}`,
+      description: `${domainsToAnalyze.length} ${searchOptions?.tld || '.de'} Domains werden ${isEnterprise ? 'mit APIs' : 'mit Basis-Checks'} analysiert${industryInfo}`,
     });
     
     try {
-      // Use enhanced analyzer with Google APIs
-      const analyzer = new EnhancedDomainAnalyzer(settings);
+      // Use appropriate analyzer based on plan
+      const analyzer = isEnterprise 
+        ? new EnhancedDomainAnalyzer(settings)
+        : new FreePlanAnalyzer(settings);
+        
       const total = domainsToAnalyze.length;
       const newResults: DomainAnalysisResult[] = [];
       let successful = 0;
@@ -132,7 +151,7 @@ export const useDomainAnalysis = () => {
         const domain = domainsToAnalyze[i];
         
         try {
-          console.log(`Enhanced analysis ${i + 1}/${total}: ${domain}`);
+          console.log(`${isEnterprise ? 'Enhanced' : 'Free plan'} analysis ${i + 1}/${total}: ${domain}`);
           
           const result = await analyzer.analyzeDomain(domain);
           newResults.push(result);
@@ -149,36 +168,36 @@ export const useDomainAnalysis = () => {
           setProgress(progressPercent);
           
           if (i < total - 1) {
-            await new Promise(resolve => setTimeout(resolve, 2000)); // Longer delay for API rate limiting
+            await new Promise(resolve => setTimeout(resolve, isEnterprise ? 2000 : 1000));
           }
           
         } catch (error) {
-          console.error(`Enhanced analysis error for ${domain}:`, error);
+          console.error(`Analysis error for ${domain}:`, error);
           toast({
             title: "Analyse-Fehler",
-            description: `Fehler bei der erweiterten Analyse von ${domain}`,
+            description: `Fehler bei der Analyse von ${domain}`,
             variant: "destructive",
           });
         }
       }
 
       toast({
-        title: "Erweiterte Analyse abgeschlossen",
-        description: `${newResults.length} Domains mit APIs analysiert (${successful} erfolgreich)`,
+        title: `${isEnterprise ? 'Erweiterte' : 'Basis'} Analyse abgeschlossen`,
+        description: `${newResults.length} Domains analysiert (${successful} erfolgreich)`,
       });
 
     } catch (error) {
-      console.error('Enhanced analysis error:', error);
+      console.error('Analysis error:', error);
       toast({
         title: "Analyse-Fehler",
-        description: "Fehler bei der erweiterten Domain-Analyse",
+        description: "Fehler bei der Domain-Analyse",
         variant: "destructive",
       });
     } finally {
       setIsAnalyzing(false);
       setProgress(100);
     }
-  }, [settings]);
+  }, [settings, isEnterprise]);
 
   const pauseAnalysis = useCallback(() => {
     setIsAnalyzing(false);
