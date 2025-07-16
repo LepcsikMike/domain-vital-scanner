@@ -2,7 +2,7 @@
 import React from 'react';
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Crown, Zap, ArrowRight } from 'lucide-react';
+import { Crown, Zap, ArrowRight, ExternalLink } from 'lucide-react';
 import { usePlan } from '@/contexts/PlanContext';
 
 export const UpgradeBanner = () => {
@@ -11,6 +11,10 @@ export const UpgradeBanner = () => {
   if (isEnterprise) {
     return null;
   }
+
+  const handleEnterpriseAccess = () => {
+    window.open('/enterprise', '_blank');
+  };
 
   return (
     <Card className="bg-gradient-to-r from-cyan-500/10 to-blue-500/10 border-cyan-500/30 mb-6">
@@ -32,13 +36,23 @@ export const UpgradeBanner = () => {
               <div className="text-slate-400 text-xs">Heute verwendet</div>
               <div className="text-white font-bold">{dailyScansUsed}/{dailyScansLimit}</div>
             </div>
-            <Button 
-              onClick={upgradeToPro}
-              className="bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600"
-            >
-              Upgraden
-              <ArrowRight className="h-4 w-4 ml-2" />
-            </Button>
+            <div className="flex space-x-2">
+              <Button 
+                onClick={handleEnterpriseAccess}
+                variant="outline"
+                className="border-cyan-500 text-cyan-400 hover:bg-cyan-500/10"
+              >
+                <ExternalLink className="h-4 w-4 mr-2" />
+                Enterprise Testen
+              </Button>
+              <Button 
+                onClick={upgradeToPro}
+                className="bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600"
+              >
+                Kaufen
+                <ArrowRight className="h-4 w-4 ml-2" />
+              </Button>
+            </div>
           </div>
         </div>
       </CardContent>

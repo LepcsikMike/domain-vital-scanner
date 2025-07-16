@@ -12,6 +12,7 @@ interface PlanContextType {
   incrementDailyScans: () => void;
   upgradeToPro: () => void;
   activateEnterprisePlan: () => void;
+  resetToFreePlan: () => void;
 }
 
 const PlanContext = createContext<PlanContextType | undefined>(undefined);
@@ -26,10 +27,20 @@ export const PlanProvider = ({ children }: PlanProviderProps) => {
   const dailyScansLimit = 1; // Free plan limit
 
   useEffect(() => {
-    // Check for Enterprise plan (could be from Stripe subscription, localStorage, etc.)
-    const storedPlan = localStorage.getItem('userPlan');
-    if (storedPlan === 'enterprise') {
-      setPlan('enterprise');
+    // Only check for Enterprise plan if we're on enterprise routes
+    const currentPath = window.location.pathname;
+    const isEnterpriseRoute = currentPath === '/enterprise' || currentPath === '/enterprise-app';
+    
+    if (isEnterpriseRoute) {
+      // Check for Enterprise plan activation
+      const storedPlan = localStorage.getItem('userPlan');
+      if (storedPlan === 'enterprise') {
+        setPlan('enterprise');
+      }
+    } else {
+      // For /app or any other route, default to free plan
+      setPlan('free');
+      localStorage.removeItem('userPlan');
     }
 
     // Reset daily scans counter at midnight
@@ -64,6 +75,12 @@ export const PlanProvider = ({ children }: PlanProviderProps) => {
     console.log('Enterprise plan activated');
   };
 
+  const resetToFreePlan = () => {
+    setPlan('free');
+    localStorage.removeItem('userPlan');
+    console.log('Reset to free plan');
+  };
+
   const canScan = plan === 'enterprise' || dailyScansUsed < dailyScansLimit;
 
   return (
@@ -77,6 +94,7 @@ export const PlanProvider = ({ children }: PlanProviderProps) => {
         incrementDailyScans,
         upgradeToPro,
         activateEnterprisePlan,
+        resetToFreePlan,
       }}
     >
       {children}
