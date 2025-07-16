@@ -39,7 +39,7 @@ const Impressum = () => {
 
             <section>
               <h2 className="text-2xl font-semibold text-white mb-4">Geschäftsführung</h2>
-              <p>Geschäftsführer: [Name]</p>
+              <p>Geschäftsführer: Mike Lepcsik</p>
             </section>
 
             <section>
