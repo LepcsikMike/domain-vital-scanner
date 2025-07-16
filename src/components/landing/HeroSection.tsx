@@ -78,9 +78,8 @@ const HeroSection = () => {
             </Button>
             
             <Button 
-              variant="outline" 
               size="lg"
-              className="border-slate-600 text-slate-300 hover:bg-slate-800 px-8 py-3 text-lg"
+              className="bg-gradient-to-r from-orange-500 to-pink-500 hover:from-orange-600 hover:to-pink-600 text-white px-8 py-3 text-lg font-semibold shadow-lg hover:shadow-xl transition-all"
               onClick={() => window.open('https://calendly.com/hi-inspiroware/30min', '_blank')}
             >
               <Calendar className="h-5 w-5 mr-2" />

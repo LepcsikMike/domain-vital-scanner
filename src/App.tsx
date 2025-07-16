@@ -9,6 +9,9 @@ import LandingPage from "./pages/LandingPage";
 import Index from "./pages/Index";
 import EnterpriseApp from "./pages/EnterpriseApp";
 import NotFound from "./pages/NotFound";
+import Datenschutz from "./pages/Datenschutz";
+import Impressum from "./pages/Impressum";
+import AGB from "./pages/AGB";
 
 const queryClient = new QueryClient();
 
@@ -24,6 +27,9 @@ const App = () => (
             <Route path="/app" element={<Index />} />
             <Route path="/enterprise" element={<EnterpriseApp />} />
             <Route path="/enterprise-app" element={<EnterpriseApp />} />
+            <Route path="/datenschutz" element={<Datenschutz />} />
+            <Route path="/impressum" element={<Impressum />} />
+            <Route path="/agb" element={<AGB />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

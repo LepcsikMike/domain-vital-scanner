@@ -33,9 +33,8 @@ const Footer = () => {
                 Kostenlos testen
               </Button>
               <Button 
-                variant="outline" 
                 size="sm"
-                className="border-slate-600 text-slate-300 hover:bg-slate-800"
+                className="bg-gradient-to-r from-orange-500 to-pink-500 hover:from-orange-600 hover:to-pink-600 text-white font-semibold shadow-lg hover:shadow-xl transition-all"
                 onClick={() => window.open('https://calendly.com/hi-inspiroware/30min', '_blank')}
               >
                 <Calendar className="h-4 w-4 mr-2" />
@@ -82,13 +81,36 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Bottom Bar */}
-        <div className="border-t border-slate-800 mt-12 pt-8 flex flex-col sm:flex-row justify-between items-center">
-          <div className="text-slate-400 text-sm mb-4 sm:mb-0">
-            © 2025 Inspiroware OÜ. All rights reserved.
-          </div>
-          <div className="flex items-center space-x-6 text-slate-400 text-sm">
-            <span>Made with ❤️ for web professionals</span>
+        {/* Legal Links Section */}
+        <div className="border-t border-slate-800 mt-8 pt-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div>
+              <h4 className="text-white font-semibold mb-4">Rechtliches</h4>
+              <div className="flex flex-wrap gap-4 text-slate-300 text-sm">
+                <a 
+                  href="/impressum" 
+                  className="hover:text-cyan-400 transition-colors"
+                >
+                  Impressum
+                </a>
+                <a 
+                  href="/datenschutz" 
+                  className="hover:text-cyan-400 transition-colors"
+                >
+                  Datenschutz
+                </a>
+                <a 
+                  href="/agb" 
+                  className="hover:text-cyan-400 transition-colors"
+                >
+                  AGB
+                </a>
+              </div>
+            </div>
+            <div className="text-slate-400 text-sm">
+              <div className="mb-2">© 2025 Inspiroware OÜ. All rights reserved.</div>
+              <div>Made with ❤️ for web professionals</div>
+            </div>
           </div>
         </div>
       </div>
