@@ -54,15 +54,15 @@ export const useDomainAnalysis = () => {
       }
     } else {
       toast({
-        title: "Suche echte Domains",
-        description: "Durchsuche deutsche Domains nach relevanten Ergebnissen...",
+        title: "Domain-Suche läuft",
+        description: "Suche nach echten .de Domains...",
       });
       
       const searchTerms = domainList[0]?.trim();
       if (!searchTerms) {
         toast({
           title: "Suchbegriff fehlt",
-          description: "Bitte geben Sie einen Suchbegriff oder wählen Sie eine Branche",
+          description: "Bitte geben Sie einen Suchbegriff ein",
           variant: "destructive",
         });
         setIsAnalyzing(false);
@@ -70,30 +70,20 @@ export const useDomainAnalysis = () => {
       }
       
       try {
-        // Verbesserte Domain-Discovery mit mehr Kontext
-        const discoveryOptions = {
+        domainsToAnalyze = await discoverRealDomains({
           query: searchTerms,
-          industry: detectIndustryFromQuery(searchTerms),
           tld: '.de',
-          maxResults: 10
-        };
-        
-        console.log('Starting domain discovery with options:', discoveryOptions);
-        domainsToAnalyze = await discoverRealDomains(discoveryOptions);
-        
-        if (domainsToAnalyze.length === 0) {
-          throw new Error('No domains found');
-        }
-        
+          maxResults: 8
+        });
       } catch (error) {
         console.error('Domain discovery error:', error);
         toast({
-          title: "Fallback-Domains werden verwendet",
-          description: "Verwende bekannte deutsche Domains für die Demonstration",
+          title: "Suchfehler",
+          description: "Fehler bei der Domain-Suche. Verwende Fallback-Domains.",
+          variant: "destructive",
         });
         
-        // Intelligentere Fallback-Domains basierend auf Suchbegriff
-        domainsToAnalyze = getIntelligentFallback(searchTerms);
+        domainsToAnalyze = ['spiegel.de', 'zeit.de', 'focus.de'];
       }
     }
 
@@ -111,7 +101,7 @@ export const useDomainAnalysis = () => {
     
     toast({
       title: "Domains gefunden",
-      description: `${domainsToAnalyze.length} relevante deutsche Domains werden analysiert`,
+      description: `${domainsToAnalyze.length} Domains werden analysiert`,
     });
     
     try {
@@ -256,52 +246,6 @@ export const useDomainAnalysis = () => {
     exportResults,
     updateSettings
   };
-};
-
-const detectIndustryFromQuery = (query: string): string => {
-  const queryLower = query.toLowerCase();
-  
-  if (queryLower.includes('medizin') || queryLower.includes('arzt') || 
-      queryLower.includes('gesundheit') || queryLower.includes('klinik')) {
-    return 'medizin';
-  }
-  if (queryLower.includes('handwerk') || queryLower.includes('bau') || 
-      queryLower.includes('elektriker') || queryLower.includes('klempner')) {
-    return 'handwerk';
-  }
-  if (queryLower.includes('restaurant') || queryLower.includes('gastronomie') || 
-      queryLower.includes('essen') || queryLower.includes('küche')) {
-    return 'gastronomie';
-  }
-  if (queryLower.includes('shop') || queryLower.includes('handel') || 
-      queryLower.includes('verkauf') || queryLower.includes('einzelhandel')) {
-    return 'einzelhandel';
-  }
-  if (queryLower.includes('beratung') || queryLower.includes('service') || 
-      queryLower.includes('dienstleistung') || queryLower.includes('consulting')) {
-    return 'dienstleistung';
-  }
-  
-  return '';
-};
-
-const getIntelligentFallback = (searchTerms: string): string[] => {
-  const industry = detectIndustryFromQuery(searchTerms);
-  
-  switch (industry) {
-    case 'medizin':
-      return ['aerzte.de', 'netdoktor.de', 'gesundheit.de', 'apotheken-umschau.de'];
-    case 'handwerk':
-      return ['handwerk.com', 'handwerker.de', 'meisterbetrieb.de'];
-    case 'gastronomie':
-      return ['restaurant.de', 'lieferando.de', 'opentable.de'];
-    case 'einzelhandel':
-      return ['shop.de', 'handel.de', 'retail.de'];
-    case 'dienstleistung':
-      return ['service.de', 'beratung.de', 'consulting.de'];
-    default:
-      return ['spiegel.de', 'zeit.de', 'focus.de'];
-  }
 };
 
 const discoverRealDomains = async (options: DomainDiscoveryOptions): Promise<string[]> => {
