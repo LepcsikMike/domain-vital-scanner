@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -154,13 +153,6 @@ const PricingSection = () => {
               </CardContent>
             </Card>
           ))}
-        </div>
-
-        {/* Additional Info */}
-        <div className="text-center mt-12">
-          <p className="text-slate-400 text-sm">
-            Alle Preise zzgl. MwSt. • Jederzeit kündbar • 30 Tage Geld-zurück-Garantie
-          </p>
         </div>
       </div>
     </div>
