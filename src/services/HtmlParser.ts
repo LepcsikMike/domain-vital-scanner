@@ -1,4 +1,4 @@
-import { normalizeUrl, getDomainUrl } from '@/utils/urlUtils';
+import { getDomainUrl } from '@/utils/urlUtils';
 
 export interface ParsedHtmlData {
   title: string | null;
@@ -13,7 +13,11 @@ export interface ParsedHtmlData {
 }
 
 export class HtmlParser {
-  private corsProxy = 'https://api.allorigins.win/get?url=';
+  private corsProxies = [
+    'https://api.allorigins.win/get?url=',
+    'https://corsproxy.io/?',
+    'https://cors-anywhere.herokuapp.com/'
+  ];
   
   async parseWebsite(domain: string): Promise<ParsedHtmlData> {
     const startTime = Date.now();
@@ -24,28 +28,84 @@ export class HtmlParser {
       const cleanUrl = getDomainUrl(domain);
       console.log(`Normalized URL for parsing: ${cleanUrl}`);
       
-      const proxyUrl = `${this.corsProxy}${encodeURIComponent(cleanUrl)}`;
-      
-      const response = await fetch(proxyUrl, {
-        method: 'GET',
-        headers: {
-          'Accept': 'application/json'
+      // Try multiple proxies until one works
+      for (let proxyIndex = 0; proxyIndex < this.corsProxies.length; proxyIndex++) {
+        try {
+          const result = await this.tryParseWithProxy(cleanUrl, proxyIndex, startTime);
+          if (result) {
+            console.log(`Successfully parsed ${domain} with proxy ${proxyIndex + 1}`);
+            return result;
+          }
+        } catch (error) {
+          console.warn(`Proxy ${proxyIndex + 1} failed for ${domain}:`, error);
+          continue;
         }
-      });
-      
-      if (!response.ok) {
-        throw new Error(`HTTP ${response.status}`);
       }
       
-      const data = await response.json();
-      const html = data.contents;
-      const responseTime = Date.now() - startTime;
-      
-      return this.extractDataFromHtml(html, responseTime);
+      // If all proxies failed
+      console.error(`All proxies failed for ${domain}`);
+      return this.getEmptyParsedData(Date.now() - startTime);
       
     } catch (error) {
       console.error(`Failed to parse ${domain}:`, error);
       return this.getEmptyParsedData(Date.now() - startTime);
+    }
+  }
+  
+  private async tryParseWithProxy(url: string, proxyIndex: number, startTime: number): Promise<ParsedHtmlData | null> {
+    const corsProxy = this.corsProxies[proxyIndex];
+    const proxyUrl = corsProxy + encodeURIComponent(url);
+    
+    console.log(`Trying to parse ${url} with proxy ${proxyIndex + 1}`);
+    
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 15000);
+    
+    try {
+      const response = await fetch(proxyUrl, {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+        },
+        signal: controller.signal
+      });
+      
+      clearTimeout(timeoutId);
+      
+      if (!response.ok) {
+        console.warn(`Proxy ${proxyIndex + 1} returned ${response.status}`);
+        return null;
+      }
+      
+      const data = await response.json();
+      
+      // Handle different proxy response formats
+      let html = '';
+      if (corsProxy.includes('allorigins')) {
+        html = data.contents || '';
+      } else {
+        html = data.contents || data.body || data.data || '';
+      }
+      
+      if (!html || html.length < 100) {
+        console.warn(`Proxy ${proxyIndex + 1} returned insufficient content`);
+        return null;
+      }
+      
+      const responseTime = Date.now() - startTime;
+      return this.extractDataFromHtml(html, responseTime);
+      
+    } catch (error) {
+      clearTimeout(timeoutId);
+      
+      if (error.name === 'AbortError') {
+        console.warn(`Request timeout for ${url} via proxy ${proxyIndex + 1}`);
+      } else {
+        console.warn(`Network error for ${url} via proxy ${proxyIndex + 1}:`, error);
+      }
+      
+      return null;
     }
   }
   
@@ -163,16 +223,31 @@ export class HtmlParser {
       const robotsUrl = `https://${cleanDomain}/robots.txt`;
       console.log(`Checking robots.txt at: ${robotsUrl}`);
       
-      const proxyUrl = `${this.corsProxy}${encodeURIComponent(robotsUrl)}`;
-      
-      const response = await fetch(proxyUrl);
-      
-      if (response.ok) {
-        const data = await response.json();
-        return {
-          exists: true,
-          content: data.contents
-        };
+      // Try multiple proxies for robots.txt check
+      for (let proxyIndex = 0; proxyIndex < this.corsProxies.length; proxyIndex++) {
+        try {
+          const corsProxy = this.corsProxies[proxyIndex];
+          const proxyUrl = corsProxy + encodeURIComponent(robotsUrl);
+          
+          const response = await fetch(proxyUrl, {
+            signal: AbortSignal.timeout(10000)
+          });
+          
+          if (response.ok) {
+            const data = await response.json();
+            const content = corsProxy.includes('allorigins') ? data.contents : data.contents || data.body || data.data;
+            
+            if (content && content.length > 0) {
+              return {
+                exists: true,
+                content: content
+              };
+            }
+          }
+        } catch (error) {
+          console.warn(`Robots.txt check failed with proxy ${proxyIndex + 1}:`, error);
+          continue;
+        }
       }
       
       return { exists: false, content: null };

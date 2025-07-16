@@ -16,7 +16,11 @@ interface AnalysisSettings {
 export class DomainAnalyzer {
   private settings: AnalysisSettings;
   private htmlParser: HtmlParser;
-  private corsProxy = 'https://api.allorigins.win/get?url=';
+  private corsProxies = [
+    'https://api.allorigins.win/get?url=',
+    'https://corsproxy.io/?',
+    'https://cors-anywhere.herokuapp.com/'
+  ];
 
   constructor(settings: AnalysisSettings) {
     this.settings = settings;
@@ -61,9 +65,9 @@ export class DomainAnalyzer {
         parsedData = await this.htmlParser.parseWebsite(cleanDomain);
       }
 
-      // HTTPS & SSL Check
+      // HTTPS & SSL Check - Improved version
       if (this.settings.checkHTTPS) {
-        result.httpsStatus = await this.checkHTTPS(cleanDomain);
+        result.httpsStatus = await this.checkHTTPSImproved(cleanDomain);
       }
 
       // Technology Audit
@@ -111,25 +115,40 @@ export class DomainAnalyzer {
       .trim();
   }
 
-  private async checkHTTPS(domain: string) {
-    console.log(`Checking real HTTPS for ${domain}`);
+  private async checkHTTPSImproved(domain: string) {
+    console.log(`Checking improved HTTPS for ${domain}`);
     
     try {
       // Normalize URLs to prevent double protocol issues
       const urls = normalizeUrl(domain);
       console.log(`Testing URLs - HTTPS: ${urls.https}, HTTP: ${urls.http}`);
       
-      // Test both HTTP and HTTPS
-      const httpsTest = await this.testConnection(urls.https);
-      const httpTest = await this.testConnection(urls.http);
+      // Test HTTPS first with retry logic
+      const httpsResult = await this.testConnectionWithRetry(urls.https);
+      console.log(`HTTPS test result:`, httpsResult);
       
-      console.log(`HTTPS test result:`, httpsTest);
-      console.log(`HTTP test result:`, httpTest);
+      // Test HTTP only if HTTPS fails or for redirect check
+      let httpResult = { success: false, statusCode: 0, redirectsToHttps: false };
+      if (!httpsResult.success || httpsResult.statusCode >= 400) {
+        httpResult = await this.testConnectionWithRetry(urls.http);
+        console.log(`HTTP test result:`, httpResult);
+      }
+      
+      // Determine final status
+      const httpsValid = httpsResult.success && httpsResult.statusCode < 400;
+      const sslValid = httpsValid && httpsResult.statusCode < 300;
+      
+      // Check for redirects - more robust logic
+      let redirectsToHttps = false;
+      if (httpResult.success) {
+        redirectsToHttps = httpResult.redirectsToHttps || 
+                          (httpResult.statusCode >= 300 && httpResult.statusCode < 400);
+      }
       
       return {
-        valid: httpsTest.success,
-        sslValid: httpsTest.success && httpsTest.statusCode < 400,
-        redirectsToHttps: httpTest.success && httpTest.redirectsToHttps
+        valid: httpsValid,
+        sslValid: sslValid,
+        redirectsToHttps: redirectsToHttps
       };
     } catch (error) {
       console.error(`HTTPS check failed for ${domain}:`, error);
@@ -141,22 +160,77 @@ export class DomainAnalyzer {
     }
   }
 
-  private async testConnection(url: string): Promise<{
+  private async testConnectionWithRetry(url: string, maxRetries: number = 2): Promise<{
     success: boolean;
     statusCode: number;
     redirectsToHttps: boolean;
   }> {
-    try {
-      console.log(`Testing connection to: ${url}`);
-      const proxyUrl = `${this.corsProxy}${encodeURIComponent(url)}`;
+    for (let attempt = 0; attempt <= maxRetries; attempt++) {
+      for (let proxyIndex = 0; proxyIndex < this.corsProxies.length; proxyIndex++) {
+        try {
+          console.log(`Attempt ${attempt + 1}, Proxy ${proxyIndex + 1}: Testing ${url}`);
+          
+          const result = await this.testConnectionSingle(url, proxyIndex);
+          
+          // If successful, return immediately
+          if (result.success && result.statusCode > 0) {
+            console.log(`Success on attempt ${attempt + 1}, proxy ${proxyIndex + 1}`);
+            return result;
+          }
+          
+          // Add delay between proxy attempts
+          if (proxyIndex < this.corsProxies.length - 1) {
+            await new Promise(resolve => setTimeout(resolve, 1000));
+          }
+          
+        } catch (error) {
+          console.warn(`Proxy ${proxyIndex + 1} failed for ${url}:`, error);
+          continue;
+        }
+      }
       
+      // Add delay between retry attempts
+      if (attempt < maxRetries) {
+        await new Promise(resolve => setTimeout(resolve, 2000));
+      }
+    }
+    
+    // All attempts failed
+    console.error(`All retry attempts failed for ${url}`);
+    return {
+      success: false,
+      statusCode: 0,
+      redirectsToHttps: false
+    };
+  }
+
+  private async testConnectionSingle(url: string, proxyIndex: number): Promise<{
+    success: boolean;
+    statusCode: number;
+    redirectsToHttps: boolean;
+  }> {
+    const corsProxy = this.corsProxies[proxyIndex];
+    const proxyUrl = corsProxy + encodeURIComponent(url);
+    
+    console.log(`Testing connection via proxy ${proxyIndex + 1}: ${proxyUrl}`);
+    
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 15000);
+    
+    try {
       const response = await fetch(proxyUrl, {
         method: 'GET',
-        signal: AbortSignal.timeout(15000) // 15 second timeout
+        headers: {
+          'Accept': 'application/json',
+          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+        },
+        signal: controller.signal
       });
       
+      clearTimeout(timeoutId);
+      
       if (!response.ok) {
-        console.error(`Proxy response not ok: ${response.status} ${response.statusText}`);
+        console.warn(`Proxy response not ok: ${response.status} ${response.statusText}`);
         return {
           success: false,
           statusCode: response.status,
@@ -165,19 +239,44 @@ export class DomainAnalyzer {
       }
       
       const data = await response.json();
-      console.log(`Proxy response data:`, data);
+      console.log(`Proxy response data from proxy ${proxyIndex + 1}:`, data);
       
-      // Check if the proxy was able to fetch the content
-      const statusCode = data.status?.http_code || 0;
-      const success = statusCode > 0 && statusCode < 400;
+      // Handle different proxy response formats
+      let statusCode = 0;
+      let finalUrl = '';
+      
+      if (corsProxy.includes('allorigins')) {
+        statusCode = data.status?.http_code || 0;
+        finalUrl = data.url || '';
+      } else if (corsProxy.includes('corsproxy')) {
+        statusCode = response.status;
+        finalUrl = response.url || '';
+      } else {
+        statusCode = response.status;
+        finalUrl = response.url || '';
+      }
+      
+      const success = statusCode > 0 && statusCode < 500;
+      
+      // Better redirect detection
+      const redirectsToHttps = url.startsWith('http://') && 
+        (finalUrl.startsWith('https://') || 
+         (statusCode >= 300 && statusCode < 400));
       
       return {
         success,
         statusCode,
-        redirectsToHttps: url.startsWith('http://') && data.url?.startsWith('https://')
+        redirectsToHttps
       };
     } catch (error) {
-      console.error(`Connection test failed for ${url}:`, error);
+      clearTimeout(timeoutId);
+      
+      if (error.name === 'AbortError') {
+        console.warn(`Request timeout for ${url} via proxy ${proxyIndex + 1}`);
+      } else {
+        console.warn(`Network error for ${url} via proxy ${proxyIndex + 1}:`, error);
+      }
+      
       return {
         success: false,
         statusCode: 0,
