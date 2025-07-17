@@ -96,6 +96,22 @@ export class GoogleCustomSearchService {
     let query = industry;
     
     if (location) {
+      // Enhanced local search patterns
+      const localQueries = [
+        `"${industry}" "${location}" site:*${tld}`,
+        `${industry} praxis ${location} site:*${tld}`,
+        `${industry} ${location} deutschland site:*${tld}`,
+        `${industry} zentrum ${location} site:*${tld}`
+      ];
+      
+      // Try local search patterns first
+      for (const localQuery of localQueries) {
+        const result = await this.searchDomains(localQuery.replace('site:*', 'site:'), tld, 10);
+        if (result.domains.length >= 3) {
+          return result;
+        }
+      }
+      
       query += ` ${location}`;
     }
     
@@ -111,6 +127,9 @@ export class GoogleCustomSearchService {
   private getIndustryKeywords(industry: string): string[] {
     const keywordMap: Record<string, string[]> = {
       'medizin': ['arzt', 'praxis', 'klinik', 'gesundheit', 'therapie'],
+      'zahnarzt': ['dental', 'zahnmedizin', 'zahnpraxis', 'kieferorthopäde', 'dentist'],
+      'anwalt': ['rechtsanwalt', 'kanzlei', 'jurist', 'legal', 'recht'],
+      'friseur': ['salon', 'haare', 'beauty', 'styling', 'coiffeur'],
       'handwerk': ['meister', 'betrieb', 'service', 'reparatur', 'installation'],
       'gastronomie': ['restaurant', 'cafe', 'bistro', 'küche', 'catering'],
       'einzelhandel': ['shop', 'store', 'laden', 'verkauf', 'handel'],
@@ -118,7 +137,9 @@ export class GoogleCustomSearchService {
       'technologie': ['software', 'digital', 'tech', 'innovation', 'IT'],
       'immobilien': ['makler', 'verkauf', 'vermietung', 'immobilie'],
       'bildung': ['schule', 'kurs', 'training', 'bildung', 'lernen'],
-      'finance': ['bank', 'versicherung', 'finanz', 'kredit', 'anlage']
+      'finance': ['bank', 'versicherung', 'finanz', 'kredit', 'anlage'],
+      'hotel': ['übernachtung', 'pension', 'gasthaus', 'unterkunft'],
+      'apotheke': ['pharmazie', 'medikament', 'gesundheit', 'arzneimittel']
     };
     
     return keywordMap[industry.toLowerCase()] || [];

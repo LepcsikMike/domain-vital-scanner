@@ -2,6 +2,7 @@ import { DnsLookup } from './DnsLookup';
 import { IndustryDomainDatabase } from './IndustryDomainDatabase';
 import { GoogleCustomSearchService } from './GoogleCustomSearchService';
 import { CommonCrawlService } from './CommonCrawlService';
+import { LocalBusinessSearch, LocalSearchOptions } from './LocalBusinessSearch';
 
 export interface DomainDiscoveryOptions {
   query: string;
@@ -16,6 +17,7 @@ export class DomainDiscovery {
   private dnsLookup = new DnsLookup();
   private googleSearch = new GoogleCustomSearchService();
   private commonCrawl = new CommonCrawlService();
+  private localSearch = new LocalBusinessSearch();
   private cache = new Map<string, string[]>();
   
   async discoverDomains(options: DomainDiscoveryOptions): Promise<string[]> {
@@ -30,18 +32,76 @@ export class DomainDiscovery {
     try {
       const discoveredDomains: string[] = [];
       
-      // Step 1: Try Google Custom Search if configured
+      // Step 0: Local business search optimization
+      if (options.location && options.query) {
+        console.log('Using local business search for location-based discovery');
+        try {
+          const localResults = await this.localSearch.searchLocalBusinesses({
+            business: options.query,
+            location: options.location,
+            tld: options.tld || '.de',
+            maxResults: options.maxResults || 8,
+            radius: 'region'
+          });
+          
+          // Add high-confidence local results first
+          localResults.forEach(result => {
+            if (result.confidence >= 0.8) {
+              result.domains.slice(0, 6).forEach(domain => {
+                if (!discoveredDomains.includes(domain)) {
+                  discoveredDomains.push(domain);
+                }
+              });
+            }
+          });
+          
+          console.log(`Local business search found ${discoveredDomains.length} potential domains`);
+        } catch (error) {
+          console.warn('Local business search failed:', error);
+        }
+      }
+      
+      // Step 1: Enhanced Google Custom Search for local businesses
       if (this.googleSearch.hasCredentials()) {
         console.log('Using Google Custom Search for domain discovery');
         try {
-          const googleResult = await this.googleSearch.searchByIndustry(
-            options.industry || options.query,
-            options.location,
-            options.tld
-          );
+          let googleResult;
           
-          discoveredDomains.push(...googleResult.domains);
-          console.log(`Google Search found ${googleResult.domains.length} domains`);
+          if (options.location) {
+            // Use local business optimized search
+            const localQueries = this.localSearch.generateGoogleSearchQueries(
+              options.query, 
+              options.location
+            );
+            
+            // Try multiple local search patterns
+            for (const query of localQueries.slice(0, 3)) {
+              const result = await this.googleSearch.searchDomains(query, options.tld || '.de', 5);
+              if (result.domains.length > 0) {
+                result.domains.forEach(domain => {
+                  if (!discoveredDomains.includes(domain)) {
+                    discoveredDomains.push(domain);
+                  }
+                });
+                break; // Use first successful query
+              }
+            }
+          } else {
+            // Standard industry search
+            googleResult = await this.googleSearch.searchByIndustry(
+              options.industry || options.query,
+              options.location,
+              options.tld
+            );
+            
+            googleResult.domains.forEach(domain => {
+              if (!discoveredDomains.includes(domain)) {
+                discoveredDomains.push(domain);
+              }
+            });
+          }
+          
+          console.log(`Google Search found additional domains, total: ${discoveredDomains.length}`);
         } catch (error) {
           console.warn('Google Custom Search failed:', error);
         }

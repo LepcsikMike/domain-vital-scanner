@@ -18,6 +18,18 @@ export class IndustryDomainDatabase {
       { domain: 'klinikum.de', industry: 'medizin', country: 'de', verified: true },
       { domain: 'praxis-info.de', industry: 'medizin', country: 'de', verified: true }
     ],
+    zahnarzt: [
+      { domain: 'zahnarzt-notdienst.de', industry: 'zahnarzt', country: 'de', verified: true },
+      { domain: 'dental-online.de', industry: 'zahnarzt', country: 'de', verified: true },
+      { domain: 'zahnmedizin-online.de', industry: 'zahnarzt', country: 'de', verified: true },
+      { domain: 'kieferorthopaedie.de', industry: 'zahnarzt', country: 'de', verified: true }
+    ],
+    anwalt: [
+      { domain: 'anwalt.de', industry: 'anwalt', country: 'de', verified: true },
+      { domain: 'kanzlei-online.de', industry: 'anwalt', country: 'de', verified: true },
+      { domain: 'rechtsanwalt-finden.de', industry: 'anwalt', country: 'de', verified: true },
+      { domain: 'juraforum.de', industry: 'anwalt', country: 'de', verified: true }
+    ],
     handwerk: [
       { domain: 'handwerker.de', industry: 'handwerk', country: 'de', verified: true },
       { domain: 'baubeaver.de', industry: 'handwerk', country: 'de', verified: true },
@@ -49,11 +61,16 @@ export class IndustryDomainDatabase {
   };
 
   private static keywordMappings: Record<string, string[]> = {
-    medizin: ['arzt', 'praxis', 'klinik', 'gesundheit', 'medizin', 'zahnarzt', 'apotheke', 'therapie'],
+    medizin: ['arzt', 'praxis', 'klinik', 'gesundheit', 'medizin', 'therapie'],
+    zahnarzt: ['zahnarzt', 'dental', 'zahnmedizin', 'zahnpraxis', 'kieferorthopäde', 'dentist'],
+    anwalt: ['anwalt', 'rechtsanwalt', 'kanzlei', 'jurist', 'legal', 'recht'],
+    friseur: ['friseur', 'salon', 'haare', 'beauty', 'styling', 'coiffeur'],
     handwerk: ['handwerker', 'bau', 'renovierung', 'installation', 'reparatur', 'service', 'meister'],
     gastronomie: ['restaurant', 'hotel', 'cafe', 'bar', 'küche', 'catering', 'gastronomie'],
     technologie: ['software', 'it', 'tech', 'digital', 'entwicklung', 'app', 'web'],
-    einzelhandel: ['shop', 'store', 'verkauf', 'handel', 'online', 'ecommerce']
+    einzelhandel: ['shop', 'store', 'verkauf', 'handel', 'online', 'ecommerce'],
+    apotheke: ['apotheke', 'pharmazie', 'medikament', 'gesundheit', 'arzneimittel'],
+    immobilien: ['immobilien', 'makler', 'wohnung', 'haus', 'miete', 'verkauf']
   };
 
   static detectIndustryFromQuery(query: string): string | null {
