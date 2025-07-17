@@ -66,7 +66,7 @@ export const PlanProvider = ({ children }: PlanProviderProps) => {
   };
 
   const upgradeToPro = () => {
-    window.open('https://buy.stripe.com/7sYeVegbJekDdQbdjy8AE04', '_blank');
+    window.open('https://buy.stripe.com/fZuaEY6B91xRaDZbbq8AE07', '_blank');
   };
 
   const activateEnterprisePlan = () => {

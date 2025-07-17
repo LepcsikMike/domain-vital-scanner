@@ -52,7 +52,7 @@ const PricingSection = () => {
       ],
       limitations: [],
       cta: "Enterprise sichern",
-      ctaAction: () => window.open('https://buy.stripe.com/7sYeVegbJekDdQbdjy8AE04', '_blank'),
+      ctaAction: () => window.open('https://buy.stripe.com/fZuaEY6B91xRaDZbbq8AE07', '_blank'),
       highlight: true
     }
   ];
