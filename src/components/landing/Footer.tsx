@@ -1,8 +1,7 @@
 
 import React from 'react';
-import { Mail, Calendar, ExternalLink } from 'lucide-react';
+import { Globe, Mail, Calendar, ExternalLink } from 'lucide-react';
 import { Button } from "@/components/ui/button";
-import logo from '@/assets/logo.png';
 
 const Footer = () => {
   return (
@@ -12,8 +11,8 @@ const Footer = () => {
           {/* Brand */}
           <div className="md:col-span-2">
             <div className="flex items-center space-x-3 mb-4">
-              <div className="p-2 rounded-lg">
-                <img src={logo} alt="DomainAudit Pro Logo" className="h-6 w-6" />
+              <div className="p-2 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-lg">
+                <Globe className="h-6 w-6 text-white" />
               </div>
               <div>
                 <h3 className="text-xl font-bold text-white">DomainAudit Pro</h3>
