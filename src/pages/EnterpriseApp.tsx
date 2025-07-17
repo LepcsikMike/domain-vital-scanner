@@ -1,4 +1,3 @@
-
 import React, { useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -14,11 +13,11 @@ import { useDomainAnalysis } from '@/hooks/useDomainAnalysis';
 import { ApiKeySettings } from '@/components/ApiKeySettings';
 import { usePlan } from '@/contexts/PlanContext';
 import { useSearchParams } from 'react-router-dom';
-
 const EnterpriseApp = () => {
   const [searchParams] = useSearchParams();
-  const { activateEnterprisePlan } = usePlan();
-  
+  const {
+    activateEnterprisePlan
+  } = usePlan();
   const {
     domains,
     isAnalyzing,
@@ -32,7 +31,6 @@ const EnterpriseApp = () => {
     settings,
     updateSettings
   } = useDomainAnalysis();
-
   useEffect(() => {
     // Check for access key in URL parameters
     const accessKey = searchParams.get('key') || searchParams.get('access');
@@ -47,13 +45,10 @@ const EnterpriseApp = () => {
       activateEnterprisePlan();
     }
   }, [searchParams, activateEnterprisePlan]);
-
   const handleSearchStart = (domainList: string[], searchType: string, searchOptions?: any) => {
     startAnalysis(domainList, searchType, searchOptions);
   };
-  
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-blue-950 to-slate-900">
+  return <div className="min-h-screen bg-gradient-to-br from-slate-950 via-blue-950 to-slate-900">
       {/* Enterprise Header */}
       <div className="border-b border-slate-800 bg-slate-950/50 backdrop-blur-sm">
         <div className="container mx-auto px-4 py-6">
@@ -82,7 +77,7 @@ const EnterpriseApp = () => {
                 API-Enhanced
               </Badge>
               
-              <Button onClick={exportResults} variant="outline" className="border-slate-600 text-slate-300 hover:bg-slate-800" disabled={results.length === 0}>
+              <Button onClick={exportResults} variant="outline" disabled={results.length === 0} className="border-slate-600 hover:bg-slate-800 text-slate-50">
                 <Download className="h-4 w-4 mr-2" />
                 Export CSV
               </Button>
@@ -134,8 +129,7 @@ const EnterpriseApp = () => {
             <DashboardStats results={results} />
 
             {/* Progress */}
-            {isAnalyzing && (
-              <Card className="bg-slate-900/50 border-slate-700 backdrop-blur-sm transition-all duration-300 ease-in-out">
+            {isAnalyzing && <Card className="bg-slate-900/50 border-slate-700 backdrop-blur-sm transition-all duration-300 ease-in-out">
                 <CardHeader>
                   <CardTitle className="text-white flex items-center justify-between">
                     <span className="flex items-center">
@@ -155,8 +149,7 @@ const EnterpriseApp = () => {
                     </p>
                   </div>
                 </CardContent>
-              </Card>
-            )}
+              </Card>}
 
             {/* Analysis Results */}
             <Card className="bg-slate-900/50 border-slate-700 backdrop-blur-sm">
@@ -173,8 +166,6 @@ const EnterpriseApp = () => {
           </div>
         </div>
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default EnterpriseApp;
