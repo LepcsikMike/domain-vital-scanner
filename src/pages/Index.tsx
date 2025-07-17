@@ -5,7 +5,8 @@ import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Search, Globe, Shield, Zap, FileText, Download, Play, Pause, AlertCircle, Crown } from 'lucide-react';
+import { Search, Shield, Zap, FileText, Download, Play, Pause, AlertCircle, Crown } from 'lucide-react';
+import logo from '@/assets/logo.png';
 import { DomainSearchForm } from '@/components/DomainSearchForm';
 import { AnalysisResults } from '@/components/AnalysisResults';
 import { DashboardStats } from '@/components/DashboardStats';
@@ -66,8 +67,8 @@ const Index = () => {
         <div className="container mx-auto px-4 py-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
-              <div className="p-2 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-lg">
-                <Globe className="h-6 w-6 text-white" />
+              <div className="p-2 rounded-lg">
+                <img src={logo} alt="DomainAudit Pro Logo" className="h-6 w-6" />
               </div>
               <div>
                 <h1 className="text-2xl font-bold text-white">DomainAudit Pro - Kostenlos</h1>

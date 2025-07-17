@@ -4,7 +4,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
-import { Search, Globe, Shield, Zap, FileText, Download, Pause, Crown } from 'lucide-react';
+import { Search, Shield, Zap, FileText, Download, Pause, Crown } from 'lucide-react';
+import logo from '@/assets/logo.png';
 import { DomainSearchForm } from '@/components/DomainSearchForm';
 import { AnalysisResults } from '@/components/AnalysisResults';
 import { DashboardStats } from '@/components/DashboardStats';
@@ -60,7 +61,7 @@ const EnterpriseApp = () => {
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
               <div className="p-2 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-lg">
-                <Globe className="h-6 w-6 text-white" />
+                <img src={logo} alt="DomainAudit Pro Logo" className="h-6 w-6" />
               </div>
               <div>
                 <h1 className="text-2xl font-bold text-white flex items-center">
