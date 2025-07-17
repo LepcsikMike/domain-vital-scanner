@@ -77,7 +77,7 @@ const EnterpriseApp = () => {
                 API-Enhanced
               </Badge>
               
-              <Button onClick={exportResults} variant="outline" disabled={results.length === 0} className="border-slate-600 hover:bg-slate-800 text-slate-50">
+              <Button onClick={exportResults} variant="outline" disabled={results.length === 0} className="border-primary/50 hover:bg-primary/10 text-primary hover:text-primary">
                 <Download className="h-4 w-4 mr-2" />
                 Export CSV
               </Button>
