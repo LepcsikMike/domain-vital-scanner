@@ -29,7 +29,7 @@ export const PlanProvider = ({ children }: PlanProviderProps) => {
   useEffect(() => {
     // Only check for Enterprise plan if we're on enterprise routes
     const currentPath = window.location.pathname;
-    const isEnterpriseRoute = currentPath === '/enterprise' || currentPath === '/enterprise-app';
+    const isEnterpriseRoute = currentPath === '/enterprise';
     
     if (isEnterpriseRoute) {
       // Check for Enterprise plan activation

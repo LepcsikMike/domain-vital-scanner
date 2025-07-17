@@ -30,7 +30,6 @@ const App = () => (
               <Route path="/" element={<LandingPage />} />
               <Route path="/app" element={<Index />} />
               <Route path="/enterprise" element={<EnterpriseApp />} />
-              <Route path="/enterprise-app" element={<EnterpriseApp />} />
               <Route path="/datenschutz" element={<Datenschutz />} />
               <Route path="/impressum" element={<Impressum />} />
               <Route path="/agb" element={<AGB />} />
