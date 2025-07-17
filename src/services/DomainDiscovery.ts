@@ -3,6 +3,9 @@ import { IndustryDomainDatabase } from './IndustryDomainDatabase';
 import { GoogleCustomSearchService } from './GoogleCustomSearchService';
 import { CommonCrawlService } from './CommonCrawlService';
 import { LocalBusinessSearch, LocalSearchOptions } from './LocalBusinessSearch';
+import { ExternalApiService } from './ExternalApiService';
+import { DirectoryScraperService } from './DirectoryScraperService';
+import { SocialMediaSearchService } from './SocialMediaSearchService';
 
 export interface DomainDiscoveryOptions {
   query: string;
@@ -18,6 +21,9 @@ export class DomainDiscovery {
   private googleSearch = new GoogleCustomSearchService();
   private commonCrawl = new CommonCrawlService();
   private localSearch = new LocalBusinessSearch();
+  private externalApi = new ExternalApiService();
+  private directoryScraper = new DirectoryScraperService();
+  private socialMedia = new SocialMediaSearchService();
   private cache = new Map<string, string[]>();
   
   async discoverDomains(options: DomainDiscoveryOptions): Promise<string[]> {
@@ -58,6 +64,72 @@ export class DomainDiscovery {
           console.log(`Local business search found ${discoveredDomains.length} potential domains`);
         } catch (error) {
           console.warn('Local business search failed:', error);
+        }
+      }
+
+      // Step 0.5: External APIs (Yelp, Google Places) - parallel execution
+      if (options.location && options.query) {
+        console.log('Using external APIs for enhanced local search');
+        try {
+          const [yelpResults, placesResults] = await Promise.all([
+            this.externalApi.searchYelp(options),
+            this.externalApi.searchGooglePlaces(options)
+          ]);
+          
+          [...yelpResults, ...placesResults].forEach(domain => {
+            if (!discoveredDomains.includes(domain)) {
+              discoveredDomains.push(domain);
+            }
+          });
+          
+          console.log(`External APIs found ${yelpResults.length + placesResults.length} additional domains`);
+        } catch (error) {
+          console.warn('External API search failed:', error);
+        }
+      }
+
+      // Step 0.6: Directory Scraping (German business directories) - parallel execution
+      if (options.location && options.query) {
+        console.log('Using German business directories');
+        try {
+          const [gelbeSeitenResults, oertlicheResults, jamedaResults, elevenResults] = await Promise.all([
+            this.directoryScraper.searchGelbeSeiten(options),
+            this.directoryScraper.searchDasOertliche(options),
+            this.directoryScraper.searchJameda(options),
+            this.directoryScraper.search11880(options)
+          ]);
+          
+          [...gelbeSeitenResults, ...oertlicheResults, ...jamedaResults, ...elevenResults].forEach(domain => {
+            if (!discoveredDomains.includes(domain)) {
+              discoveredDomains.push(domain);
+            }
+          });
+          
+          console.log(`Directory scraping found ${gelbeSeitenResults.length + oertlicheResults.length + jamedaResults.length + elevenResults.length} additional domains`);
+        } catch (error) {
+          console.warn('Directory scraping failed:', error);
+        }
+      }
+
+      // Step 0.7: Social Media Search - parallel execution
+      if (options.location && options.query) {
+        console.log('Using social media business search');
+        try {
+          const [linkedinResults, facebookResults, instagramResults] = await Promise.all([
+            this.socialMedia.searchLinkedIn(options),
+            this.socialMedia.searchFacebook(options),
+            this.socialMedia.searchInstagram(options)
+          ]);
+          
+          [...linkedinResults, ...facebookResults, ...instagramResults].forEach(domain => {
+            if (!discoveredDomains.includes(domain)) {
+              discoveredDomains.push(domain);
+            }
+          });
+          
+          console.log(`Social media found ${linkedinResults.length + facebookResults.length + instagramResults.length} additional domains`);
+        } catch (error) {
+          console.warn('Social media search failed:', error);
         }
       }
       
