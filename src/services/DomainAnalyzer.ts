@@ -23,7 +23,7 @@ interface ProxyTestResult {
 
 export class DomainAnalyzer {
   private settings: AnalysisSettings;
-  private htmlParser: HtmlParser;
+  protected htmlParser: HtmlParser;
   private httpsCache = new Map<string, any>();
   
   // Optimized CORS proxies with better reliability
@@ -64,6 +64,50 @@ export class DomainAnalyzer {
         isAccessible: false, 
         hasErrors: false, 
         robotsTxtExists: false 
+      },
+      // Initialize new enhanced fields with empty data
+      technologyDetails: {
+        jsLibraries: [],
+        cssFrameworks: [],
+        analyticsTools: [],
+        adNetworks: [],
+        cdnProviders: [],
+        serverTech: [],
+        ecommercePlatforms: [],
+        securityTools: [],
+        socialWidgets: [],
+        version: null
+      },
+      marketingTools: {
+        googleAnalytics: [],
+        facebookPixel: [],
+        googleTagManager: [],
+        googleAdSense: [],
+        linkedinInsight: [],
+        twitterAnalytics: [],
+        hotjar: [],
+        mixpanel: [],
+        segment: []
+      },
+      securityAudit: {
+        vulnerableLibraries: [],
+        outdatedVersions: [],
+        securityHeaders: {
+          hsts: false,
+          csp: false,
+          xFrameOptions: false,
+          xContentTypeOptions: false
+        },
+        riskyScripts: [],
+        httpsIssues: [],
+        score: 0
+      },
+      competitorInsights: {
+        similarDomains: [],
+        sharedTechnologies: [],
+        industryCategory: 'Unknown',
+        marketPosition: 'emerging',
+        technicalSimilarity: 0
       },
       criticalIssues: 0
     };

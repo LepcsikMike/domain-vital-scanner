@@ -1,4 +1,51 @@
 
+export interface TechnologyDetails {
+  jsLibraries: string[];
+  cssFrameworks: string[];
+  analyticsTools: string[];
+  adNetworks: string[];
+  cdnProviders: string[];
+  serverTech: string[];
+  ecommercePlatforms: string[];
+  securityTools: string[];
+  socialWidgets: string[];
+  version: string | null;
+}
+
+export interface MarketingTools {
+  googleAnalytics: string[];
+  facebookPixel: string[];
+  googleTagManager: string[];
+  googleAdSense: string[];
+  linkedinInsight: string[];
+  twitterAnalytics: string[];
+  hotjar: string[];
+  mixpanel: string[];
+  segment: string[];
+}
+
+export interface SecurityAudit {
+  vulnerableLibraries: string[];
+  outdatedVersions: string[];
+  securityHeaders: {
+    hsts: boolean;
+    csp: boolean;
+    xFrameOptions: boolean;
+    xContentTypeOptions: boolean;
+  };
+  riskyScripts: string[];
+  httpsIssues: string[];
+  score: number;
+}
+
+export interface CompetitorInsights {
+  similarDomains: string[];
+  sharedTechnologies: string[];
+  industryCategory: string;
+  marketPosition: 'leading' | 'following' | 'emerging';
+  technicalSimilarity: number;
+}
+
 export interface DomainAnalysisResult {
   domain: string;
   timestamp: string;
@@ -32,6 +79,11 @@ export interface DomainAnalysisResult {
     hasErrors: boolean;
     robotsTxtExists: boolean;
   };
+  // New enhanced fields
+  technologyDetails: TechnologyDetails;
+  marketingTools: MarketingTools;
+  securityAudit: SecurityAudit;
+  competitorInsights: CompetitorInsights;
   criticalIssues: number;
 }
 
