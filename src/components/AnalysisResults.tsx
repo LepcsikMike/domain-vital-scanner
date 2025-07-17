@@ -92,8 +92,8 @@ export const AnalysisResults: React.FC<AnalysisResultsProps> = ({ results }) => 
   return (
     <div className="space-y-6">
       {/* Filter & Search Controls */}
-      <div className="flex flex-col sm:flex-row gap-4">
-        <div className="flex-1">
+      <div className="flex flex-col gap-3 sm:gap-4">
+        <div className="w-full">
           <Input
             placeholder="Domain suchen..."
             value={searchTerm}
@@ -102,144 +102,218 @@ export const AnalysisResults: React.FC<AnalysisResultsProps> = ({ results }) => 
           />
         </div>
         
-        <Select value={filter} onValueChange={setFilter}>
-          <SelectTrigger className="w-full sm:w-48 bg-slate-800 border-slate-600 text-white">
-            <Filter className="h-4 w-4 mr-2" />
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">Alle Ergebnisse</SelectItem>
-            <SelectItem value="critical">Kritische Probleme</SelectItem>
-            <SelectItem value="https-issues">HTTPS Probleme</SelectItem>
-            <SelectItem value="seo-issues">SEO Probleme</SelectItem>
-          </SelectContent>
-        </Select>
+        <div className="flex flex-col sm:flex-row gap-3">
+          <Select value={filter} onValueChange={setFilter}>
+            <SelectTrigger className="bg-slate-800 border-slate-600 text-white">
+              <Filter className="h-4 w-4 mr-2" />
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">Alle Ergebnisse</SelectItem>
+              <SelectItem value="critical">Kritische Probleme</SelectItem>
+              <SelectItem value="https-issues">HTTPS Probleme</SelectItem>
+              <SelectItem value="seo-issues">SEO Probleme</SelectItem>
+            </SelectContent>
+          </Select>
 
-        <Select value={sortBy} onValueChange={setSortBy}>
-          <SelectTrigger className="w-full sm:w-48 bg-slate-800 border-slate-600 text-white">
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="domain">Domain A-Z</SelectItem>
-            <SelectItem value="score">PageSpeed Score</SelectItem>
-            <SelectItem value="issues">Anzahl Probleme</SelectItem>
-          </SelectContent>
-        </Select>
+          <Select value={sortBy} onValueChange={setSortBy}>
+            <SelectTrigger className="bg-slate-800 border-slate-600 text-white">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="domain">Domain A-Z</SelectItem>
+              <SelectItem value="score">PageSpeed Score</SelectItem>
+              <SelectItem value="issues">Anzahl Probleme</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
       </div>
 
-      {/* Results Table */}
-      <div className="border border-slate-700 rounded-lg overflow-hidden">
-        <Table>
-          <TableHeader>
-            <TableRow className="border-slate-700 bg-slate-800/50">
-              <TableHead className="text-slate-300">Domain</TableHead>
-              <TableHead className="text-slate-300">HTTPS</TableHead>
-              <TableHead className="text-slate-300">Technologie</TableHead>
-              <TableHead className="text-slate-300">PageSpeed</TableHead>
-              <TableHead className="text-slate-300">Core Web Vitals</TableHead>
-              <TableHead className="text-slate-300">SEO</TableHead>
-              <TableHead className="text-slate-300">Status</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {filteredResults.map((result) => (
-              <TableRow key={result.domain} className="border-slate-700 hover:bg-slate-800/30">
-                <TableCell className="font-medium text-white">
-                  <div className="flex items-center space-x-2">
+      {/* Results - Mobile Card View / Desktop Table */}
+      <div className="block lg:hidden">
+        {/* Mobile Card View */}
+        <div className="space-y-4">
+          {filteredResults.map((result) => (
+            <Card key={result.domain} className="bg-slate-900/50 border-slate-700 backdrop-blur-sm">
+              <CardContent className="p-4">
+                <div className="space-y-3">
+                  {/* Domain Header */}
+                  <div className="flex items-center justify-between">
                     <a 
                       href={getDomainUrl(result.domain)}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center space-x-1 text-blue-400 hover:text-blue-300 transition-colors"
+                      className="flex items-center space-x-1 text-blue-400 hover:text-blue-300 transition-colors font-medium"
                     >
-                      <span>{result.domain}</span>
-                      <ExternalLink className="h-3 w-3" />
+                      <span className="truncate">{result.domain}</span>
+                      <ExternalLink className="h-3 w-3 flex-shrink-0" />
                     </a>
                     {result.criticalIssues >= 2 && (
-                      <AlertTriangle className="h-4 w-4 text-yellow-400" />
+                      <AlertTriangle className="h-4 w-4 text-yellow-400 flex-shrink-0" />
                     )}
                   </div>
-                </TableCell>
-                
-                <TableCell>
-                  <div className="flex items-center space-x-2">
-                    {getStatusIcon(result.httpsStatus.valid)}
-                    <span className="text-sm text-slate-400">
-                      {result.httpsStatus.valid ? 'Gültig' : 'Fehler'}
-                    </span>
-                  </div>
-                </TableCell>
-                
-                <TableCell>
-                  {result.technologyAudit.outdatedTechnologies.length > 0 ? (
-                    <Badge variant="destructive" className="text-xs">
-                      {result.technologyAudit.outdatedTechnologies[0]}
-                    </Badge>
-                  ) : (
-                    <Badge variant="secondary" className="text-xs">Modern</Badge>
-                  )}
-                </TableCell>
-                
-                <TableCell>
-                  <div className="space-y-1">
-                    <div className="flex items-center space-x-2">
-                      <span className="text-xs text-slate-400">Mobile:</span>
-                      {getScoreBadge(result.pageSpeedScores.mobile)}
+
+                  {/* Status Grid */}
+                  <div className="grid grid-cols-2 gap-3 text-sm">
+                    <div className="space-y-1">
+                      <div className="text-slate-400 text-xs">HTTPS</div>
+                      <div className="flex items-center space-x-1">
+                        {getStatusIcon(result.httpsStatus.valid)}
+                        <span className="text-xs">{result.httpsStatus.valid ? 'Gültig' : 'Fehler'}</span>
+                      </div>
                     </div>
-                    <div className="flex items-center space-x-2">
-                      <span className="text-xs text-slate-400">Desktop:</span>
-                      {getScoreBadge(result.pageSpeedScores.desktop)}
-                    </div>
-                  </div>
-                </TableCell>
-                
-                <TableCell>
-                  <div className="space-y-1 text-xs">
-                    <div className="flex justify-between">
-                      <span className="text-slate-400">LCP:</span>
-                      <span className="text-white">{result.coreWebVitals.lcp || 'N/A'}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-slate-400">CLS:</span>
-                      <span className="text-white">{result.coreWebVitals.cls || 'N/A'}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-slate-400">INP:</span>
-                      <span className="text-white">{result.coreWebVitals.inp || 'N/A'}</span>
-                    </div>
-                  </div>
-                </TableCell>
-                
-                <TableCell>
-                  <div className="flex flex-col space-y-1">
-                    {result.seoAudit.issues.length === 0 ? (
-                      <Badge className="bg-green-600 text-xs">OK</Badge>
-                    ) : (
-                      result.seoAudit.issues.slice(0, 2).map((issue, index) => (
-                        <Badge key={index} variant="destructive" className="text-xs">
-                          {issue}
+
+                    <div className="space-y-1">
+                      <div className="text-slate-400 text-xs">Tech</div>
+                      {result.technologyAudit.outdatedTechnologies.length > 0 ? (
+                        <Badge variant="destructive" className="text-xs">
+                          {result.technologyAudit.outdatedTechnologies[0]}
                         </Badge>
-                      ))
-                    )}
+                      ) : (
+                        <Badge variant="secondary" className="text-xs">Modern</Badge>
+                      )}
+                    </div>
+
+                    <div className="space-y-1">
+                      <div className="text-slate-400 text-xs">PageSpeed</div>
+                      <div className="space-y-1">
+                        {getScoreBadge(result.pageSpeedScores.mobile)}
+                      </div>
+                    </div>
+
+                    <div className="space-y-1">
+                      <div className="text-slate-400 text-xs">SEO</div>
+                      {result.seoAudit.issues.length === 0 ? (
+                        <Badge className="bg-green-600 text-xs">OK</Badge>
+                      ) : (
+                        <Badge variant="destructive" className="text-xs">
+                          {result.seoAudit.issues.length} Issues
+                        </Badge>
+                      )}
+                    </div>
                   </div>
-                </TableCell>
-                
-                <TableCell>
-                  <div className="flex items-center space-x-2">
-                    {result.crawlingStatus.hasErrors ? (
-                      <XCircle className="h-4 w-4 text-red-400" />
-                    ) : (
-                      <CheckCircle className="h-4 w-4 text-green-400" />
-                    )}
-                    <span className="text-xs text-slate-400">
-                      {result.crawlingStatus.hasErrors ? 'Fehler' : 'OK'}
-                    </span>
-                  </div>
-                </TableCell>
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </div>
+
+      {/* Desktop Table View */}
+      <div className="hidden lg:block border border-slate-700 rounded-lg overflow-hidden">
+        <div className="overflow-x-auto">
+          <Table>
+            <TableHeader>
+              <TableRow className="border-slate-700 bg-slate-800/50">
+                <TableHead className="text-slate-300">Domain</TableHead>
+                <TableHead className="text-slate-300">HTTPS</TableHead>
+                <TableHead className="text-slate-300">Technologie</TableHead>
+                <TableHead className="text-slate-300">PageSpeed</TableHead>
+                <TableHead className="text-slate-300">Core Web Vitals</TableHead>
+                <TableHead className="text-slate-300">SEO</TableHead>
+                <TableHead className="text-slate-300">Status</TableHead>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+            </TableHeader>
+            <TableBody>
+              {filteredResults.map((result) => (
+                <TableRow key={result.domain} className="border-slate-700 hover:bg-slate-800/30">
+                  <TableCell className="font-medium text-white">
+                    <div className="flex items-center space-x-2">
+                      <a 
+                        href={getDomainUrl(result.domain)}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center space-x-1 text-blue-400 hover:text-blue-300 transition-colors"
+                      >
+                        <span>{result.domain}</span>
+                        <ExternalLink className="h-3 w-3" />
+                      </a>
+                      {result.criticalIssues >= 2 && (
+                        <AlertTriangle className="h-4 w-4 text-yellow-400" />
+                      )}
+                    </div>
+                  </TableCell>
+                  
+                  <TableCell>
+                    <div className="flex items-center space-x-2">
+                      {getStatusIcon(result.httpsStatus.valid)}
+                      <span className="text-sm text-slate-400">
+                        {result.httpsStatus.valid ? 'Gültig' : 'Fehler'}
+                      </span>
+                    </div>
+                  </TableCell>
+                  
+                  <TableCell>
+                    {result.technologyAudit.outdatedTechnologies.length > 0 ? (
+                      <Badge variant="destructive" className="text-xs">
+                        {result.technologyAudit.outdatedTechnologies[0]}
+                      </Badge>
+                    ) : (
+                      <Badge variant="secondary" className="text-xs">Modern</Badge>
+                    )}
+                  </TableCell>
+                  
+                  <TableCell>
+                    <div className="space-y-1">
+                      <div className="flex items-center space-x-2">
+                        <span className="text-xs text-slate-400">Mobile:</span>
+                        {getScoreBadge(result.pageSpeedScores.mobile)}
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <span className="text-xs text-slate-400">Desktop:</span>
+                        {getScoreBadge(result.pageSpeedScores.desktop)}
+                      </div>
+                    </div>
+                  </TableCell>
+                  
+                  <TableCell>
+                    <div className="space-y-1 text-xs">
+                      <div className="flex justify-between">
+                        <span className="text-slate-400">LCP:</span>
+                        <span className="text-white">{result.coreWebVitals.lcp || 'N/A'}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-slate-400">CLS:</span>
+                        <span className="text-white">{result.coreWebVitals.cls || 'N/A'}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-slate-400">INP:</span>
+                        <span className="text-white">{result.coreWebVitals.inp || 'N/A'}</span>
+                      </div>
+                    </div>
+                  </TableCell>
+                  
+                  <TableCell>
+                    <div className="flex flex-col space-y-1">
+                      {result.seoAudit.issues.length === 0 ? (
+                        <Badge className="bg-green-600 text-xs">OK</Badge>
+                      ) : (
+                        result.seoAudit.issues.slice(0, 2).map((issue, index) => (
+                          <Badge key={index} variant="destructive" className="text-xs">
+                            {issue}
+                          </Badge>
+                        ))
+                      )}
+                    </div>
+                  </TableCell>
+                  
+                  <TableCell>
+                    <div className="flex items-center space-x-2">
+                      {result.crawlingStatus.hasErrors ? (
+                        <XCircle className="h-4 w-4 text-red-400" />
+                      ) : (
+                        <CheckCircle className="h-4 w-4 text-green-400" />
+                      )}
+                      <span className="text-xs text-slate-400">
+                        {result.crawlingStatus.hasErrors ? 'Fehler' : 'OK'}
+                      </span>
+                    </div>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
       </div>
 
       {filteredResults.length === 0 && (

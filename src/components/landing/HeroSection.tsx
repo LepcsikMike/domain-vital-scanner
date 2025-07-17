@@ -45,7 +45,7 @@ const HeroSection = () => {
             Google APIs Enhanced
           </Badge>
           
-          <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white mb-6 leading-tight">
             Veraltete Websites{' '}
             <span className="bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
               automatisch
@@ -53,51 +53,51 @@ const HeroSection = () => {
             identifizieren
           </h1>
           
-          <p className="text-xl text-slate-300 mb-8 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-base sm:text-lg lg:text-xl text-slate-300 mb-8 max-w-2xl mx-auto leading-relaxed px-4 sm:px-0">
             Finden Sie potenzielle Kunden durch technische Website-Audits. 
             Scannen Sie ganze Domainlisten und identifizieren Sie Websites mit 
             Sicherheitsproblemen, veralteter Technik und SEO-Schwächen.
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12 px-4 sm:px-0">
             <Button 
               size="lg" 
-              className="bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white px-8 py-3 text-lg"
+              className="w-full sm:w-auto bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white px-6 sm:px-8 py-3 text-base sm:text-lg"
               onClick={() => window.location.href = '/app'}
             >
-              <Zap className="h-5 w-5 mr-2" />
+              <Zap className="h-4 w-4 sm:h-5 sm:w-5 mr-2" />
               Kostenlos testen
-              <ArrowRight className="h-5 w-5 ml-2" />
+              <ArrowRight className="h-4 w-4 sm:h-5 sm:w-5 ml-2" />
             </Button>
             
             <Button 
               size="lg"
-              className="bg-gradient-to-r from-orange-500 to-pink-500 hover:from-orange-600 hover:to-pink-600 text-white px-8 py-3 text-lg font-semibold shadow-lg hover:shadow-xl transition-all"
+              className="w-full sm:w-auto bg-gradient-to-r from-orange-500 to-pink-500 hover:from-orange-600 hover:to-pink-600 text-white px-6 sm:px-8 py-3 text-base sm:text-lg font-semibold shadow-lg hover:shadow-xl transition-all"
               onClick={() => window.open('https://calendly.com/hi-inspiroware/30min', '_blank')}
             >
-              <Calendar className="h-5 w-5 mr-2" />
+              <Calendar className="h-4 w-4 sm:h-5 sm:w-5 mr-2" />
               Demo vereinbaren
             </Button>
           </div>
 
           {/* Trust Signals */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-3xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 max-w-3xl mx-auto px-4 sm:px-0">
             <div className="bg-slate-900/50 border border-slate-700 rounded-lg p-4 backdrop-blur-sm">
-              <div className="text-cyan-400 font-semibold text-sm mb-1">Google PageSpeed</div>
-              <div className="text-white text-2xl font-bold">Core Web Vitals</div>
-              <div className="text-slate-400 text-sm">Echte Performance-Daten</div>
+              <div className="text-cyan-400 font-semibold text-xs sm:text-sm mb-1">Google PageSpeed</div>
+              <div className="text-white text-lg sm:text-xl lg:text-2xl font-bold">Core Web Vitals</div>
+              <div className="text-slate-400 text-xs sm:text-sm">Echte Performance-Daten</div>
             </div>
             
             <div className="bg-slate-900/50 border border-slate-700 rounded-lg p-4 backdrop-blur-sm">
-              <div className="text-green-400 font-semibold text-sm mb-1">SSL & Security</div>
-              <div className="text-white text-2xl font-bold">HTTPS Checks</div>
-              <div className="text-slate-400 text-sm">Automatische Sicherheitsprüfung</div>
+              <div className="text-green-400 font-semibold text-xs sm:text-sm mb-1">SSL & Security</div>
+              <div className="text-white text-lg sm:text-xl lg:text-2xl font-bold">HTTPS Checks</div>
+              <div className="text-slate-400 text-xs sm:text-sm">Automatische Sicherheitsprüfung</div>
             </div>
             
-            <div className="bg-slate-900/50 border border-slate-700 rounded-lg p-4 backdrop-blur-sm">
-              <div className="text-blue-400 font-semibold text-sm mb-1">Batch Analysis</div>
-              <div className="text-white text-2xl font-bold">Bulk Scan</div>
-              <div className="text-slate-400 text-sm">Tausende Domains parallel</div>
+            <div className="bg-slate-900/50 border border-slate-700 rounded-lg p-4 backdrop-blur-sm sm:col-span-2 lg:col-span-1">
+              <div className="text-blue-400 font-semibold text-xs sm:text-sm mb-1">Batch Analysis</div>
+              <div className="text-white text-lg sm:text-xl lg:text-2xl font-bold">Bulk Scan</div>
+              <div className="text-slate-400 text-xs sm:text-sm">Tausende Domains parallel</div>
             </div>
           </div>
         </div>

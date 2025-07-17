@@ -95,29 +95,29 @@ export const DashboardStats: React.FC<DashboardStatsProps> = ({ results }) => {
   };
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
       {stats.map((stat, index) => {
         const Icon = stat.icon;
         return (
           <Card key={index} className={`bg-slate-900/50 border-slate-700 backdrop-blur-sm ${getColorClasses(stat.color)}`}>
-            <CardContent className="p-6">
+            <CardContent className="p-4 lg:p-6">
               <div className="flex items-center justify-between">
-                <div className="space-y-2">
-                  <p className="text-sm font-medium text-slate-400">
+                <div className="space-y-1 lg:space-y-2 min-w-0">
+                  <p className="text-xs lg:text-sm font-medium text-slate-400 truncate">
                     {stat.title}
                   </p>
-                  <p className="text-3xl font-bold text-white">
+                  <p className="text-xl lg:text-3xl font-bold text-white">
                     {stat.value}
                     {stat.title.includes('PageSpeed') && totalDomains > 0 && (
-                      <span className="text-lg text-slate-400 ml-1">/100</span>
+                      <span className="text-sm lg:text-lg text-slate-400 ml-1">/100</span>
                     )}
                   </p>
-                  <p className="text-xs text-slate-500">
+                  <p className="text-xs text-slate-500 hidden sm:block">
                     {stat.description}
                   </p>
                 </div>
-                <div className={`p-3 rounded-lg bg-slate-800/50`}>
-                  <Icon className={`h-6 w-6 ${getIconColor(stat.color)}`} />
+                <div className={`p-2 lg:p-3 rounded-lg bg-slate-800/50 flex-shrink-0`}>
+                  <Icon className={`h-5 w-5 lg:h-6 lg:w-6 ${getIconColor(stat.color)}`} />
                 </div>
               </div>
             </CardContent>

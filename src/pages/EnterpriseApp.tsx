@@ -51,45 +51,59 @@ const EnterpriseApp = () => {
   return <div className="min-h-screen bg-gradient-to-br from-slate-950 via-blue-950 to-slate-900">
       {/* Enterprise Header */}
       <div className="border-b border-slate-800 bg-slate-950/50 backdrop-blur-sm">
-        <div className="container mx-auto px-4 py-6">
-          <div className="flex items-center justify-between">
+        <div className="container mx-auto px-4 py-4 lg:py-6">
+          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
             <div className="flex items-center space-x-3">
-              <div className="p-2 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-lg">
-                <Globe className="h-6 w-6 text-white" />
+              <div className="p-2 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-lg flex-shrink-0">
+                <Globe className="h-5 w-5 lg:h-6 lg:w-6 text-white" />
               </div>
-              <div>
-                <h1 className="text-2xl font-bold text-white flex items-center">
-                  DomainAudit Pro Enterprise
-                  <Crown className="h-5 w-5 ml-2 text-yellow-500" />
+              <div className="min-w-0">
+                <h1 className="text-lg lg:text-2xl font-bold text-white flex items-center">
+                  <span className="hidden sm:inline">DomainAudit Pro Enterprise</span>
+                  <span className="sm:hidden">DomainAudit Enterprise</span>
+                  <Crown className="h-4 w-4 lg:h-5 lg:w-5 ml-2 text-yellow-500 flex-shrink-0" />
                 </h1>
-                <p className="text-slate-400 text-sm">
+                <p className="text-slate-400 text-xs lg:text-sm hidden sm:block">
                   Vollständige Domain-Analyse mit Google APIs & Erweiterten Features
+                </p>
+                <p className="text-slate-400 text-xs sm:hidden">
+                  API-Enhanced Domain-Analyse
                 </p>
               </div>
             </div>
-            <div className="flex items-center space-x-4">
-              <Badge className="bg-gradient-to-r from-yellow-500 to-orange-500 text-white border-0">
-                <Crown className="h-3 w-3 mr-1" />
-                Enterprise
-              </Badge>
+            <div className="flex items-center justify-between lg:justify-end gap-2 lg:gap-4">
+              <div className="flex items-center gap-2">
+                <Badge className="bg-gradient-to-r from-yellow-500 to-orange-500 text-white border-0 text-xs">
+                  <Crown className="h-3 w-3 mr-1" />
+                  <span className="hidden sm:inline">Enterprise</span>
+                  <span className="sm:hidden">Pro</span>
+                </Badge>
+                
+                <Badge variant="outline" className="border-green-500 text-green-400 text-xs hidden sm:flex">
+                  API-Enhanced
+                </Badge>
+              </div>
               
-              <Badge variant="outline" className="border-green-500 text-green-400">
-                API-Enhanced
-              </Badge>
-              
-              <Button onClick={exportResults} variant="outline" disabled={results.length === 0} className="border-primary/50 hover:bg-primary/10 text-primary hover:text-primary">
-                <Download className="h-4 w-4 mr-2" />
-                Export CSV
+              <Button 
+                onClick={exportResults} 
+                variant="outline" 
+                disabled={results.length === 0} 
+                size="sm"
+                className="border-primary/50 hover:bg-primary/10 text-primary hover:text-primary"
+              >
+                <Download className="h-4 w-4 mr-1 lg:mr-2" />
+                <span className="hidden sm:inline">Export CSV</span>
+                <span className="sm:hidden">Export</span>
               </Button>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="container mx-auto px-4 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="container mx-auto px-4 py-6 lg:py-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
           {/* Left Sidebar */}
-          <div className="lg:col-span-1 space-y-6">
+          <div className="lg:col-span-1 space-y-4 lg:space-y-6">
             {/* Search Form */}
             <Card className="bg-slate-900/50 border-slate-700 backdrop-blur-sm">
               <CardHeader>
@@ -124,7 +138,7 @@ const EnterpriseApp = () => {
           </div>
 
           {/* Main Content */}
-          <div className="lg:col-span-2 space-y-6">
+          <div className="lg:col-span-2 space-y-4 lg:space-y-6">
             {/* Dashboard Stats */}
             <DashboardStats results={results} />
 
