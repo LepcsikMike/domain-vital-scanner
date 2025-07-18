@@ -1,0 +1,74 @@
+{
+  "hero": {
+    "consultation": "Kostenlose Beratung buchen",
+    "badge": "Professionelle Website-Analyse",
+    "headline": "Website-Analyse mit professionellen PDF-Reports",
+    "description": "Analysieren Sie Domains mit Google PageSpeed, Core Web Vitals und erstellen Sie professionelle PDF-Reports. Für Agenturen, SEO-Experten und Unternehmen.",
+    "testFree": "Kostenlos testen",
+    "bookDemo": "Demo buchen",
+    "trust1": "Google PageSpeed API",
+    "trust2": "Professional PDF Reports",
+    "trust3": "Core Web Vitals Monitoring",
+    "trust4": "Enhanced CSV Export"
+  },
+  "features": {
+    "title": "Leistungsstarke Website-Analyse-Features",
+    "subtitle": "Alles was Sie für professionelle Website-Audits benötigen",
+    "domainAnalysis": {
+      "title": "Domain-Analyse",
+      "description": "Umfassende Analyse von Domains mit detaillierten Einblicken in Performance, SEO und technische Aspekte."
+    },
+    "technologyDetection": {
+      "title": "Technologie-Erkennung",
+      "description": "Automatische Erkennung von verwendeten Technologien, Frameworks und Tools auf jeder Website."
+    },
+    "competitorAnalysis": {
+      "title": "Konkurrenzanalyse",
+      "description": "Vergleichen Sie Ihre Website mit Mitbewerbern und identifizieren Sie Optimierungsmöglichkeiten."
+    },
+    "pdfReports": {
+      "title": "Professional PDF Reports",
+      "description": "Generieren Sie professionelle PDF-Reports mit Executive Summary, Technical Deep-Dive und Action Plans - perfekt für Kundenpräsentationen."
+    },
+    "exportIntegration": {
+      "title": "Export & Integration",
+      "description": "Enhanced CSV Export mit 20+ Datenfeldern, Professional PDF Reports und nahtlose Integration in Ihre bestehenden Workflows."
+    },
+    "marketingTools": {
+      "title": "Marketing-Tools-Erkennung",
+      "description": "Erkennung von Google Analytics, Facebook Pixel, Marketing-Automatisierung und anderen wichtigen Marketing-Tools."
+    }
+  },
+  "pricing": {
+    "title": "Einfache, transparente Preise",
+    "subtitle": "Wählen Sie den Plan, der zu Ihren Bedürfnissen passt",
+    "bookDemo": "Demo buchen"
+  },
+  "faq": {
+    "title": "Häufig gestellte Fragen",
+    "q1": {
+      "question": "Welche PDF-Report-Formate sind verfügbar?",
+      "answer": "Wir bieten drei professionelle PDF-Report-Formate: Executive Summary (kompakte Übersicht für Entscheidungsträger), Technical Deep-Dive (detaillierte technische Analyse) und Action Plan (konkrete Handlungsempfehlungen mit Prioritäten)."
+    },
+    "q2": {
+      "question": "Was ist im Enhanced CSV Export enthalten?",
+      "answer": "Der Enhanced CSV Export enthält über 20 Datenfelder inklusive Core Web Vitals, Google PageSpeed Scores, Technology Stack, Marketing Tools, Security Assessment, SEO Metrics und detaillierte Performance-Daten."
+    },
+    "q3": {
+      "question": "Wie unterscheidet sich das Tool von SEOptimer oder ähnlichen Plattformen?",
+      "answer": "Unser Tool bietet professionelle PDF-Reports zu einem Bruchteil der Kosten von SEOptimer (€79/Monat). Sie erhalten die gleiche Qualität der Analyse mit Executive Summaries, detaillierten technischen Reports und Action Plans."
+    },
+    "q4": {
+      "question": "Welche Datenquellen werden für die Analyse verwendet?",
+      "answer": "Wir nutzen Google PageSpeed Insights API, Core Web Vitals Monitoring, DNS-Lookups, Technologie-Erkennung und umfassende SEO-Metriken für präzise und verlässliche Analysen."
+    },
+    "q5": {
+      "question": "Gibt es eine API für die Integration?",
+      "answer": "Ja, Enterprise-Kunden erhalten Zugang zu unserer API für die nahtlose Integration in bestehende Workflows und automatisierte Report-Generierung."
+    },
+    "q6": {
+      "question": "Wie schnell werden die Reports generiert?",
+      "answer": "Standard-Analysen werden in 30-60 Sekunden abgeschlossen. PDF-Reports werden automatisch generiert und können sofort heruntergeladen werden."
+    }
+  }
+}

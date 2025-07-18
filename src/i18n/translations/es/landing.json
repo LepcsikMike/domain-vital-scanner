@@ -1,0 +1,74 @@
+{
+  "hero": {
+    "consultation": "Reservar Consulta Gratuita",
+    "badge": "Análisis Profesional de Sitios Web",
+    "headline": "Análisis de Sitios Web con Informes PDF Profesionales",
+    "description": "Analiza dominios con Google PageSpeed, Core Web Vitals y genera informes PDF profesionales. Para agencias, expertos SEO y empresas.",
+    "testFree": "Probar Gratis",
+    "bookDemo": "Reservar Demo",
+    "trust1": "API Google PageSpeed",
+    "trust2": "Informes PDF Profesionales",
+    "trust3": "Monitoreo Core Web Vitals",
+    "trust4": "Exportación CSV Mejorada"
+  },
+  "features": {
+    "title": "Características Potentes de Análisis Web",
+    "subtitle": "Todo lo que necesitas para auditorías profesionales de sitios web",
+    "domainAnalysis": {
+      "title": "Análisis de Dominio",
+      "description": "Análisis integral de dominios con información detallada sobre rendimiento, SEO y aspectos técnicos."
+    },
+    "technologyDetection": {
+      "title": "Detección de Tecnología",
+      "description": "Detección automática de tecnologías, frameworks y herramientas utilizadas en cualquier sitio web."
+    },
+    "competitorAnalysis": {
+      "title": "Análisis de Competencia",
+      "description": "Compara tu sitio web con competidores e identifica oportunidades de optimización."
+    },
+    "pdfReports": {
+      "title": "Informes PDF Profesionales",
+      "description": "Genera informes PDF profesionales con Resumen Ejecutivo, Análisis Técnico Detallado y Planes de Acción - perfectos para presentaciones a clientes."
+    },
+    "exportIntegration": {
+      "title": "Exportación e Integración",
+      "description": "Exportación CSV mejorada con más de 20 campos de datos, informes PDF profesionales e integración perfecta en tus flujos de trabajo existentes."
+    },
+    "marketingTools": {
+      "title": "Detección de Herramientas de Marketing",
+      "description": "Detección de Google Analytics, Facebook Pixel, automatización de marketing y otras herramientas importantes de marketing."
+    }
+  },
+  "pricing": {
+    "title": "Precios simples y transparentes",
+    "subtitle": "Elige el plan que se adapte a tus necesidades",
+    "bookDemo": "Reservar Demo"
+  },
+  "faq": {
+    "title": "Preguntas Frecuentes",
+    "q1": {
+      "question": "¿Qué formatos de informes PDF están disponibles?",
+      "answer": "Ofrecemos tres formatos de informes PDF profesionales: Resumen Ejecutivo (visión general compacta para tomadores de decisiones), Análisis Técnico Detallado (análisis técnico detallado) y Plan de Acción (recomendaciones concretas con prioridades)."
+    },
+    "q2": {
+      "question": "¿Qué incluye la Exportación CSV Mejorada?",
+      "answer": "La Exportación CSV Mejorada contiene más de 20 campos de datos incluyendo Core Web Vitals, Puntuaciones Google PageSpeed, Stack de Tecnología, Herramientas de Marketing, Evaluación de Seguridad, Métricas SEO y datos detallados de rendimiento."
+    },
+    "q3": {
+      "question": "¿Cómo se diferencia la herramienta de SEOptimer o plataformas similares?",
+      "answer": "Nuestra herramienta ofrece informes PDF profesionales a una fracción del costo de SEOptimer (€79/mes). Obtienes la misma calidad de análisis con Resúmenes Ejecutivos, informes técnicos detallados y Planes de Acción."
+    },
+    "q4": {
+      "question": "¿Qué fuentes de datos se utilizan para el análisis?",
+      "answer": "Utilizamos la API de Google PageSpeed Insights, Monitoreo de Core Web Vitals, búsquedas DNS, detección de tecnología y métricas SEO integrales para análisis precisos y confiables."
+    },
+    "q5": {
+      "question": "¿Hay una API para integración?",
+      "answer": "Sí, los clientes Enterprise obtienen acceso a nuestra API para integración perfecta en flujos de trabajo existentes y generación automatizada de informes."
+    },
+    "q6": {
+      "question": "¿Qué tan rápido se generan los informes?",
+      "answer": "Los análisis estándar se completan en 30-60 segundos. Los informes PDF se generan automáticamente y se pueden descargar inmediatamente."
+    }
+  }
+}

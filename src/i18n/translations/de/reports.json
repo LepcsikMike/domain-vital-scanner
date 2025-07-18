@@ -1,0 +1,29 @@
+{
+  "executiveSummary": {
+    "title": "Executive Summary",
+    "overallScore": "Gesamtscore",
+    "keyFindings": "Wichtigste Erkenntnisse",
+    "recommendations": "Empfehlungen",
+    "priority": "Priorität"
+  },
+  "technicalAnalysis": {
+    "title": "Technische Analyse",
+    "pageSpeed": "Page Speed",
+    "coreWebVitals": "Core Web Vitals",
+    "security": "Sicherheit",
+    "accessibility": "Barrierefreiheit"
+  },
+  "actionPlan": {
+    "title": "Aktionsplan",
+    "immediateActions": "Sofortige Maßnahmen",
+    "shortTerm": "Kurzfristig (1-2 Wochen)",
+    "mediumTerm": "Mittelfristig (1-3 Monate)",
+    "longTerm": "Langfristig (3+ Monate)"
+  },
+  "common": {
+    "generatedOn": "Erstellt am",
+    "domain": "Domain",
+    "page": "Seite",
+    "of": "von"
+  }
+}

@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { PlanProvider } from "./contexts/PlanContext";
 import { CookieProvider } from "./contexts/CookieContext";
+import { LanguageProvider } from "./contexts/LanguageContext";
 import CookieBanner from "./components/CookieBanner";
 import LandingPage from "./pages/LandingPage";
 import Index from "./pages/Index";
@@ -26,18 +27,46 @@ const App = () => (
           <Toaster />
           <Sonner />
           <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<LandingPage />} />
-              <Route path="/app" element={<Index />} />
-              <Route path="/enterprise" element={<EnterpriseApp />} />
-              <Route path="/datenschutz" element={<Datenschutz />} />
-              <Route path="/impressum" element={<Impressum />} />
-              <Route path="/agb" element={<AGB />} />
-              <Route path="/cookie-einstellungen" element={<CookieEinstellungen />} />
-              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-            <CookieBanner />
+            <LanguageProvider>
+              <Routes>
+                {/* Redirect root to German */}
+                <Route path="/" element={<LandingPage />} />
+                
+                {/* Language-based routes */}
+                <Route path="/:lang" element={<LandingPage />} />
+                <Route path="/:lang/app" element={<Index />} />
+                <Route path="/:lang/enterprise" element={<EnterpriseApp />} />
+                
+                {/* Legacy routes without language prefix */}
+                <Route path="/app" element={<Index />} />
+                <Route path="/enterprise" element={<EnterpriseApp />} />
+                
+                {/* Legal pages with localized URLs */}
+                <Route path="/datenschutz" element={<Datenschutz />} />
+                <Route path="/de/datenschutz" element={<Datenschutz />} />
+                <Route path="/en/privacy" element={<Datenschutz />} />
+                <Route path="/es/privacidad" element={<Datenschutz />} />
+                
+                <Route path="/impressum" element={<Impressum />} />
+                <Route path="/de/impressum" element={<Impressum />} />
+                <Route path="/en/imprint" element={<Impressum />} />
+                <Route path="/es/aviso-legal" element={<Impressum />} />
+                
+                <Route path="/agb" element={<AGB />} />
+                <Route path="/de/agb" element={<AGB />} />
+                <Route path="/en/terms" element={<AGB />} />
+                <Route path="/es/terminos" element={<AGB />} />
+                
+                <Route path="/cookie-einstellungen" element={<CookieEinstellungen />} />
+                <Route path="/de/cookie-einstellungen" element={<CookieEinstellungen />} />
+                <Route path="/en/cookie-settings" element={<CookieEinstellungen />} />
+                <Route path="/es/configuracion-cookies" element={<CookieEinstellungen />} />
+                
+                {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+              <CookieBanner />
+            </LanguageProvider>
           </BrowserRouter>
         </TooltipProvider>
       </PlanProvider>

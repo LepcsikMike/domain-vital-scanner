@@ -1,0 +1,29 @@
+{
+  "executiveSummary": {
+    "title": "Resumen Ejecutivo",
+    "overallScore": "Puntuación General",
+    "keyFindings": "Hallazgos Clave",
+    "recommendations": "Recomendaciones",
+    "priority": "Prioridad"
+  },
+  "technicalAnalysis": {
+    "title": "Análisis Técnico",
+    "pageSpeed": "Velocidad de Página",
+    "coreWebVitals": "Core Web Vitals",
+    "security": "Seguridad",
+    "accessibility": "Accesibilidad"
+  },
+  "actionPlan": {
+    "title": "Plan de Acción",
+    "immediateActions": "Acciones Inmediatas",
+    "shortTerm": "Corto Plazo (1-2 semanas)",
+    "mediumTerm": "Mediano Plazo (1-3 meses)",
+    "longTerm": "Largo Plazo (3+ meses)"
+  },
+  "common": {
+    "generatedOn": "Generado el",
+    "domain": "Dominio",
+    "page": "Página",
+    "of": "de"
+  }
+}

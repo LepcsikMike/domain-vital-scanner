@@ -1,0 +1,46 @@
+{
+  "search": {
+    "placeholder": "Ingresar dominio (ej. example.com)",
+    "analyze": "Analizar",
+    "analyzing": "Analizando...",
+    "searchType": "Tipo de Búsqueda",
+    "singleDomain": "Dominio Único",
+    "multipleDomains": "Múltiples Dominios"
+  },
+  "results": {
+    "domain": "Dominio",
+    "status": "Estado",
+    "score": "Puntuación",
+    "pageSpeed": "PageSpeed",
+    "security": "Seguridad",
+    "seo": "SEO",
+    "actions": "Acciones",
+    "viewDetails": "Ver Detalles",
+    "exportPdf": "Exportar PDF",
+    "exportCsv": "Exportar CSV",
+    "noResults": "No se encontraron resultados",
+    "analyzing": "Analizando...",
+    "completed": "Completado",
+    "failed": "Falló"
+  },
+  "stats": {
+    "totalDomains": "Dominios Totales",
+    "successRate": "Tasa de Éxito",
+    "avgScore": "Puntuación Promedio",
+    "completedToday": "Completados Hoy"
+  },
+  "settings": {
+    "title": "Configuración de Análisis",
+    "includePageSpeed": "Incluir PageSpeed",
+    "includeSecurity": "Incluir Seguridad",
+    "includeSeo": "Incluir SEO",
+    "includeMarketingTools": "Incluir Herramientas de Marketing"
+  },
+  "plan": {
+    "free": "Gratis",
+    "enterprise": "Empresa",
+    "dailyScans": "Escaneos Diarios",
+    "upgradeRequired": "Actualización Requerida",
+    "limitReached": "Límite Alcanzado"
+  }
+}

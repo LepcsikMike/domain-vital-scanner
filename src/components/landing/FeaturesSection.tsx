@@ -2,13 +2,16 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Shield, Zap, FileText, Search, Download, Globe, Lock, BarChart3 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 const FeaturesSection = () => {
+  const { t } = useTranslation('landing');
+  
   const features = [
     {
       icon: <FileText className="h-8 w-8 text-purple-400" />,
-      title: "Professional PDF Reports",
-      description: "Erstellen Sie hochwertige PDF-Reports wie SEOptimer: Executive Summary, Technical Deep-Dive und Action Plans",
+      title: t('features.pdfReports.title'),
+      description: t('features.pdfReports.description'),
       highlights: ["Executive Summary PDF", "Technical Deep-Dive Report", "Action Plan mit Prioritäten"]
     },
     {
@@ -48,15 +51,10 @@ const FeaturesSection = () => {
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-            Alles was Sie für{' '}
-            <span className="bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
-              Website-Audits
-            </span>{' '}
-            brauchen
+            {t('features.title')}
           </h2>
           <p className="text-xl text-slate-300 max-w-3xl mx-auto">
-            Von der automatischen Domain-Erkennung bis zum detaillierten Audit-Report – 
-            alle Tools in einer Plattform vereint.
+            {t('features.subtitle')}
           </p>
         </div>
 
