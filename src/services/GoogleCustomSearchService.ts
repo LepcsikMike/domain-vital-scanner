@@ -34,30 +34,52 @@ export class GoogleCustomSearchService {
     const startTime = Date.now();
     
     try {
-      // Build search query for specific TLD and industry
-      const searchQuery = `site:*${tld} ${query}`;
+      // Enhanced search patterns for better domain discovery
+      const searchQueries = [
+        `site:*${tld} "${query}"`,
+        `site:*${tld} ${query} praxis`,
+        `site:*${tld} ${query} kanzlei`,
+        `site:*${tld} ${query} zentrum`,
+        `inurl:${query.replace(/\s+/g, '-')} site:*${tld}`,
+        `intitle:"${query}" site:*${tld}`
+      ];
       
-      const params = new URLSearchParams({
-        key: this.apiKey!,
-        cx: this.searchEngineId!,
-        q: searchQuery,
-        num: Math.min(maxResults, 10).toString()
-      });
+      const allDomains = new Set<string>();
       
-      const response = await fetch(`${this.baseUrl}?${params}`);
-      
-      if (!response.ok) {
-        throw new Error(`Custom Search API returned ${response.status}`);
+      // Try multiple search strategies
+      for (const searchQuery of searchQueries.slice(0, 3)) {
+        const params = new URLSearchParams({
+          key: this.apiKey!,
+          cx: this.searchEngineId!,
+          q: searchQuery,
+          num: Math.min(maxResults, 10).toString(),
+          gl: 'de', // Geolocation for German results
+          lr: 'lang_de' // Language restriction
+        });
+        
+        try {
+          const response = await fetch(`${this.baseUrl}?${params}`);
+          
+          if (response.ok) {
+            const data = await response.json();
+            const domains = this.extractDomains(data.items || [], tld);
+            domains.forEach(domain => allDomains.add(domain));
+            
+            // If we found enough domains, break early
+            if (allDomains.size >= maxResults) break;
+          }
+        } catch (error) {
+          console.warn(`Search query failed: ${searchQuery}`, error);
+          continue;
+        }
+        
+        // Rate limiting delay
+        await new Promise(resolve => setTimeout(resolve, 100));
       }
       
-      const data = await response.json();
-      
-      // Extract domains from search results
-      const domains = this.extractDomains(data.items || [], tld);
-      
       return {
-        domains: [...new Set(domains)], // Remove duplicates
-        totalResults: parseInt(data.searchInformation?.totalResults || '0'),
+        domains: Array.from(allDomains).slice(0, maxResults),
+        totalResults: allDomains.size,
         searchTime: Date.now() - startTime
       };
       

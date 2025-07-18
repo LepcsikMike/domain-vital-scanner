@@ -106,23 +106,63 @@ export class LocalBusinessSearch {
     const cleanBusiness = this.cleanBusinessTerm(business);
     const cleanLocation = this.cleanLocationTerm(location);
     
-    // Primary patterns for German local businesses
-    const patterns = [
-      `${cleanBusiness}-${cleanLocation}${tld}`,
-      `${cleanBusiness}${cleanLocation}${tld}`,
-      `${cleanLocation}-${cleanBusiness}${tld}`,
-      `${cleanLocation}${cleanBusiness}${tld}`,
-      `${cleanBusiness}-praxis-${cleanLocation}${tld}`,
-      `${cleanBusiness}praxis-${cleanLocation}${tld}`,
-      `dr-${cleanBusiness}-${cleanLocation}${tld}`,
-      `praxis-${cleanBusiness}-${cleanLocation}${tld}`,
-      `${cleanBusiness}-zentrum-${cleanLocation}${tld}`,
-      `${cleanBusiness}-${cleanLocation}-city${tld}`,
-      `${cleanBusiness}24-${cleanLocation}${tld}`,
-      `${cleanBusiness}-${cleanLocation}-online${tld}`
-    ];
+    // Enhanced patterns for German local businesses with realistic variations
+    const professionalPrefixes = ['dr', 'prof', 'med', 'drs'];
+    const businessSuffixes = ['praxis', 'zentrum', 'klinik', 'kanzlei', 'institut', 'gruppe', 'team', 'service', 'care'];
+    const locationVariants = [cleanLocation, `${cleanLocation}er`, `${cleanLocation}-city`, `${cleanLocation}-mitte`];
     
-    return patterns;
+    // Professional practice patterns
+    professionalPrefixes.forEach(prefix => {
+      locationVariants.forEach(locVariant => {
+        domains.push(
+          `${prefix}-${cleanBusiness}-${locVariant}${tld}`,
+          `${prefix}${cleanBusiness}${locVariant}${tld}`,
+          `${prefix}-${locVariant}-${cleanBusiness}${tld}`
+        );
+      });
+    });
+    
+    // Business type patterns
+    businessSuffixes.forEach(suffix => {
+      locationVariants.forEach(locVariant => {
+        domains.push(
+          `${cleanBusiness}-${suffix}-${locVariant}${tld}`,
+          `${cleanBusiness}${suffix}-${locVariant}${tld}`,
+          `${locVariant}-${cleanBusiness}-${suffix}${tld}`,
+          `${suffix}-${cleanBusiness}-${locVariant}${tld}`
+        );
+      });
+    });
+    
+    // Geographic patterns
+    locationVariants.forEach(locVariant => {
+      domains.push(
+        `${cleanBusiness}-${locVariant}${tld}`,
+        `${cleanBusiness}${locVariant}${tld}`,
+        `${locVariant}-${cleanBusiness}${tld}`,
+        `${locVariant}${cleanBusiness}${tld}`,
+        `${cleanBusiness}-${locVariant}-online${tld}`,
+        `${cleanBusiness}24-${locVariant}${tld}`,
+        `${cleanBusiness}-${locVariant}-center${tld}`,
+        `${cleanBusiness}-clinic-${locVariant}${tld}`,
+        `${cleanBusiness}-office-${locVariant}${tld}`
+      );
+    });
+    
+    // Corporate patterns
+    ['group', 'corporate', 'company', 'business'].forEach(corp => {
+      domains.push(
+        `${cleanBusiness}-${corp}${tld}`,
+        `${cleanBusiness}${corp}${tld}`,
+        `${cleanLocation}-${cleanBusiness}-${corp}${tld}`
+      );
+    });
+    
+    // Filter for realistic length and format
+    return domains
+      .filter(domain => domain.length >= 8 && domain.length <= 60)
+      .filter(domain => !domain.includes('--'))
+      .slice(0, 25); // Return top 25 most likely patterns
   }
 
   private expandSearchRadius(business: string, location: string, tld: string): string[] {
