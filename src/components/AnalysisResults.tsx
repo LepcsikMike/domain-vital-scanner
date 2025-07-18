@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Progress } from "@/components/ui/progress";
 import { 
   Table, 
@@ -33,12 +34,15 @@ import {
   Monitor,
   Eye,
   FileText,
-  Download
+  Download,
+  ChevronDown
 } from 'lucide-react';
 import { DomainAnalysisResult } from '@/types/domain-analysis';
 import { getDomainUrl } from '@/utils/urlUtils';
 import { TechnologyStackCard } from './TechnologyStackCard';
 import { ScoreDashboard } from './ScoreDashboard';
+import { ReportGenerator, ReportOptions } from '@/services/ReportGenerator';
+import { useToast } from '@/hooks/use-toast';
 
 interface AnalysisResultsProps {
   results: DomainAnalysisResult[];
@@ -49,6 +53,8 @@ export const AnalysisResults: React.FC<AnalysisResultsProps> = ({ results }) => 
   const [searchTerm, setSearchTerm] = useState('');
   const [sortBy, setSortBy] = useState('domain');
   const [expandedDomain, setExpandedDomain] = useState<string | null>(null);
+  const [isGeneratingReport, setIsGeneratingReport] = useState<string | null>(null);
+  const { toast } = useToast();
 
   const filteredResults = results
     .filter(result => {
@@ -130,6 +136,42 @@ export const AnalysisResults: React.FC<AnalysisResultsProps> = ({ results }) => 
     }
     
     return issues;
+  };
+
+  const handleDownloadReport = async (result: DomainAnalysisResult, type: 'pdf-executive' | 'pdf-technical' | 'pdf-action-plan' | 'csv') => {
+    setIsGeneratingReport(result.domain);
+    
+    try {
+      if (type === 'csv') {
+        ReportGenerator.generateEnhancedCSV([result]);
+        toast({
+          title: "CSV Export erfolgreich",
+          description: `Detaillierte Analyse für ${result.domain} wurde heruntergeladen`,
+        });
+      } else {
+        const reportType = type.replace('pdf-', '') as 'executive' | 'technical' | 'action-plan';
+        const options: ReportOptions = {
+          type: reportType,
+          format: 'pdf',
+          includeCharts: true,
+          includeRecommendations: true
+        };
+        
+        await ReportGenerator.generatePDFReport(result, options);
+        toast({
+          title: "PDF Report erfolgreich",
+          description: `${reportType === 'executive' ? 'Executive' : reportType === 'technical' ? 'Technischer' : 'Aktionsplan'} Report für ${result.domain} wurde erstellt`,
+        });
+      }
+    } catch (error) {
+      toast({
+        title: "Fehler beim Report-Export",
+        description: "Der Report konnte nicht erstellt werden. Bitte versuchen Sie es erneut.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsGeneratingReport(null);
+    }
   };
 
   if (results.length === 0) {
@@ -340,10 +382,34 @@ export const AnalysisResults: React.FC<AnalysisResultsProps> = ({ results }) => 
 
                 {/* Quick Actions */}
                 <div className="flex flex-wrap gap-2 pt-4 border-t">
-                  <Button variant="outline" size="sm" className="gap-2">
-                    <Download className="h-4 w-4" />
-                    Report
-                  </Button>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button 
+                        variant="outline" 
+                        size="sm" 
+                        className="gap-2"
+                        disabled={isGeneratingReport === result.domain}
+                      >
+                        <Download className="h-4 w-4" />
+                        {isGeneratingReport === result.domain ? 'Erstelle...' : 'Report'}
+                        <ChevronDown className="h-3 w-3" />
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="start">
+                      <DropdownMenuItem onClick={() => handleDownloadReport(result, 'pdf-executive')}>
+                        📊 Executive Summary (PDF)
+                      </DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => handleDownloadReport(result, 'pdf-technical')}>
+                        🔧 Technischer Report (PDF)
+                      </DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => handleDownloadReport(result, 'pdf-action-plan')}>
+                        📋 Aktionsplan (PDF)
+                      </DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => handleDownloadReport(result, 'csv')}>
+                        📁 Detaillierte Daten (CSV)
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
                   <Button 
                     variant="outline" 
                     size="sm"
