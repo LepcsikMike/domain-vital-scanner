@@ -25,196 +25,443 @@ export class ReportGenerator {
     const pageHeight = pdf.internal.pageSize.getHeight();
     let yPosition = 20;
 
-    // Title
-    pdf.setFontSize(24);
-    pdf.setTextColor(59, 130, 246); // primary blue
-    pdf.text('Domain Analyse Report', 20, yPosition);
-    yPosition += 15;
+    // Design System Colors (HSL converted to RGB)
+    const colors = {
+      primary: [34, 60, 29], // hsl(222.2 47.4% 11.2%) 
+      primaryLight: [59, 130, 246], // Primary blue accent
+      success: [34, 134, 58], // hsl(142.1 76.2% 36.3%)
+      warning: [251, 191, 36], // hsl(47.9 95.8% 53.1%)
+      destructive: [220, 38, 127], // hsl(0 84.2% 60.2%)
+      muted: [107, 114, 128], // Gray
+      background: [248, 250, 252],
+      text: [30, 41, 59]
+    };
 
-    // Domain
-    pdf.setFontSize(16);
-    pdf.setTextColor(0, 0, 0);
-    pdf.text(`Domain: ${result.domain}`, 20, yPosition);
-    yPosition += 10;
+    // Professional Header with Branding
+    yPosition = this.addProfessionalHeader(pdf, result, options, colors, yPosition);
 
-    // Timestamp
-    pdf.setFontSize(12);
-    pdf.setTextColor(107, 114, 128); // gray
-    pdf.text(`Erstellt am: ${new Date(result.timestamp).toLocaleDateString('de-DE')}`, 20, yPosition);
-    yPosition += 20;
+    // Score Dashboard (like website)
+    yPosition = this.addScoreDashboard(pdf, result, colors, yPosition);
 
-    // Executive Summary
-    if (options.type === 'executive' || options.type === 'action-plan') {
-      pdf.setFontSize(16);
-      pdf.setTextColor(0, 0, 0);
-      pdf.text('Executive Summary', 20, yPosition);
-      yPosition += 10;
-
-      // Overall Score
-      const overallScore = this.calculateOverallScore(result);
-      pdf.setFontSize(12);
-      pdf.text(`Gesamtbewertung: ${overallScore}/100`, 20, yPosition);
-      yPosition += 8;
-
-      // Critical Issues Count
-      pdf.text(`Kritische Probleme: ${result.criticalIssues}`, 20, yPosition);
-      yPosition += 8;
-
-      // Status Summary
-      const statusText = result.httpsStatus.valid ? 'Sicher (HTTPS)' : 'Unsicher (HTTP)';
-      pdf.text(`Sicherheitsstatus: ${statusText}`, 20, yPosition);
-      yPosition += 15;
+    // Critical Issues Section
+    if (result.criticalIssues > 0) {
+      yPosition = this.addCriticalIssuesSection(pdf, result, colors, yPosition);
     }
 
-    // Technical Details
-    if (options.type === 'technical' || options.type === 'action-plan') {
-      pdf.setFontSize(16);
-      pdf.text('Technische Details', 20, yPosition);
-      yPosition += 10;
+    // Content based on report type
+    yPosition = this.addReportContent(pdf, result, options, colors, yPosition, pageHeight);
 
-      // Technology Stack
-      pdf.setFontSize(12);
-      pdf.text('Erkannte Technologien:', 20, yPosition);
-      yPosition += 8;
-
-      if (result.technologyAudit.cmsDetected) {
-        pdf.text(`• CMS: ${result.technologyAudit.cmsDetected}`, 25, yPosition);
-        yPosition += 6;
-      }
-
-      if (result.technologyDetails.jsLibraries.length > 0) {
-        pdf.text(`• JavaScript: ${result.technologyDetails.jsLibraries.slice(0, 3).join(', ')}`, 25, yPosition);
-        yPosition += 6;
-      }
-
-      if (result.technologyDetails.cssFrameworks.length > 0) {
-        pdf.text(`• CSS Frameworks: ${result.technologyDetails.cssFrameworks.slice(0, 3).join(', ')}`, 25, yPosition);
-        yPosition += 6;
-      }
-
-      yPosition += 10;
-
-      // Performance Scores
-      pdf.text('Performance Scores:', 20, yPosition);
-      yPosition += 8;
-
-      if (result.pageSpeedScores.mobile) {
-        pdf.text(`• Mobile: ${result.pageSpeedScores.mobile}/100`, 25, yPosition);
-        yPosition += 6;
-      }
-
-      if (result.pageSpeedScores.desktop) {
-        pdf.text(`• Desktop: ${result.pageSpeedScores.desktop}/100`, 25, yPosition);
-        yPosition += 6;
-      }
-
-      yPosition += 10;
-    }
-
-    // Security Audit
-    pdf.setFontSize(16);
-    pdf.text('Sicherheitsaudit', 20, yPosition);
-    yPosition += 10;
-
-    pdf.setFontSize(12);
-    pdf.text(`Sicherheitsscore: ${result.securityAudit.score}/100`, 20, yPosition);
-    yPosition += 8;
-
-    if (result.securityAudit.vulnerableLibraries.length > 0) {
-      pdf.text('Vulnerable Bibliotheken:', 20, yPosition);
-      yPosition += 6;
-      result.securityAudit.vulnerableLibraries.slice(0, 5).forEach(lib => {
-        pdf.text(`• ${lib}`, 25, yPosition);
-        yPosition += 6;
-      });
-      yPosition += 5;
-    }
-
-    if (result.securityAudit.outdatedVersions.length > 0) {
-      pdf.text('Veraltete Versionen:', 20, yPosition);
-      yPosition += 6;
-      result.securityAudit.outdatedVersions.slice(0, 5).forEach(version => {
-        pdf.text(`• ${version}`, 25, yPosition);
-        yPosition += 6;
-      });
-      yPosition += 5;
-    }
-
-    // SEO Audit
-    if (yPosition > pageHeight - 40) {
-      pdf.addPage();
-      yPosition = 20;
-    }
-
-    pdf.setFontSize(16);
-    pdf.text('SEO Audit', 20, yPosition);
-    yPosition += 10;
-
-    pdf.setFontSize(12);
-    const seoStatus = [
-      `Title Tag: ${result.seoAudit.hasTitle ? '✓' : '✗'}`,
-      `Meta Description: ${result.seoAudit.hasMetaDescription ? '✓' : '✗'}`,
-      `H1 Tag: ${result.seoAudit.hasH1 ? '✓' : '✗'}`
-    ];
-
-    seoStatus.forEach(status => {
-      pdf.text(status, 20, yPosition);
-      yPosition += 6;
-    });
-
-    if (result.seoAudit.issues.length > 0) {
-      yPosition += 5;
-      pdf.text('SEO Probleme:', 20, yPosition);
-      yPosition += 6;
-      result.seoAudit.issues.slice(0, 5).forEach(issue => {
-        pdf.text(`• ${issue}`, 25, yPosition);
-        yPosition += 6;
-      });
-    }
-
-    // Action Items (for action-plan type)
-    if (options.type === 'action-plan' || options.includeRecommendations) {
-      if (yPosition > pageHeight - 60) {
-        pdf.addPage();
-        yPosition = 20;
-      }
-
-      pdf.setFontSize(16);
-      pdf.text('Empfohlene Maßnahmen', 20, yPosition);
-      yPosition += 10;
-
-      const actionItems = this.generateActionItems(result);
-      pdf.setFontSize(12);
-
-      actionItems.forEach((item, index) => {
-        if (yPosition > pageHeight - 20) {
-          pdf.addPage();
-          yPosition = 20;
-        }
-
-        pdf.text(`${index + 1}. ${item.title}`, 20, yPosition);
-        yPosition += 6;
-        pdf.setFontSize(10);
-        pdf.text(`   Priorität: ${item.priority} | Aufwand: ${item.effort}`, 20, yPosition);
-        yPosition += 6;
-        pdf.setFontSize(12);
-        yPosition += 3;
-      });
-    }
-
-    // Footer
-    const totalPages = pdf.internal.pages.length - 1;
-    for (let i = 1; i <= totalPages; i++) {
-      pdf.setPage(i);
-      pdf.setFontSize(8);
-      pdf.setTextColor(107, 114, 128);
-      pdf.text(`Seite ${i} von ${totalPages}`, pageWidth - 30, pageHeight - 10);
-      pdf.text(`© ${new Date().getFullYear()} Domain Analyzer`, 20, pageHeight - 10);
-    }
+    // Enhanced Footer with contact
+    this.addEnhancedFooter(pdf, pageWidth, pageHeight);
 
     // Save PDF
     const fileName = `${result.domain}-report-${options.type}-${new Date().toISOString().split('T')[0]}.pdf`;
     pdf.save(fileName);
+  }
+
+  private static addProfessionalHeader(
+    pdf: jsPDF, 
+    result: DomainAnalysisResult, 
+    options: ReportOptions, 
+    colors: any, 
+    yPosition: number
+  ): number {
+    const pageWidth = pdf.internal.pageSize.getWidth();
+    
+    // Background header bar
+    pdf.setFillColor(colors.primaryLight[0], colors.primaryLight[1], colors.primaryLight[2]);
+    pdf.rect(0, 0, pageWidth, 50, 'F');
+    
+    // Company branding
+    pdf.setFontSize(24);
+    pdf.setTextColor(255, 255, 255);
+    pdf.text('Domain Analyzer Pro', 20, 25);
+    
+    // Report type badge
+    const reportTypeText = {
+      'executive': 'Executive Summary',
+      'technical': 'Technical Deep-Dive',
+      'action-plan': 'Action Plan',
+      'competitor': 'Competitor Analysis'
+    }[options.type];
+    
+    pdf.setFontSize(10);
+    pdf.setFillColor(255, 255, 255);
+    pdf.roundedRect(pageWidth - 80, 15, 60, 15, 3, 3, 'F');
+    pdf.setTextColor(colors.primaryLight[0], colors.primaryLight[1], colors.primaryLight[2]);
+    pdf.text(reportTypeText, pageWidth - 75, 25);
+    
+    // Domain and date
+    pdf.setFontSize(20);
+    pdf.setTextColor(colors.text[0], colors.text[1], colors.text[2]);
+    pdf.text(result.domain, 20, 65);
+    
+    pdf.setFontSize(12);
+    pdf.setTextColor(colors.muted[0], colors.muted[1], colors.muted[2]);
+    pdf.text(`Erstellt am: ${new Date(result.timestamp).toLocaleDateString('de-DE')}`, 20, 75);
+    
+    return 90;
+  }
+
+  private static addScoreDashboard(
+    pdf: jsPDF, 
+    result: DomainAnalysisResult, 
+    colors: any, 
+    yPosition: number
+  ): number {
+    const pageWidth = pdf.internal.pageSize.getWidth();
+    const overallScore = this.calculateOverallScore(result);
+    const performanceScore = this.calculatePerformanceScore(result);
+    const securityScore = result.securityAudit.score;
+    const seoScore = this.calculateSEOScore(result);
+    
+    // Dashboard background
+    pdf.setFillColor(colors.background[0], colors.background[1], colors.background[2]);
+    pdf.roundedRect(15, yPosition, pageWidth - 30, 60, 5, 5, 'F');
+    
+    // Dashboard title
+    pdf.setFontSize(16);
+    pdf.setTextColor(colors.text[0], colors.text[1], colors.text[2]);
+    pdf.text('Score Dashboard', 25, yPosition + 15);
+    
+    // Score circles
+    const scores = [
+      { label: 'Overall', score: overallScore, x: 40 },
+      { label: 'Performance', score: performanceScore, x: 90 },
+      { label: 'Security', score: securityScore, x: 140 },
+      { label: 'SEO', score: seoScore, x: 190 }
+    ];
+    
+    scores.forEach(({ label, score, x }) => {
+      this.drawScoreCircle(pdf, x, yPosition + 35, score, colors);
+      
+      // Score text
+      pdf.setFontSize(14);
+      pdf.setTextColor(colors.text[0], colors.text[1], colors.text[2]);
+      pdf.text(score.toString(), x - 5, yPosition + 38);
+      
+      // Label
+      pdf.setFontSize(8);
+      pdf.setTextColor(colors.muted[0], colors.muted[1], colors.muted[2]);
+      pdf.text(label, x - 10, yPosition + 50);
+    });
+    
+    return yPosition + 75;
+  }
+
+  private static drawScoreCircle(pdf: jsPDF, x: number, y: number, score: number, colors: any): void {
+    const radius = 12;
+    
+    // Background circle
+    pdf.setDrawColor(240, 240, 240);
+    pdf.setLineWidth(3);
+    pdf.circle(x, y, radius, 'S');
+    
+    // Score color based on value
+    let scoreColor = colors.success;
+    if (score < 50) scoreColor = colors.destructive;
+    else if (score < 70) scoreColor = colors.warning;
+    else if (score < 90) scoreColor = [255, 165, 0]; // Orange
+    
+    // Progress arc
+    pdf.setDrawColor(scoreColor[0], scoreColor[1], scoreColor[2]);
+    pdf.setLineWidth(3);
+    
+    const startAngle = -90;
+    const endAngle = startAngle + (score / 100) * 360;
+    this.drawArc(pdf, x, y, radius, startAngle, endAngle);
+  }
+
+  private static drawArc(pdf: jsPDF, x: number, y: number, radius: number, startAngle: number, endAngle: number): void {
+    const segments = Math.max(1, Math.floor((endAngle - startAngle) / 5));
+    const angleStep = (endAngle - startAngle) / segments;
+    
+    for (let i = 0; i < segments; i++) {
+      const angle1 = (startAngle + i * angleStep) * Math.PI / 180;
+      const angle2 = (startAngle + (i + 1) * angleStep) * Math.PI / 180;
+      
+      const x1 = x + radius * Math.cos(angle1);
+      const y1 = y + radius * Math.sin(angle1);
+      const x2 = x + radius * Math.cos(angle2);
+      const y2 = y + radius * Math.sin(angle2);
+      
+      pdf.line(x1, y1, x2, y2);
+    }
+  }
+
+  private static addCriticalIssuesSection(
+    pdf: jsPDF, 
+    result: DomainAnalysisResult, 
+    colors: any, 
+    yPosition: number
+  ): number {
+    const pageWidth = pdf.internal.pageSize.getWidth();
+    
+    // Critical issues header with red background
+    pdf.setFillColor(colors.destructive[0], colors.destructive[1], colors.destructive[2]);
+    pdf.roundedRect(15, yPosition, pageWidth - 30, 25, 5, 5, 'F');
+    
+    pdf.setFontSize(14);
+    pdf.setTextColor(255, 255, 255);
+    pdf.text('⚠️ Kritische Probleme', 25, yPosition + 15);
+    
+    pdf.setFontSize(12);
+    pdf.text(`${result.criticalIssues} Probleme gefunden`, pageWidth - 80, yPosition + 15);
+    
+    yPosition += 35;
+    
+    // List critical issues
+    const criticalIssues = this.getCriticalIssuesList(result);
+    
+    criticalIssues.slice(0, 5).forEach((issue, index) => {
+      pdf.setFontSize(10);
+      pdf.setTextColor(colors.destructive[0], colors.destructive[1], colors.destructive[2]);
+      pdf.text('●', 25, yPosition);
+      
+      pdf.setTextColor(colors.text[0], colors.text[1], colors.text[2]);
+      pdf.text(issue, 30, yPosition);
+      yPosition += 8;
+    });
+    
+    return yPosition + 10;
+  }
+
+  private static addReportContent(
+    pdf: jsPDF, 
+    result: DomainAnalysisResult, 
+    options: ReportOptions, 
+    colors: any, 
+    yPosition: number,
+    pageHeight: number
+  ): number {
+    
+    if (options.type === 'executive') {
+      yPosition = this.addExecutiveContent(pdf, result, colors, yPosition, pageHeight);
+    } else if (options.type === 'technical') {
+      yPosition = this.addTechnicalContent(pdf, result, colors, yPosition, pageHeight);
+    } else if (options.type === 'action-plan') {
+      yPosition = this.addActionPlanContent(pdf, result, colors, yPosition, pageHeight);
+    }
+    
+    return yPosition;
+  }
+
+  private static addExecutiveContent(
+    pdf: jsPDF, 
+    result: DomainAnalysisResult, 
+    colors: any, 
+    yPosition: number,
+    pageHeight: number
+  ): number {
+    
+    // Key Insights Section
+    yPosition = this.addSection(pdf, 'Executive Summary', colors, yPosition);
+    
+    const insights = [
+      `Gesamtbewertung: ${this.calculateOverallScore(result)}/100`,
+      `Sicherheitsstatus: ${result.httpsStatus.valid ? 'Sicher (HTTPS)' : 'Unsicher (HTTP)'}`,
+      `Performance: ${this.calculatePerformanceScore(result)}/100`,
+      `SEO-Optimierung: ${this.calculateSEOScore(result)}/100`
+    ];
+    
+    insights.forEach(insight => {
+      pdf.setFontSize(11);
+      pdf.setTextColor(colors.text[0], colors.text[1], colors.text[2]);
+      pdf.text(`• ${insight}`, 25, yPosition);
+      yPosition += 8;
+    });
+    
+    yPosition += 15;
+    
+    // Business Impact
+    yPosition = this.addSection(pdf, 'Business Impact', colors, yPosition);
+    
+    const businessImpacts = [
+      'Verbesserung der Suchmaschinenrankings durch SEO-Optimierung',
+      'Erhöhung der Conversion-Rate durch bessere Performance',
+      'Schutz vor Sicherheitsbedrohungen und Datenlecks',
+      'Stärkung des Vertrauens bei Kunden und Partnern'
+    ];
+    
+    businessImpacts.forEach(impact => {
+      pdf.setFontSize(10);
+      pdf.text(`• ${impact}`, 25, yPosition);
+      yPosition += 7;
+    });
+    
+    return yPosition + 10;
+  }
+
+  private static addTechnicalContent(
+    pdf: jsPDF, 
+    result: DomainAnalysisResult, 
+    colors: any, 
+    yPosition: number,
+    pageHeight: number
+  ): number {
+    
+    // Technology Stack
+    yPosition = this.addSection(pdf, 'Technology Stack', colors, yPosition);
+    
+    if (result.technologyAudit.cmsDetected) {
+      pdf.setFontSize(11);
+      pdf.text(`Content Management System: ${result.technologyAudit.cmsDetected}`, 25, yPosition);
+      yPosition += 8;
+    }
+    
+    if (result.technologyDetails.jsLibraries.length > 0) {
+      pdf.text(`JavaScript Libraries: ${result.technologyDetails.jsLibraries.slice(0, 5).join(', ')}`, 25, yPosition);
+      yPosition += 8;
+    }
+    
+    if (result.technologyDetails.cssFrameworks.length > 0) {
+      pdf.text(`CSS Frameworks: ${result.technologyDetails.cssFrameworks.slice(0, 3).join(', ')}`, 25, yPosition);
+      yPosition += 8;
+    }
+    
+    yPosition += 10;
+    
+    // Performance Metrics
+    yPosition = this.addSection(pdf, 'Performance Metrics', colors, yPosition);
+    
+    const metrics = [
+      `Mobile PageSpeed: ${result.pageSpeedScores.mobile || 'N/A'}/100`,
+      `Desktop PageSpeed: ${result.pageSpeedScores.desktop || 'N/A'}/100`,
+      `Largest Contentful Paint: ${result.coreWebVitals.lcp || 'N/A'}`,
+      `Cumulative Layout Shift: ${result.coreWebVitals.cls || 'N/A'}`,
+      `Interaction to Next Paint: ${result.coreWebVitals.inp || 'N/A'}`
+    ];
+    
+    metrics.forEach(metric => {
+      pdf.setFontSize(10);
+      pdf.text(`• ${metric}`, 25, yPosition);
+      yPosition += 7;
+    });
+    
+    return yPosition + 10;
+  }
+
+  private static addActionPlanContent(
+    pdf: jsPDF, 
+    result: DomainAnalysisResult, 
+    colors: any, 
+    yPosition: number,
+    pageHeight: number
+  ): number {
+    
+    yPosition = this.addSection(pdf, 'Priorisierte Handlungsempfehlungen', colors, yPosition);
+    
+    const actionItems = this.generateActionItems(result);
+    
+    actionItems.slice(0, 8).forEach((item, index) => {
+      if (yPosition > pageHeight - 40) {
+        pdf.addPage();
+        yPosition = 30;
+      }
+      
+      // Priority badge
+      const priorityColor = item.priority === 'Hoch' ? colors.destructive : 
+                           item.priority === 'Mittel' ? colors.warning : colors.success;
+      
+      pdf.setFillColor(priorityColor[0], priorityColor[1], priorityColor[2]);
+      pdf.roundedRect(25, yPosition - 5, 15, 8, 2, 2, 'F');
+      
+      pdf.setFontSize(8);
+      pdf.setTextColor(255, 255, 255);
+      pdf.text(item.priority, 27, yPosition);
+      
+      // Action item
+      pdf.setFontSize(11);
+      pdf.setTextColor(colors.text[0], colors.text[1], colors.text[2]);
+      pdf.text(`${index + 1}. ${item.title}`, 45, yPosition);
+      
+      pdf.setFontSize(9);
+      pdf.setTextColor(colors.muted[0], colors.muted[1], colors.muted[2]);
+      pdf.text(`Aufwand: ${item.effort}`, 45, yPosition + 8);
+      
+      yPosition += 20;
+    });
+    
+    return yPosition;
+  }
+
+  private static addSection(pdf: jsPDF, title: string, colors: any, yPosition: number): number {
+    pdf.setFontSize(14);
+    pdf.setTextColor(colors.primaryLight[0], colors.primaryLight[1], colors.primaryLight[2]);
+    pdf.text(title, 20, yPosition);
+    
+    // Underline
+    pdf.setDrawColor(colors.primaryLight[0], colors.primaryLight[1], colors.primaryLight[2]);
+    pdf.setLineWidth(0.5);
+    pdf.line(20, yPosition + 2, 20 + pdf.getTextWidth(title), yPosition + 2);
+    
+    return yPosition + 15;
+  }
+
+  private static addEnhancedFooter(pdf: jsPDF, pageWidth: number, pageHeight: number): void {
+    const totalPages = pdf.internal.pages.length - 1;
+    
+    for (let i = 1; i <= totalPages; i++) {
+      pdf.setPage(i);
+      
+      // Footer background
+      pdf.setFillColor(248, 250, 252);
+      pdf.rect(0, pageHeight - 25, pageWidth, 25, 'F');
+      
+      // Contact email
+      pdf.setFontSize(10);
+      pdf.setTextColor(59, 130, 246);
+      pdf.text('hi@inspiroware.com', 20, pageHeight - 10);
+      
+      // Page number
+      pdf.setTextColor(107, 114, 128);
+      pdf.text(`Seite ${i} von ${totalPages}`, pageWidth - 40, pageHeight - 10);
+      
+      // Copyright
+      pdf.setFontSize(8);
+      pdf.text(`© ${new Date().getFullYear()} Domain Analyzer Pro - Powered by Inspiroware`, 20, pageHeight - 5);
+    }
+  }
+
+  private static calculatePerformanceScore(result: DomainAnalysisResult): number {
+    const mobile = result.pageSpeedScores.mobile || 0;
+    const desktop = result.pageSpeedScores.desktop || 0;
+    
+    if (mobile === 0 && desktop === 0) return 0;
+    if (mobile === 0) return desktop;
+    if (desktop === 0) return mobile;
+    
+    return Math.round((mobile + desktop) / 2);
+  }
+
+  private static getCriticalIssuesList(result: DomainAnalysisResult): string[] {
+    const issues = [];
+    
+    if (!result.httpsStatus.valid) {
+      issues.push('Fehlende HTTPS-Verschlüsselung');
+    }
+    
+    if (result.securityAudit.vulnerableLibraries.length > 0) {
+      issues.push(`${result.securityAudit.vulnerableLibraries.length} vulnerable Bibliotheken`);
+    }
+    
+    if (result.technologyAudit.outdatedTechnologies.length > 0) {
+      issues.push(`${result.technologyAudit.outdatedTechnologies.length} veraltete Technologien`);
+    }
+    
+    if (result.pageSpeedScores.mobile && result.pageSpeedScores.mobile < 50) {
+      issues.push('Schlechte Mobile Performance');
+    }
+    
+    if (!result.seoAudit.hasTitle) {
+      issues.push('Fehlender Title Tag');
+    }
+    
+    if (result.securityAudit.score < 50) {
+      issues.push('Kritische Sicherheitslücken');
+    }
+    
+    return issues;
   }
 
   static generateEnhancedCSV(results: DomainAnalysisResult[]): void {
