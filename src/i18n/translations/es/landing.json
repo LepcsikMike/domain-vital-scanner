@@ -14,29 +14,63 @@
   "features": {
     "title": "Características Potentes de Análisis Web",
     "subtitle": "Todo lo que necesitas para auditorías profesionales de sitios web",
-    "domainAnalysis": {
-      "title": "Análisis de Dominio",
-      "description": "Análisis integral de dominios con información detallada sobre rendimiento, SEO y aspectos técnicos."
-    },
-    "technologyDetection": {
-      "title": "Detección de Tecnología",
-      "description": "Detección automática de tecnologías, frameworks y herramientas utilizadas en cualquier sitio web."
-    },
-    "competitorAnalysis": {
-      "title": "Análisis de Competencia",
-      "description": "Compara tu sitio web con competidores e identifica oportunidades de optimización."
-    },
     "pdfReports": {
       "title": "Informes PDF Profesionales",
-      "description": "Genera informes PDF profesionales con Resumen Ejecutivo, Análisis Técnico Detallado y Planes de Acción - perfectos para presentaciones a clientes."
+      "description": "Genera informes PDF profesionales con Resumen Ejecutivo, Análisis Técnico Detallado y Planes de Acción - perfectos para presentaciones a clientes.",
+      "highlights": {
+        "summary": "PDF de Resumen Ejecutivo",
+        "technical": "Informe de Análisis Técnico",
+        "actionPlan": "Plan de Acción con Prioridades"
+      }
     },
-    "exportIntegration": {
-      "title": "Exportación e Integración",
-      "description": "Exportación CSV mejorada con más de 20 campos de datos, informes PDF profesionales e integración perfecta en tus flujos de trabajo existentes."
+    "security": {
+      "title": "Auditoría de Seguridad",
+      "description": "Detección automática de sitios web HTTP, problemas SSL y vulnerabilidades de seguridad",
+      "highlights": {
+        "https": "Estado HTTPS",
+        "ssl": "Verificación de Certificado SSL",
+        "headers": "Cabeceras de Seguridad"
+      }
     },
-    "marketingTools": {
-      "title": "Detección de Herramientas de Marketing",
-      "description": "Detección de Google Analytics, Facebook Pixel, automatización de marketing y otras herramientas importantes de marketing."
+    "performance": {
+      "title": "Análisis de Rendimiento",
+      "description": "Integración con Google PageSpeed Insights con datos reales de Core Web Vitals",
+      "highlights": {
+        "metrics": "LCP, CLS, INP",
+        "devices": "Móvil y Escritorio",
+        "score": "Puntuación de Rendimiento"
+      }
+    },
+    "seo": {
+      "title": "Verificaciones SEO",
+      "description": "Análisis SEO completo con meta tags, sitemap y rastreabilidad",
+      "highlights": {
+        "meta": "Meta Tags",
+        "robots": "Robots.txt",
+        "schema": "Marcado Schema"
+      }
+    },
+    "discovery": {
+      "title": "Descubrimiento de Dominios",
+      "description": "Búsqueda inteligente de dominios con API de Google Custom Search",
+      "highlights": {
+        "industry": "Filtro por Industria",
+        "tld": "Multi-TLD",
+        "crawl": "Common Crawl"
+      }
+    },
+    "export": {
+      "title": "Exportación e Integración Mejorada",
+      "description": "Informes PDF, Exportación CSV Mejorada (20+ campos) y acceso API para integración CRM",
+      "highlights": {
+        "pdf": "Exportación de Informes PDF",
+        "csv": "CSV Mejorado (20+ campos)",
+        "api": "API JSON e Integración CRM"
+      }
+    },
+    "trust": {
+      "secureAnalysis": "Análisis Seguro",
+      "realData": "Datos Reales"
     }
   },
   "howItWorks": {

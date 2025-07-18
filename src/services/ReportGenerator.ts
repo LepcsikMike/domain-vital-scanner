@@ -110,7 +110,7 @@ export class ReportGenerator {
     
     pdf.setFontSize(12);
     pdf.setTextColor(colors.muted[0], colors.muted[1], colors.muted[2]);
-    pdf.text(`Erstellt am: ${new Date(result.timestamp).toLocaleDateString('de-DE')}`, 20, 75);
+    pdf.text(`Generated on: ${new Date(result.timestamp).toLocaleDateString('en-US')}`, 20, 75);
     
     return 90;
   }
@@ -194,10 +194,10 @@ export class ReportGenerator {
     
     pdf.setFontSize(14);
     pdf.setTextColor(255, 255, 255);
-    pdf.text('! Kritische Probleme', 25, yPosition + 15);
+    pdf.text('! Critical Issues', 25, yPosition + 15);
     
     pdf.setFontSize(12);
-    pdf.text(`${result.criticalIssues} Probleme gefunden`, pageWidth - 80, yPosition + 15);
+    pdf.text(`${result.criticalIssues} issues found`, pageWidth - 80, yPosition + 15);
     
     yPosition += 35;
     
@@ -251,10 +251,10 @@ export class ReportGenerator {
     yPosition = this.addSection(pdf, 'Executive Summary', colors, yPosition);
     
     const insights = [
-      `Gesamtbewertung: ${this.calculateOverallScore(result)}/100`,
-      `Sicherheitsstatus: ${result.httpsStatus.valid ? 'Sicher (HTTPS)' : 'Unsicher (HTTP)'}`,
+      `Overall Score: ${this.calculateOverallScore(result)}/100`,
+      `Security Status: ${result.httpsStatus.valid ? 'Secure (HTTPS)' : 'Insecure (HTTP)'}`,
       `Performance: ${this.calculatePerformanceScore(result)}/100`,
-      `SEO-Optimierung: ${this.calculateSEOScore(result)}/100`
+      `SEO Optimization: ${this.calculateSEOScore(result)}/100`
     ];
     
     insights.forEach(insight => {
@@ -272,10 +272,10 @@ export class ReportGenerator {
     yPosition = this.addSection(pdf, 'Business Impact', colors, yPosition);
     
     const businessImpacts = [
-      'Verbesserung der Suchmaschinenrankings durch SEO-Optimierung',
-      'Erhoehung der Conversion-Rate durch bessere Performance',
-      'Schutz vor Sicherheitsbedrohungen und Datenlecks',
-      'Staerkung des Vertrauens bei Kunden und Partnern'
+      'Improvement of search engine rankings through SEO optimization',
+      'Increase in conversion rate through better performance',
+      'Protection against security threats and data leaks',
+      'Strengthening trust with customers and partners'
     ];
     
     businessImpacts.forEach(impact => {
@@ -288,13 +288,13 @@ export class ReportGenerator {
     
     // Strategic Recommendations
     yPosition = this.checkPageBreak(pdf, yPosition, pageHeight, 40);
-    yPosition = this.addSection(pdf, 'Strategische Empfehlungen', colors, yPosition + 15);
+    yPosition = this.addSection(pdf, 'Strategic Recommendations', colors, yPosition + 15);
     
     const recommendations = [
-      'Prioritaet 1: Sicherheit durch HTTPS und Updates staerken',
-      'Prioritaet 2: Page Speed fuer bessere Nutzererfahrung optimieren',
-      'Prioritaet 3: SEO-Grundlagen fuer hoehere Sichtbarkeit umsetzen',
-      'Prioritaet 4: Monitoring-System fuer kontinuierliche Ueberwachung'
+      'Priority 1: Strengthen security through HTTPS and updates',
+      'Priority 2: Optimize page speed for better user experience',
+      'Priority 3: Implement SEO basics for higher visibility',
+      'Priority 4: Set up monitoring system for continuous tracking'
     ];
     
     recommendations.forEach(rec => {
@@ -366,11 +366,11 @@ export class ReportGenerator {
     yPosition = this.addSection(pdf, 'Security Analysis', colors, yPosition + 10);
     
     const securityItems = [
-      `HTTPS Status: ${result.httpsStatus.valid ? 'Aktiv' : 'Nicht aktiv'}`,
-      `SSL-Zertifikat: ${result.httpsStatus.sslValid ? 'Gueltig' : 'Ungueltig'}`,
-      `Sicherheitsscore: ${result.securityAudit.score}/100`,
+      `HTTPS Status: ${result.httpsStatus.valid ? 'Active' : 'Not active'}`,
+      `SSL Certificate: ${result.httpsStatus.sslValid ? 'Valid' : 'Invalid'}`,
+      `Security Score: ${result.securityAudit.score}/100`,
       `Vulnerable Libraries: ${result.securityAudit.vulnerableLibraries.length}`,
-      `Veraltete Technologien: ${result.technologyAudit.outdatedTechnologies.length}`
+      `Outdated Technologies: ${result.technologyAudit.outdatedTechnologies.length}`
     ];
     
     securityItems.forEach(item => {
@@ -385,9 +385,9 @@ export class ReportGenerator {
     yPosition = this.addSection(pdf, 'SEO Analysis', colors, yPosition + 10);
     
     const seoItems = [
-      `Title Tag: ${result.seoAudit.hasTitle ? 'Vorhanden' : 'Fehlt'}`,
-      `Meta Description: ${result.seoAudit.hasMetaDescription ? 'Vorhanden' : 'Fehlt'}`,
-      `H1 Tag: ${result.seoAudit.hasH1 ? 'Vorhanden' : 'Fehlt'}`,
+      `Title Tag: ${result.seoAudit.hasTitle ? 'Present' : 'Missing'}`,
+      `Meta Description: ${result.seoAudit.hasMetaDescription ? 'Present' : 'Missing'}`,
+      `H1 Tag: ${result.seoAudit.hasH1 ? 'Present' : 'Missing'}`,
       `SEO Score: ${this.calculateSEOScore(result)}/100`
     ];
     
@@ -402,7 +402,7 @@ export class ReportGenerator {
       yPosition = this.checkPageBreak(pdf, yPosition, pageHeight, 30);
       pdf.setFontSize(11);
       pdf.setTextColor(colors.warning[0], colors.warning[1], colors.warning[2]);
-      pdf.text('SEO Probleme:', 25, yPosition);
+      pdf.text('SEO Issues:', 25, yPosition);
       yPosition += 10;
       
       result.seoAudit.issues.slice(0, 8).forEach(issue => {
@@ -427,7 +427,7 @@ export class ReportGenerator {
   ): number {
     
     yPosition = this.checkPageBreak(pdf, yPosition, pageHeight, 40);
-    yPosition = this.addSection(pdf, 'Priorisierte Handlungsempfehlungen', colors, yPosition);
+    yPosition = this.addSection(pdf, 'Prioritized Action Items', colors, yPosition);
     
     const actionItems = this.generateActionItems(result);
     
@@ -435,8 +435,8 @@ export class ReportGenerator {
       yPosition = this.checkPageBreak(pdf, yPosition, pageHeight, 30);
       
       // Priority badge
-      const priorityColor = item.priority === 'Hoch' ? colors.destructive : 
-                           item.priority === 'Mittel' ? colors.warning : colors.success;
+      const priorityColor = item.priority === 'High' ? colors.destructive : 
+                           item.priority === 'Medium' ? colors.warning : colors.success;
       
       pdf.setFillColor(priorityColor[0], priorityColor[1], priorityColor[2]);
       pdf.roundedRect(25, yPosition - 3, 20, 10, 2, 2, 'F');
@@ -453,20 +453,20 @@ export class ReportGenerator {
       
       pdf.setFontSize(9);
       pdf.setTextColor(colors.muted[0], colors.muted[1], colors.muted[2]);
-      pdf.text(`Aufwand: ${item.effort}`, 50, yPosition + (titleText.length * 6) + 5);
+      pdf.text(`Effort: ${item.effort}`, 50, yPosition + (titleText.length * 6) + 5);
       
       yPosition += Math.max(20, titleText.length * 6 + 15);
     });
     
     // Add Implementation Timeline
     yPosition = this.checkPageBreak(pdf, yPosition, pageHeight, 50);
-    yPosition = this.addSection(pdf, 'Umsetzungsplan', colors, yPosition + 15);
+    yPosition = this.addSection(pdf, 'Implementation Timeline', colors, yPosition + 15);
     
     const timeline = [
-      'Woche 1-2: Kritische Sicherheitsprobleme beheben',
-      'Woche 3-4: Performance-Optimierungen umsetzen',
-      'Woche 5-6: SEO-Verbesserungen implementieren',
-      'Woche 7-8: Monitoring und finale Tests'
+      'Week 1-2: Fix critical security issues',
+      'Week 3-4: Implement performance optimizations',
+      'Week 5-6: Implement SEO improvements',
+      'Week 7-8: Monitoring and final tests'
     ];
     
     timeline.forEach(phase => {
@@ -510,7 +510,7 @@ export class ReportGenerator {
       
       // Page number
       pdf.setTextColor(107, 114, 128);
-      pdf.text(`Seite ${i} von ${totalPages}`, pageWidth - 40, pageHeight - 10);
+      pdf.text(`Page ${i} of ${totalPages}`, pageWidth - 40, pageHeight - 10);
       
       // Copyright
       pdf.setFontSize(8);
@@ -533,27 +533,27 @@ export class ReportGenerator {
     const issues = [];
     
     if (!result.httpsStatus.valid) {
-      issues.push('Fehlende HTTPS-Verschlüsselung');
+      issues.push('Missing HTTPS encryption');
     }
     
     if (result.securityAudit.vulnerableLibraries.length > 0) {
-      issues.push(`${result.securityAudit.vulnerableLibraries.length} vulnerable Bibliotheken`);
+      issues.push(`${result.securityAudit.vulnerableLibraries.length} vulnerable libraries`);
     }
     
     if (result.technologyAudit.outdatedTechnologies.length > 0) {
-      issues.push(`${result.technologyAudit.outdatedTechnologies.length} veraltete Technologien`);
+      issues.push(`${result.technologyAudit.outdatedTechnologies.length} outdated technologies`);
     }
     
     if (result.pageSpeedScores.mobile && result.pageSpeedScores.mobile < 50) {
-      issues.push('Schlechte Mobile Performance');
+      issues.push('Poor Mobile Performance');
     }
     
     if (!result.seoAudit.hasTitle) {
-      issues.push('Fehlender Title Tag');
+      issues.push('Missing Title Tag');
     }
     
     if (result.securityAudit.score < 50) {
-      issues.push('Kritische Sicherheitslücken');
+      issues.push('Critical Security Vulnerabilities');
     }
     
     return issues;
@@ -562,12 +562,12 @@ export class ReportGenerator {
   static generateEnhancedCSV(results: DomainAnalysisResult[]): void {
     const headers = [
       'Domain',
-      'Analyse_Datum',
+      'Analysis_Date',
       'HTTPS_Status',
-      'SSL_Gültig',
-      'CMS_Erkannt',
-      'Veraltete_Technologien',
-      'JavaScript_Bibliotheken',
+      'SSL_Valid',
+      'CMS_Detected',
+      'Outdated_Technologies',
+      'JavaScript_Libraries',
       'CSS_Frameworks',
       'Marketing_Tools',
       'PageSpeed_Mobile',
@@ -576,45 +576,45 @@ export class ReportGenerator {
       'CLS',
       'INP',
       'SEO_Score',
-      'SEO_Probleme',
-      'Sicherheitsscore',
-      'Vulnerable_Bibliotheken',
-      'Veraltete_Versionen',
-      'Sicherheitsheader',
-      'Kritische_Probleme',
-      'Branche',
-      'Marktposition',
-      'Empfehlungen'
+      'SEO_Issues',
+      'Security_Score',
+      'Vulnerable_Libraries',
+      'Outdated_Versions',
+      'Security_Headers',
+      'Critical_Issues',
+      'Industry',
+      'Market_Position',
+      'Recommendations'
     ];
 
     const csvData = results.map(result => [
       result.domain,
-      new Date(result.timestamp).toLocaleDateString('de-DE'),
-      result.httpsStatus.valid ? 'Ja' : 'Nein',
-      result.httpsStatus.sslValid ? 'Ja' : 'Nein',
-      result.technologyAudit.cmsDetected || 'Nicht erkannt',
-      result.technologyAudit.outdatedTechnologies.join('; ') || 'Keine',
-      result.technologyDetails.jsLibraries.join('; ') || 'Keine',
-      result.technologyDetails.cssFrameworks.join('; ') || 'Keine',
+      new Date(result.timestamp).toLocaleDateString('en-US'),
+      result.httpsStatus.valid ? 'Yes' : 'No',
+      result.httpsStatus.sslValid ? 'Yes' : 'No',
+      result.technologyAudit.cmsDetected || 'Not detected',
+      result.technologyAudit.outdatedTechnologies.join('; ') || 'None',
+      result.technologyDetails.jsLibraries.join('; ') || 'None',
+      result.technologyDetails.cssFrameworks.join('; ') || 'None',
       [
         ...result.marketingTools.googleAnalytics,
         ...result.marketingTools.facebookPixel,
         ...result.marketingTools.googleTagManager
-      ].join('; ') || 'Keine',
+      ].join('; ') || 'None',
       result.pageSpeedScores.mobile || 'N/A',
       result.pageSpeedScores.desktop || 'N/A',
       result.coreWebVitals.lcp || 'N/A',
       result.coreWebVitals.cls || 'N/A',
       result.coreWebVitals.inp || 'N/A',
       this.calculateSEOScore(result),
-      result.seoAudit.issues.join('; ') || 'Keine',
+      result.seoAudit.issues.join('; ') || 'None',
       result.securityAudit.score,
-      result.securityAudit.vulnerableLibraries.join('; ') || 'Keine',
-      result.securityAudit.outdatedVersions.join('; ') || 'Keine',
+      result.securityAudit.vulnerableLibraries.join('; ') || 'None',
+      result.securityAudit.outdatedVersions.join('; ') || 'None',
       this.getSecurityHeadersStatus(result.securityAudit.securityHeaders),
       result.criticalIssues,
-      result.competitorInsights.industryCategory || 'Unbekannt',
-      result.competitorInsights.marketPosition || 'Unbekannt',
+      result.competitorInsights.industryCategory || 'Unknown',
+      result.competitorInsights.marketPosition || 'Unknown',
       this.generateActionItems(result).slice(0, 3).map(item => item.title).join('; ')
     ]);
 
@@ -627,7 +627,7 @@ export class ReportGenerator {
     const link = document.createElement('a');
     const url = URL.createObjectURL(blob);
     link.setAttribute('href', url);
-    link.setAttribute('download', `erweiterte-domain-analyse-${new Date().toISOString().split('T')[0]}.csv`);
+    link.setAttribute('download', `enhanced-domain-analysis-${new Date().toISOString().split('T')[0]}.csv`);
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -685,7 +685,7 @@ export class ReportGenerator {
     if (headers.csp) active.push('CSP');
     if (headers.xFrameOptions) active.push('X-Frame-Options');
     if (headers.xContentTypeOptions) active.push('X-Content-Type-Options');
-    return active.join('; ') || 'Keine';
+    return active.join('; ') || 'None';
   }
 
   private static generateActionItems(result: DomainAnalysisResult) {
@@ -694,61 +694,61 @@ export class ReportGenerator {
     // HTTPS Issues
     if (!result.httpsStatus.valid) {
       items.push({
-        title: 'HTTPS-Verschlüsselung implementieren',
-        priority: 'Hoch',
-        effort: 'Mittel'
+        title: 'Implement HTTPS encryption',
+        priority: 'High',
+        effort: 'Medium'
       });
     }
 
     // Outdated Technologies
     if (result.technologyAudit.outdatedTechnologies.length > 0) {
       items.push({
-        title: 'Veraltete Technologien aktualisieren',
-        priority: 'Hoch',
-        effort: 'Hoch'
+        title: 'Update outdated technologies',
+        priority: 'High',
+        effort: 'High'
       });
     }
 
     // Page Speed
     if (result.pageSpeedScores.mobile && result.pageSpeedScores.mobile < 50) {
       items.push({
-        title: 'Mobile Performance optimieren',
-        priority: 'Hoch',
-        effort: 'Mittel'
+        title: 'Optimize mobile performance',
+        priority: 'High',
+        effort: 'Medium'
       });
     }
 
     // SEO Issues
     if (!result.seoAudit.hasTitle) {
       items.push({
-        title: 'Title Tag hinzufügen',
-        priority: 'Mittel',
-        effort: 'Niedrig'
+        title: 'Add title tag',
+        priority: 'Medium',
+        effort: 'Low'
       });
     }
 
     if (!result.seoAudit.hasMetaDescription) {
       items.push({
-        title: 'Meta Description hinzufügen',
-        priority: 'Mittel',
-        effort: 'Niedrig'
+        title: 'Add meta description',
+        priority: 'Medium',
+        effort: 'Low'
       });
     }
 
     // Security Issues
     if (result.securityAudit.vulnerableLibraries.length > 0) {
       items.push({
-        title: 'Sicherheitslücken in Bibliotheken schließen',
-        priority: 'Hoch',
-        effort: 'Mittel'
+        title: 'Fix security vulnerabilities in libraries',
+        priority: 'High',
+        effort: 'Medium'
       });
     }
 
     if (result.securityAudit.score < 70) {
       items.push({
-        title: 'Sicherheitsheader konfigurieren',
-        priority: 'Mittel',
-        effort: 'Niedrig'
+        title: 'Configure security headers',
+        priority: 'Medium',
+        effort: 'Low'
       });
     }
 

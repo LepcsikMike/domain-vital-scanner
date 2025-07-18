@@ -1,152 +1,172 @@
 {
-  "hero": {
-    "consultation": "Kostenlose Beratung buchen",
-    "badge": "Professionelle Website-Analyse",
-    "headline": "Website-Analyse mit professionellen PDF-Reports",
-    "description": "Analysieren Sie Domains mit Google PageSpeed, Core Web Vitals und erstellen Sie professionelle PDF-Reports. Für Agenturen, SEO-Experten und Unternehmen.",
-    "testFree": "Kostenlos testen",
-    "bookDemo": "Demo buchen",
-    "trust1": "Google PageSpeed API",
-    "trust2": "Professionelle PDF-Reports",
-    "trust3": "Core Web Vitals Monitoring",
-    "trust4": "Enhanced CSV Export"
-  },
   "features": {
-    "title": "Leistungsstarke Website-Analyse-Features",
-    "subtitle": "Alles was Sie für professionelle Website-Audits benötigen",
-    "domainAnalysis": {
-      "title": "Domain-Analyse",
-      "description": "Umfassende Analyse von Domains mit detaillierten Einblicken in Performance, SEO und technische Aspekte."
-    },
-    "technologyDetection": {
-      "title": "Technologie-Erkennung",
-      "description": "Automatische Erkennung von verwendeten Technologien, Frameworks und Tools auf jeder Website."
-    },
-    "competitorAnalysis": {
-      "title": "Konkurrenzanalyse",
-      "description": "Vergleichen Sie Ihre Website mit Mitbewerbern und identifizieren Sie Optimierungsmöglichkeiten."
-    },
-    "pdfReports": {
+    "pdf": {
       "title": "Professional PDF Reports",
-      "description": "Generieren Sie professionelle PDF-Reports mit Executive Summary, Technical Deep-Dive und Action Plans - perfekt für Kundenpräsentationen."
+      "description": "Comprehensive PDF reports with executive summary and action plan",
+      "highlights": {
+        "summary": "Executive Summary PDF",
+        "technical": "Technical Analysis",
+        "actionPlan": "Prioritized Action Plan"
+      }
     },
-    "exportIntegration": {
+    "security": {
+      "title": "Security Audit",
+      "description": "Automatic detection of HTTP websites, SSL issues and security vulnerabilities",
+      "highlights": {
+        "https": "HTTPS Status",
+        "ssl": "SSL Certificate Check",
+        "headers": "Security Headers"
+      }
+    },
+    "performance": {
+      "title": "Performance Analysis",
+      "description": "Google PageSpeed Insights integration with real Core Web Vitals data",
+      "highlights": {
+        "metrics": "LCP, CLS, INP",
+        "devices": "Mobile & Desktop",
+        "score": "Performance Score"
+      }
+    },
+    "seo": {
+      "title": "SEO Checks",
+      "description": "Comprehensive SEO analysis with meta tags, sitemap and crawlability",
+      "highlights": {
+        "meta": "Meta Tags",
+        "robots": "Robots.txt",
+        "schema": "Schema Markup"
+      }
+    },
+    "discovery": {
+      "title": "Domain Discovery",
+      "description": "Intelligent domain search with Google Custom Search",
+      "highlights": {
+        "industry": "Industry Filter",
+        "tld": "Multi-TLD",
+        "crawl": "Common Crawl"
+      }
+    },
+    "export": {
       "title": "Export & Integration",
-      "description": "Enhanced CSV Export mit 20+ Datenfeldern, Professional PDF Reports und nahtlose Integration in Ihre bestehenden Workflows."
+      "description": "PDF reports, Enhanced CSV export (20+ fields) and API access for CRM integration",
+      "highlights": {
+        "pdf": "PDF Report Export",
+        "csv": "Enhanced CSV (20+ fields)",
+        "api": "JSON API & CRM Integration"
+      }
     },
-    "marketingTools": {
-      "title": "Marketing-Tools-Erkennung",
-      "description": "Erkennung von Google Analytics, Facebook Pixel, Marketing-Automatisierung und anderen wichtigen Marketing-Tools."
+    "trust": {
+      "secureAnalysis": "Secure Analysis",
+      "realData": "Real Data"
     }
   },
   "howItWorks": {
-    "title": "So einfach funktioniert's",
-    "subtitle": "Von der Domain-Eingabe zum actionable Report in wenigen Minuten",
-    "step": "Schritt",
+    "title": "How It Works",
+    "subtitle": "From domain input to actionable report in minutes",
+    "step": "Step",
     "steps": {
       "domainInput": {
-        "title": "Domain-Input",
-        "description": "Einzelne Domains eingeben oder ganze Listen hochladen. Intelligente Multi-TLD Suche verfügbar.",
-        "details": ["Einzeldomain-Scan", "Batch-Upload", "Branchen-Discovery"]
+        "title": "Domain Input",
+        "description": "Enter single domains or upload lists. Intelligent multi-TLD search available.",
+        "details": ["Single domain scan", "Batch upload", "Industry discovery"]
       },
       "automaticAnalysis": {
-        "title": "Automatische Analyse",
-        "description": "Google APIs analysieren Performance, Sicherheit und SEO-Faktoren in Echtzeit.",
-        "details": ["Google PageSpeed", "SSL-Checks", "SEO-Audit"]
+        "title": "Automatic Analysis",
+        "description": "Google APIs analyze performance, security and SEO factors in real-time.",
+        "details": ["Google PageSpeed", "SSL Checks", "SEO Audit"]
       },
       "exportAction": {
         "title": "Export & Action",
-        "description": "Detaillierte Reports als CSV/JSON exportieren und direkt in Ihren Vertriebsprozess integrieren.",
-        "details": ["CSV/JSON Export", "API-Zugriff", "CRM Integration"]
+        "description": "Export detailed reports as CSV/JSON and integrate directly into your sales process.",
+        "details": ["CSV/JSON Export", "API Access", "CRM Integration"]
       }
     }
   },
   "pricing": {
     "title": "Transparent Pricing",
-    "subtitle": "Starten Sie kostenlos oder nutzen Sie den vollen Funktionsumfang für professionelle Website-Audits",
-    "bookDemo": "Persönliche Demo vereinbaren",
+    "subtitle": "Start for free or use full functionality for professional website audits",
+    "bookDemo": "Schedule Personal Demo",
     "plans": {
       "free": {
-        "name": "Kostenloser Plan",
+        "name": "Free Plan",
         "price": "0",
         "period": "Forever",
-        "description": "Perfekt zum Testen und für gelegentliche Audits",
+        "description": "Perfect for testing and occasional audits",
         "features": [
-          "1 Domain-Scan pro Tag",
-          "Basis-Sicherheitschecks (HTTPS, SSL)",
-          "Performance-Überblick",
-          "Meta-Tags & CMS Erkennung",
-          "Generator-Tags Analyse",
-          "Web-Interface Zugriff"
+          "1 domain scan per day",
+          "Basic security checks (HTTPS, SSL)",
+          "Performance overview",
+          "Meta tags & CMS detection",
+          "Generator tags analysis",
+          "Web interface access"
         ],
         "limitations": [
-          "Keine PDF-Reports",
-          "Kein CSV-Export",
-          "Keine API-Integration",
-          "Begrenzte Analyse-Tiefe"
+          "No PDF reports",
+          "No CSV export",
+          "No API integration",
+          "Limited analysis depth"
         ],
-        "cta": "Kostenlos testen"
+        "cta": "Try for free"
       },
       "enterprise": {
         "name": "Enterprise Plan",
         "price": "19",
-        "period": "pro Monat",
-        "description": "Für Agenturen und professionelle Website-Audits",
-        "badge": "Beliebt",
+        "period": "per month",
+        "description": "For agencies and professional website audits",
+        "badge": "Popular",
         "features": [
           "Professional PDF Reports (Executive Summary)",
           "Technical Deep-Dive Reports (PDF)",
-          "Action Plan Reports mit Prioritäten (PDF)",
-          "Enhanced CSV Export (20+ Datenfelder)",
-          "Unbegrenzte Domain-Scans",
-          "Google PageSpeed Insights Integration",
-          "Vollständige Core Web Vitals",
-          "API-Zugriff für CRM Integration",
-          "Batch-Analyse (1000+ Domains)",
-          "Common Crawl Domain Discovery",
-          "Premium Support & Beratung"
+          "Action Plan Reports with Priorities (PDF)",
+          "Enhanced CSV Export (20+ data fields)",
+          "Unlimited domain scans",
+          "Google PageSpeed Insights integration",
+          "Full Core Web Vitals",
+          "API access for CRM integration",
+          "Batch analysis (1000+ domains)",
+          "Common Crawl domain discovery",
+          "Premium support & consulting"
         ],
-        "cta": "Enterprise sichern"
+        "cta": "Get Enterprise"
       }
     },
-    "limitations": "Einschränkungen:"
+    "limitations": "Limitations:"
   },
   "faq": {
-    "title": "Häufig gestellte Fragen",
-    "subtitle": "Alles was Sie über DomainAudit Pro wissen müssen",
-    "contact": "Weitere Fragen? Wir helfen gerne weiter.",
+    "title": "Frequently Asked Questions",
+    "subtitle": "Everything you need to know about DomainAudit Pro",
+    "contact": "More questions? We're here to help.",
     "questions": [
       {
-        "question": "Welche PDF-Reports kann ich erstellen?",
-        "answer": "Der Enterprise Plan bietet drei professionelle PDF-Report-Typen: Executive Summary (Management-Überblick), Technical Deep-Dive (detaillierte technische Analyse) und Action Plan (priorisierte Handlungsempfehlungen). Alle Reports sind für Kundenpräsentationen optimiert."
+        "question": "What PDF reports can I create?",
+        "answer": "The Enterprise Plan offers three professional PDF report types: Executive Summary (management overview), Technical Deep-Dive (detailed technical analysis) and Action Plan (prioritized recommendations). All reports are optimized for client presentations."
       },
       {
-        "question": "Wie unterscheiden sich die PDF-Reports von der Web-Ansicht?",
-        "answer": "Die PDF-Reports sind professionell formatiert mit Corporate Design, Charts, Scores und strukturierten Empfehlungen. Sie eignen sich perfekt für Kundenpräsentationen, Angebote und Audit-Dokumentation - vergleichbar mit SEOptimer oder GTmetrix Premium-Reports."
+        "question": "How do PDF reports differ from the web view?",
+        "answer": "The PDF reports are professionally formatted with corporate design, charts, scores and structured recommendations. They are perfect for client presentations, proposals and audit documentation - comparable to SEOptimer or GTmetrix premium reports."
       },
       {
-        "question": "Welche Daten enthält der Enhanced CSV-Export?",
-        "answer": "Der Enhanced CSV-Export umfasst 20+ Datenfelder: Core Web Vitals, Performance-Scores, Marketing Tools, Technology Stack, Security Assessment, SEO-Metriken, Meta-Tags und vieles mehr. Ideal für CRM-Integration und Datenanalyse."
+        "question": "What data does the Enhanced CSV export contain?",
+        "answer": "The Enhanced CSV export includes 20+ data fields: Core Web Vitals, performance scores, marketing tools, technology stack, security assessment, SEO metrics, meta tags and much more. Ideal for CRM integration and data analysis."
       },
       {
-        "question": "Wie genau funktioniert die Domain-Analyse?",
-        "answer": "DomainAudit Pro nutzt Google APIs (PageSpeed Insights, Custom Search) und eigene Crawler, um Websites umfassend zu analysieren. Wir prüfen HTTPS-Status, Performance-Metriken (Core Web Vitals), SEO-Faktoren, veraltete Technologien und Sicherheitsaspekte automatisch."
+        "question": "How exactly does the domain analysis work?",
+        "answer": "DomainAudit Pro uses Google APIs (PageSpeed Insights, Custom Search) and custom crawlers to comprehensively analyze websites. We automatically check HTTPS status, performance metrics (Core Web Vitals), SEO factors, outdated technologies and security aspects."
       },
       {
-        "question": "Kann ich große Domain-Listen automatisch analysieren?",
-        "answer": "Absolut. Der Enterprise Plan unterstützt Batch-Analysen von 1000+ Domains parallel. Sie können CSV-Listen hochladen oder unsere Domain Discovery nutzen, um automatisch relevante Domains in Ihrer Zielbranche zu finden."
+        "question": "Can I analyze large domain lists automatically?",
+        "answer": "Absolutely. The Enterprise Plan supports batch analysis of 1000+ domains in parallel. You can upload CSV lists or use our Domain Discovery to automatically find relevant domains in your target industry."
       },
       {
-        "question": "Wie kann ich die Ergebnisse in mein CRM integrieren?",
-        "answer": "Der Enterprise Plan bietet vollständigen API-Zugriff, Enhanced CSV-Export und PDF-Reports. Sie können alle Daten direkt in Ihr CRM (HubSpot, Salesforce, etc.) importieren oder über unsere API automatisiert abrufen."
+        "question": "How can I integrate the results into my CRM?",
+        "answer": "The Enterprise Plan provides full API access, Enhanced CSV export and PDF reports. You can import all data directly into your CRM (HubSpot, Salesforce, etc.) or retrieve it automatically via our API."
       },
       {
-        "question": "Ist das günstiger als SEOptimer oder andere Premium-Tools?",
-        "answer": "Ja! SEOptimer kostet $29-99/Monat für ähnliche Features. Unser Enterprise Plan (€19/Monat) bietet vergleichbare PDF-Reports, Enhanced Export und Google API Integration zu einem Bruchteil der Kosten anderer Premium-Audit-Tools."
+        "question": "Is this cheaper than SEOptimer or other premium tools?",
+        "answer": "Yes! SEOptimer costs $29-99/month for similar features. Our Enterprise Plan (€19/month) offers comparable PDF reports, Enhanced Export and Google API integration at a fraction of the cost of other premium audit tools."
       },
       {
-        "question": "Gibt es eine Geld-zurück-Garantie?",
-        "answer": "Ja, wir bieten eine 30-Tage Geld-zurück-Garantie für den Enterprise Plan. Sie können jederzeit kündigen, und wir erstatten den vollen Betrag ohne Nachfragen."
+        "question": "Is there a money-back guarantee?",
+        "answer": "Yes, we offer a 30-day money-back guarantee for the Enterprise Plan. You can cancel anytime, and we'll refund the full amount no questions asked."
       }
     ]
   },
@@ -154,31 +174,31 @@
     "brand": {
       "title": "DomainAudit Pro",
       "subtitle": "Powered by Google APIs",
-      "description": "Die professionelle Lösung für automatisierte Website-Audits. Identifizieren Sie veraltete Websites und gewinnen Sie neue Kunden durch datenbasierte Analysen.",
-      "testFree": "Kostenlos testen",
-      "bookDemo": "Demo buchen"
+      "description": "The professional solution for automated website audits. Identify outdated websites and win new customers through data-driven analysis.",
+      "testFree": "Try for free",
+      "bookDemo": "Book demo"
     },
     "contact": {
-      "title": "Kontakt",
-      "schedule": "Termin vereinbaren"
+      "title": "Contact",
+      "schedule": "Schedule appointment"
     },
     "features": {
       "title": "Features",
       "list": [
         "Google PageSpeed Integration",
         "SSL & Security Checks",
-        "SEO-Analyse",
+        "SEO Analysis",
         "Batch Domain Scanning",
         "CSV/JSON Export",
-        "API-Zugriff"
+        "API Access"
       ]
     },
     "legal": {
-      "title": "Rechtliches",
-      "imprint": "Impressum",
-      "privacy": "Datenschutz",
-      "terms": "AGB",
-      "cookies": "Cookie-Einstellungen"
+      "title": "Legal",
+      "imprint": "Imprint",
+      "privacy": "Privacy",
+      "terms": "Terms",
+      "cookies": "Cookie Settings"
     },
     "copyright": "© 2025 Inspiroware OÜ. All rights reserved."
   }

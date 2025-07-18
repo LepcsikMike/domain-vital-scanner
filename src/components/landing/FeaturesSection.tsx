@@ -12,37 +12,37 @@ const FeaturesSection = () => {
       icon: <FileText className="h-8 w-8 text-purple-400" />,
       title: t('features.pdfReports.title'),
       description: t('features.pdfReports.description'),
-      highlights: ["Executive Summary PDF", "Technical Deep-Dive Report", "Action Plan mit Prioritäten"]
+      highlights: [t('features.pdfReports.highlights.summary'), t('features.pdfReports.highlights.technical'), t('features.pdfReports.highlights.actionPlan')]
     },
     {
       icon: <Shield className="h-8 w-8 text-green-400" />,
-      title: "Sicherheits-Audit",
-      description: "Automatische Erkennung von HTTP-Websites, SSL-Problemen und Sicherheitslücken",
-      highlights: ["HTTPS-Status", "SSL-Zertifikat Prüfung", "Security Headers"]
+      title: t('features.security.title'),
+      description: t('features.security.description'),
+      highlights: [t('features.security.highlights.https'), t('features.security.highlights.ssl'), t('features.security.highlights.headers')]
     },
     {
       icon: <Zap className="h-8 w-8 text-yellow-400" />,
-      title: "Performance-Analyse",
-      description: "Google PageSpeed Insights Integration mit echten Core Web Vitals Daten",
-      highlights: ["LCP, CLS, INP", "Mobile & Desktop", "Performance Score"]
+      title: t('features.performance.title'),
+      description: t('features.performance.description'),
+      highlights: [t('features.performance.highlights.metrics'), t('features.performance.highlights.devices'), t('features.performance.highlights.score')]
     },
     {
       icon: <Search className="h-8 w-8 text-blue-400" />,
-      title: "SEO-Checks",
-      description: "Umfassende SEO-Analyse mit Meta-Tags, Sitemap und Crawlbarkeit",
-      highlights: ["Meta-Tags", "Robots.txt", "Schema Markup"]
+      title: t('features.seo.title'),
+      description: t('features.seo.description'),
+      highlights: [t('features.seo.highlights.meta'), t('features.seo.highlights.robots'), t('features.seo.highlights.schema')]
     },
     {
       icon: <Globe className="h-8 w-8 text-cyan-400" />,
-      title: "Domain Discovery",
-      description: "Intelligente Suche nach Domains mit Google Custom Search API",
-      highlights: ["Branchen-Filter", "Multi-TLD", "Common Crawl"]
+      title: t('features.discovery.title'),
+      description: t('features.discovery.description'),
+      highlights: [t('features.discovery.highlights.industry'), t('features.discovery.highlights.tld'), t('features.discovery.highlights.crawl')]
     },
     {
       icon: <Download className="h-8 w-8 text-orange-400" />,
-      title: "Enhanced Export & Integration",
-      description: "PDF-Reports, Enhanced CSV-Export (20+ Felder) und API-Zugriff für CRM-Integration",
-      highlights: ["PDF Report Export", "Enhanced CSV (20+ Felder)", "JSON API & CRM Integration"]
+      title: t('features.export.title'),
+      description: t('features.export.description'),
+      highlights: [t('features.export.highlights.pdf'), t('features.export.highlights.csv'), t('features.export.highlights.api')]
     }
   ];
 
@@ -96,12 +96,12 @@ const FeaturesSection = () => {
             <div className="w-px h-4 bg-slate-600" />
             <div className="flex items-center space-x-2">
               <Lock className="h-4 w-4 text-blue-400" />
-              <span className="text-slate-300 text-sm">Sichere Analyse</span>
+              <span className="text-slate-300 text-sm">{t('features.trust.secureAnalysis')}</span>
             </div>
             <div className="w-px h-4 bg-slate-600" />
             <div className="flex items-center space-x-2">
               <BarChart3 className="h-4 w-4 text-purple-400" />
-              <span className="text-slate-300 text-sm">Echte Daten</span>
+              <span className="text-slate-300 text-sm">{t('features.trust.realData')}</span>
             </div>
           </div>
         </div>
