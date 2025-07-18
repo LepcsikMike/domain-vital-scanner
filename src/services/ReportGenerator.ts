@@ -21,18 +21,20 @@ export class ReportGenerator {
     }
   ): Promise<void> {
     const pdf = new jsPDF('p', 'mm', 'a4');
+    pdf.setFont("helvetica");
+    
     const pageWidth = pdf.internal.pageSize.getWidth();
     const pageHeight = pdf.internal.pageSize.getHeight();
     let yPosition = 20;
 
-    // Design System Colors (HSL converted to RGB)
+    // Design System Colors - Fixed RGB values
     const colors = {
-      primary: [34, 60, 29], // hsl(222.2 47.4% 11.2%) 
-      primaryLight: [59, 130, 246], // Primary blue accent
-      success: [34, 134, 58], // hsl(142.1 76.2% 36.3%)
-      warning: [251, 191, 36], // hsl(47.9 95.8% 53.1%)
-      destructive: [220, 38, 127], // hsl(0 84.2% 60.2%)
-      muted: [107, 114, 128], // Gray
+      primary: [34, 60, 29],
+      primaryLight: [59, 130, 246],
+      success: [34, 197, 94],
+      warning: [251, 191, 36],
+      destructive: [239, 68, 68],
+      muted: [107, 114, 128],
       background: [248, 250, 252],
       text: [30, 41, 59]
     };
@@ -40,15 +42,17 @@ export class ReportGenerator {
     // Professional Header with Branding
     yPosition = this.addProfessionalHeader(pdf, result, options, colors, yPosition);
 
-    // Score Dashboard (like website)
+    // Score Dashboard (simplified design)
     yPosition = this.addScoreDashboard(pdf, result, colors, yPosition);
 
     // Critical Issues Section
     if (result.criticalIssues > 0) {
+      yPosition = this.checkPageBreak(pdf, yPosition, pageHeight, 50);
       yPosition = this.addCriticalIssuesSection(pdf, result, colors, yPosition);
     }
 
     // Content based on report type
+    yPosition = this.checkPageBreak(pdf, yPosition, pageHeight, 60);
     yPosition = this.addReportContent(pdf, result, options, colors, yPosition, pageHeight);
 
     // Enhanced Footer with contact
@@ -57,6 +61,14 @@ export class ReportGenerator {
     // Save PDF
     const fileName = `${result.domain}-report-${options.type}-${new Date().toISOString().split('T')[0]}.pdf`;
     pdf.save(fileName);
+  }
+
+  private static checkPageBreak(pdf: jsPDF, yPosition: number, pageHeight: number, requiredSpace: number): number {
+    if (yPosition + requiredSpace > pageHeight - 40) {
+      pdf.addPage();
+      return 30; // Reset to top margin
+    }
+    return yPosition;
   }
 
   private static addProfessionalHeader(
@@ -117,76 +129,55 @@ export class ReportGenerator {
     
     // Dashboard background
     pdf.setFillColor(colors.background[0], colors.background[1], colors.background[2]);
-    pdf.roundedRect(15, yPosition, pageWidth - 30, 60, 5, 5, 'F');
+    pdf.roundedRect(15, yPosition, pageWidth - 30, 70, 5, 5, 'F');
     
     // Dashboard title
     pdf.setFontSize(16);
     pdf.setTextColor(colors.text[0], colors.text[1], colors.text[2]);
     pdf.text('Score Dashboard', 25, yPosition + 15);
     
-    // Score circles
+    // Score boxes (simplified design instead of circles)
     const scores = [
-      { label: 'Overall', score: overallScore, x: 40 },
-      { label: 'Performance', score: performanceScore, x: 90 },
-      { label: 'Security', score: securityScore, x: 140 },
-      { label: 'SEO', score: seoScore, x: 190 }
+      { label: 'Overall', score: overallScore, x: 25 },
+      { label: 'Performance', score: performanceScore, x: 70 },
+      { label: 'Security', score: securityScore, x: 115 },
+      { label: 'SEO', score: seoScore, x: 160 }
     ];
     
     scores.forEach(({ label, score, x }) => {
-      this.drawScoreCircle(pdf, x, yPosition + 35, score, colors);
+      this.drawScoreBox(pdf, x, yPosition + 25, score, colors);
       
       // Score text
-      pdf.setFontSize(14);
-      pdf.setTextColor(colors.text[0], colors.text[1], colors.text[2]);
-      pdf.text(score.toString(), x - 5, yPosition + 38);
+      pdf.setFontSize(16);
+      pdf.setTextColor(255, 255, 255);
+      pdf.text(score.toString(), x + 15, yPosition + 42);
       
       // Label
-      pdf.setFontSize(8);
-      pdf.setTextColor(colors.muted[0], colors.muted[1], colors.muted[2]);
-      pdf.text(label, x - 10, yPosition + 50);
+      pdf.setFontSize(9);
+      pdf.setTextColor(colors.text[0], colors.text[1], colors.text[2]);
+      pdf.text(label, x + 5, yPosition + 60);
     });
     
-    return yPosition + 75;
+    return yPosition + 80;
   }
 
-  private static drawScoreCircle(pdf: jsPDF, x: number, y: number, score: number, colors: any): void {
-    const radius = 12;
-    
-    // Background circle
-    pdf.setDrawColor(240, 240, 240);
-    pdf.setLineWidth(3);
-    pdf.circle(x, y, radius, 'S');
-    
+  private static drawScoreBox(pdf: jsPDF, x: number, y: number, score: number, colors: any): void {
     // Score color based on value
     let scoreColor = colors.success;
     if (score < 50) scoreColor = colors.destructive;
     else if (score < 70) scoreColor = colors.warning;
     else if (score < 90) scoreColor = [255, 165, 0]; // Orange
     
-    // Progress arc
-    pdf.setDrawColor(scoreColor[0], scoreColor[1], scoreColor[2]);
-    pdf.setLineWidth(3);
+    // Score box background
+    pdf.setFillColor(scoreColor[0], scoreColor[1], scoreColor[2]);
+    pdf.roundedRect(x, y, 35, 25, 3, 3, 'F');
     
-    const startAngle = -90;
-    const endAngle = startAngle + (score / 100) * 360;
-    this.drawArc(pdf, x, y, radius, startAngle, endAngle);
-  }
-
-  private static drawArc(pdf: jsPDF, x: number, y: number, radius: number, startAngle: number, endAngle: number): void {
-    const segments = Math.max(1, Math.floor((endAngle - startAngle) / 5));
-    const angleStep = (endAngle - startAngle) / segments;
-    
-    for (let i = 0; i < segments; i++) {
-      const angle1 = (startAngle + i * angleStep) * Math.PI / 180;
-      const angle2 = (startAngle + (i + 1) * angleStep) * Math.PI / 180;
-      
-      const x1 = x + radius * Math.cos(angle1);
-      const y1 = y + radius * Math.sin(angle1);
-      const x2 = x + radius * Math.cos(angle2);
-      const y2 = y + radius * Math.sin(angle2);
-      
-      pdf.line(x1, y1, x2, y2);
-    }
+    // Progress bar
+    const progressWidth = (score / 100) * 30;
+    pdf.setFillColor(255, 255, 255);
+    pdf.rect(x + 2.5, y + 20, 30, 3, 'F');
+    pdf.setFillColor(scoreColor[0], scoreColor[1], scoreColor[2]);
+    pdf.rect(x + 2.5, y + 20, progressWidth, 3, 'F');
   }
 
   private static addCriticalIssuesSection(
@@ -203,7 +194,7 @@ export class ReportGenerator {
     
     pdf.setFontSize(14);
     pdf.setTextColor(255, 255, 255);
-    pdf.text('⚠️ Kritische Probleme', 25, yPosition + 15);
+    pdf.text('! Kritische Probleme', 25, yPosition + 15);
     
     pdf.setFontSize(12);
     pdf.text(`${result.criticalIssues} Probleme gefunden`, pageWidth - 80, yPosition + 15);
@@ -216,11 +207,12 @@ export class ReportGenerator {
     criticalIssues.slice(0, 5).forEach((issue, index) => {
       pdf.setFontSize(10);
       pdf.setTextColor(colors.destructive[0], colors.destructive[1], colors.destructive[2]);
-      pdf.text('●', 25, yPosition);
+      pdf.text('-', 25, yPosition);
       
       pdf.setTextColor(colors.text[0], colors.text[1], colors.text[2]);
-      pdf.text(issue, 30, yPosition);
-      yPosition += 8;
+      const wrappedText = pdf.splitTextToSize(issue, pageWidth - 60);
+      pdf.text(wrappedText, 30, yPosition);
+      yPosition += wrappedText.length * 6;
     });
     
     return yPosition + 10;
@@ -255,6 +247,7 @@ export class ReportGenerator {
   ): number {
     
     // Key Insights Section
+    yPosition = this.checkPageBreak(pdf, yPosition, pageHeight, 40);
     yPosition = this.addSection(pdf, 'Executive Summary', colors, yPosition);
     
     const insights = [
@@ -265,28 +258,52 @@ export class ReportGenerator {
     ];
     
     insights.forEach(insight => {
+      yPosition = this.checkPageBreak(pdf, yPosition, pageHeight, 15);
       pdf.setFontSize(11);
       pdf.setTextColor(colors.text[0], colors.text[1], colors.text[2]);
-      pdf.text(`• ${insight}`, 25, yPosition);
+      pdf.text(`- ${insight}`, 25, yPosition);
       yPosition += 8;
     });
     
     yPosition += 15;
     
     // Business Impact
+    yPosition = this.checkPageBreak(pdf, yPosition, pageHeight, 40);
     yPosition = this.addSection(pdf, 'Business Impact', colors, yPosition);
     
     const businessImpacts = [
       'Verbesserung der Suchmaschinenrankings durch SEO-Optimierung',
-      'Erhöhung der Conversion-Rate durch bessere Performance',
+      'Erhoehung der Conversion-Rate durch bessere Performance',
       'Schutz vor Sicherheitsbedrohungen und Datenlecks',
-      'Stärkung des Vertrauens bei Kunden und Partnern'
+      'Staerkung des Vertrauens bei Kunden und Partnern'
     ];
     
     businessImpacts.forEach(impact => {
+      yPosition = this.checkPageBreak(pdf, yPosition, pageHeight, 15);
       pdf.setFontSize(10);
-      pdf.text(`• ${impact}`, 25, yPosition);
-      yPosition += 7;
+      const impactText = pdf.splitTextToSize(`- ${impact}`, 160);
+      pdf.text(impactText, 25, yPosition);
+      yPosition += impactText.length * 6;
+    });
+    
+    // Strategic Recommendations
+    yPosition = this.checkPageBreak(pdf, yPosition, pageHeight, 40);
+    yPosition = this.addSection(pdf, 'Strategische Empfehlungen', colors, yPosition + 15);
+    
+    const recommendations = [
+      'Prioritaet 1: Sicherheit durch HTTPS und Updates staerken',
+      'Prioritaet 2: Page Speed fuer bessere Nutzererfahrung optimieren',
+      'Prioritaet 3: SEO-Grundlagen fuer hoehere Sichtbarkeit umsetzen',
+      'Prioritaet 4: Monitoring-System fuer kontinuierliche Ueberwachung'
+    ];
+    
+    recommendations.forEach(rec => {
+      yPosition = this.checkPageBreak(pdf, yPosition, pageHeight, 15);
+      pdf.setFontSize(10);
+      pdf.setTextColor(colors.primaryLight[0], colors.primaryLight[1], colors.primaryLight[2]);
+      const recText = pdf.splitTextToSize(`- ${rec}`, 160);
+      pdf.text(recText, 25, yPosition);
+      yPosition += recText.length * 6;
     });
     
     return yPosition + 10;
@@ -301,27 +318,32 @@ export class ReportGenerator {
   ): number {
     
     // Technology Stack
+    yPosition = this.checkPageBreak(pdf, yPosition, pageHeight, 40);
     yPosition = this.addSection(pdf, 'Technology Stack', colors, yPosition);
     
     if (result.technologyAudit.cmsDetected) {
       pdf.setFontSize(11);
-      pdf.text(`Content Management System: ${result.technologyAudit.cmsDetected}`, 25, yPosition);
-      yPosition += 8;
+      const cmsText = pdf.splitTextToSize(`Content Management System: ${result.technologyAudit.cmsDetected}`, 160);
+      pdf.text(cmsText, 25, yPosition);
+      yPosition += cmsText.length * 6;
     }
     
     if (result.technologyDetails.jsLibraries.length > 0) {
-      pdf.text(`JavaScript Libraries: ${result.technologyDetails.jsLibraries.slice(0, 5).join(', ')}`, 25, yPosition);
-      yPosition += 8;
+      const jsText = pdf.splitTextToSize(`JavaScript Libraries: ${result.technologyDetails.jsLibraries.slice(0, 5).join(', ')}`, 160);
+      pdf.text(jsText, 25, yPosition);
+      yPosition += jsText.length * 6;
     }
     
     if (result.technologyDetails.cssFrameworks.length > 0) {
-      pdf.text(`CSS Frameworks: ${result.technologyDetails.cssFrameworks.slice(0, 3).join(', ')}`, 25, yPosition);
-      yPosition += 8;
+      const cssText = pdf.splitTextToSize(`CSS Frameworks: ${result.technologyDetails.cssFrameworks.slice(0, 3).join(', ')}`, 160);
+      pdf.text(cssText, 25, yPosition);
+      yPosition += cssText.length * 6;
     }
     
     yPosition += 10;
     
     // Performance Metrics
+    yPosition = this.checkPageBreak(pdf, yPosition, pageHeight, 50);
     yPosition = this.addSection(pdf, 'Performance Metrics', colors, yPosition);
     
     const metrics = [
@@ -333,10 +355,65 @@ export class ReportGenerator {
     ];
     
     metrics.forEach(metric => {
+      yPosition = this.checkPageBreak(pdf, yPosition, pageHeight, 15);
       pdf.setFontSize(10);
-      pdf.text(`• ${metric}`, 25, yPosition);
+      pdf.text(`- ${metric}`, 25, yPosition);
       yPosition += 7;
     });
+    
+    // Security Analysis
+    yPosition = this.checkPageBreak(pdf, yPosition, pageHeight, 50);
+    yPosition = this.addSection(pdf, 'Security Analysis', colors, yPosition + 10);
+    
+    const securityItems = [
+      `HTTPS Status: ${result.httpsStatus.valid ? 'Aktiv' : 'Nicht aktiv'}`,
+      `SSL-Zertifikat: ${result.httpsStatus.sslValid ? 'Gueltig' : 'Ungueltig'}`,
+      `Sicherheitsscore: ${result.securityAudit.score}/100`,
+      `Vulnerable Libraries: ${result.securityAudit.vulnerableLibraries.length}`,
+      `Veraltete Technologien: ${result.technologyAudit.outdatedTechnologies.length}`
+    ];
+    
+    securityItems.forEach(item => {
+      yPosition = this.checkPageBreak(pdf, yPosition, pageHeight, 15);
+      pdf.setFontSize(10);
+      pdf.text(`- ${item}`, 25, yPosition);
+      yPosition += 7;
+    });
+    
+    // SEO Analysis
+    yPosition = this.checkPageBreak(pdf, yPosition, pageHeight, 50);
+    yPosition = this.addSection(pdf, 'SEO Analysis', colors, yPosition + 10);
+    
+    const seoItems = [
+      `Title Tag: ${result.seoAudit.hasTitle ? 'Vorhanden' : 'Fehlt'}`,
+      `Meta Description: ${result.seoAudit.hasMetaDescription ? 'Vorhanden' : 'Fehlt'}`,
+      `H1 Tag: ${result.seoAudit.hasH1 ? 'Vorhanden' : 'Fehlt'}`,
+      `SEO Score: ${this.calculateSEOScore(result)}/100`
+    ];
+    
+    seoItems.forEach(item => {
+      yPosition = this.checkPageBreak(pdf, yPosition, pageHeight, 15);
+      pdf.setFontSize(10);
+      pdf.text(`- ${item}`, 25, yPosition);
+      yPosition += 7;
+    });
+    
+    if (result.seoAudit.issues.length > 0) {
+      yPosition = this.checkPageBreak(pdf, yPosition, pageHeight, 30);
+      pdf.setFontSize(11);
+      pdf.setTextColor(colors.warning[0], colors.warning[1], colors.warning[2]);
+      pdf.text('SEO Probleme:', 25, yPosition);
+      yPosition += 10;
+      
+      result.seoAudit.issues.slice(0, 8).forEach(issue => {
+        yPosition = this.checkPageBreak(pdf, yPosition, pageHeight, 15);
+        pdf.setFontSize(9);
+        pdf.setTextColor(colors.text[0], colors.text[1], colors.text[2]);
+        const issueText = pdf.splitTextToSize(`- ${issue}`, 160);
+        pdf.text(issueText, 30, yPosition);
+        yPosition += issueText.length * 5;
+      });
+    }
     
     return yPosition + 10;
   }
@@ -349,37 +426,55 @@ export class ReportGenerator {
     pageHeight: number
   ): number {
     
+    yPosition = this.checkPageBreak(pdf, yPosition, pageHeight, 40);
     yPosition = this.addSection(pdf, 'Priorisierte Handlungsempfehlungen', colors, yPosition);
     
     const actionItems = this.generateActionItems(result);
     
-    actionItems.slice(0, 8).forEach((item, index) => {
-      if (yPosition > pageHeight - 40) {
-        pdf.addPage();
-        yPosition = 30;
-      }
+    actionItems.slice(0, 12).forEach((item, index) => {
+      yPosition = this.checkPageBreak(pdf, yPosition, pageHeight, 30);
       
       // Priority badge
       const priorityColor = item.priority === 'Hoch' ? colors.destructive : 
                            item.priority === 'Mittel' ? colors.warning : colors.success;
       
       pdf.setFillColor(priorityColor[0], priorityColor[1], priorityColor[2]);
-      pdf.roundedRect(25, yPosition - 5, 15, 8, 2, 2, 'F');
+      pdf.roundedRect(25, yPosition - 3, 20, 10, 2, 2, 'F');
       
       pdf.setFontSize(8);
       pdf.setTextColor(255, 255, 255);
-      pdf.text(item.priority, 27, yPosition);
+      pdf.text(item.priority, 28, yPosition + 3);
       
       // Action item
       pdf.setFontSize(11);
       pdf.setTextColor(colors.text[0], colors.text[1], colors.text[2]);
-      pdf.text(`${index + 1}. ${item.title}`, 45, yPosition);
+      const titleText = pdf.splitTextToSize(`${index + 1}. ${item.title}`, 140);
+      pdf.text(titleText, 50, yPosition);
       
       pdf.setFontSize(9);
       pdf.setTextColor(colors.muted[0], colors.muted[1], colors.muted[2]);
-      pdf.text(`Aufwand: ${item.effort}`, 45, yPosition + 8);
+      pdf.text(`Aufwand: ${item.effort}`, 50, yPosition + (titleText.length * 6) + 5);
       
-      yPosition += 20;
+      yPosition += Math.max(20, titleText.length * 6 + 15);
+    });
+    
+    // Add Implementation Timeline
+    yPosition = this.checkPageBreak(pdf, yPosition, pageHeight, 50);
+    yPosition = this.addSection(pdf, 'Umsetzungsplan', colors, yPosition + 15);
+    
+    const timeline = [
+      'Woche 1-2: Kritische Sicherheitsprobleme beheben',
+      'Woche 3-4: Performance-Optimierungen umsetzen',
+      'Woche 5-6: SEO-Verbesserungen implementieren',
+      'Woche 7-8: Monitoring und finale Tests'
+    ];
+    
+    timeline.forEach(phase => {
+      yPosition = this.checkPageBreak(pdf, yPosition, pageHeight, 15);
+      pdf.setFontSize(10);
+      pdf.setTextColor(colors.text[0], colors.text[1], colors.text[2]);
+      pdf.text(`- ${phase}`, 25, yPosition);
+      yPosition += 8;
     });
     
     return yPosition;
