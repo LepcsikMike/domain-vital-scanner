@@ -46,17 +46,16 @@ const HeroSection = () => {
           </Badge>
           
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white mb-6 leading-tight">
-            Veraltete Websites{' '}
+            Professionelle Website-Audits{' '}
             <span className="bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
-              automatisch
-            </span>{' '}
-            identifizieren
+              mit PDF-Reports
+            </span>
           </h1>
           
           <p className="text-base sm:text-lg lg:text-xl text-slate-300 mb-8 max-w-2xl mx-auto leading-relaxed px-4 sm:px-0">
-            Finden Sie potenzielle Kunden durch technische Website-Audits. 
-            Scannen Sie ganze Domainlisten und identifizieren Sie Websites mit 
-            Sicherheitsproblemen, veralteter Technik und SEO-Schwächen.
+            Erstellen Sie professionelle Website-Audit-Reports wie SEOptimer. 
+            Executive Summaries, Technical Deep-Dives und Action Plans als hochwertige PDFs. 
+            Finden Sie potenzielle Kunden durch umfassende technische Analysen.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12 px-4 sm:px-0">
@@ -83,21 +82,21 @@ const HeroSection = () => {
           {/* Trust Signals */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 max-w-3xl mx-auto px-4 sm:px-0">
             <div className="bg-slate-900/50 border border-slate-700 rounded-lg p-4 backdrop-blur-sm">
-              <div className="text-cyan-400 font-semibold text-xs sm:text-sm mb-1">Google PageSpeed</div>
+              <div className="text-cyan-400 font-semibold text-xs sm:text-sm mb-1">Professional Reports</div>
+              <div className="text-white text-lg sm:text-xl lg:text-2xl font-bold">PDF-Export</div>
+              <div className="text-slate-400 text-xs sm:text-sm">Executive Summary & Deep-Dive</div>
+            </div>
+            
+            <div className="bg-slate-900/50 border border-slate-700 rounded-lg p-4 backdrop-blur-sm">
+              <div className="text-green-400 font-semibold text-xs sm:text-sm mb-1">Google PageSpeed</div>
               <div className="text-white text-lg sm:text-xl lg:text-2xl font-bold">Core Web Vitals</div>
               <div className="text-slate-400 text-xs sm:text-sm">Echte Performance-Daten</div>
             </div>
             
-            <div className="bg-slate-900/50 border border-slate-700 rounded-lg p-4 backdrop-blur-sm">
-              <div className="text-green-400 font-semibold text-xs sm:text-sm mb-1">SSL & Security</div>
-              <div className="text-white text-lg sm:text-xl lg:text-2xl font-bold">HTTPS Checks</div>
-              <div className="text-slate-400 text-xs sm:text-sm">Automatische Sicherheitsprüfung</div>
-            </div>
-            
             <div className="bg-slate-900/50 border border-slate-700 rounded-lg p-4 backdrop-blur-sm sm:col-span-2 lg:col-span-1">
-              <div className="text-blue-400 font-semibold text-xs sm:text-sm mb-1">Batch Analysis</div>
-              <div className="text-white text-lg sm:text-xl lg:text-2xl font-bold">Bulk Scan</div>
-              <div className="text-slate-400 text-xs sm:text-sm">Tausende Domains parallel</div>
+              <div className="text-blue-400 font-semibold text-xs sm:text-sm mb-1">Enhanced Export</div>
+              <div className="text-white text-lg sm:text-xl lg:text-2xl font-bold">CSV/JSON/PDF</div>
+              <div className="text-slate-400 text-xs sm:text-sm">20+ Datenfelder, API-Integration</div>
             </div>
           </div>
         </div>

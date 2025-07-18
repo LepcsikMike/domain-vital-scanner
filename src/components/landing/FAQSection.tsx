@@ -5,12 +5,20 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 const FAQSection = () => {
   const faqs = [
     {
-      question: "Wie genau funktioniert die Domain-Analyse?",
-      answer: "DomainAudit Pro nutzt Google APIs (PageSpeed Insights, Custom Search) und eigene Crawler, um Websites umfassend zu analysieren. Wir prüfen HTTPS-Status, Performance-Metriken (Core Web Vitals), SEO-Faktoren, veraltete Technologien und Sicherheitsaspekte automatisch."
+      question: "Welche PDF-Reports kann ich erstellen?",
+      answer: "Der Enterprise Plan bietet drei professionelle PDF-Report-Typen: Executive Summary (Management-Überblick), Technical Deep-Dive (detaillierte technische Analyse) und Action Plan (priorisierte Handlungsempfehlungen). Alle Reports sind für Kundenpräsentationen optimiert."
     },
     {
-      question: "Welche APIs werden verwendet und sind die Daten echt?",
-      answer: "Ja, wir verwenden echte Google APIs: PageSpeed Insights für Performance-Daten, Custom Search für Domain Discovery und Common Crawl für große Datensätze. Die Core Web Vitals sind echte Messwerte direkt von Google, keine Simulationen."
+      question: "Wie unterscheiden sich die PDF-Reports von der Web-Ansicht?",
+      answer: "Die PDF-Reports sind professionell formatiert mit Corporate Design, Charts, Scores und strukturierten Empfehlungen. Sie eignen sich perfekt für Kundenpräsentationen, Angebote und Audit-Dokumentation - vergleichbar mit SEOptimer oder GTmetrix Premium-Reports."
+    },
+    {
+      question: "Welche Daten enthält der Enhanced CSV-Export?",
+      answer: "Der Enhanced CSV-Export umfasst 20+ Datenfelder: Core Web Vitals, Performance-Scores, Marketing Tools, Technology Stack, Security Assessment, SEO-Metriken, Meta-Tags und vieles mehr. Ideal für CRM-Integration und Datenanalyse."
+    },
+    {
+      question: "Wie genau funktioniert die Domain-Analyse?",
+      answer: "DomainAudit Pro nutzt Google APIs (PageSpeed Insights, Custom Search) und eigene Crawler, um Websites umfassend zu analysieren. Wir prüfen HTTPS-Status, Performance-Metriken (Core Web Vitals), SEO-Faktoren, veraltete Technologien und Sicherheitsaspekte automatisch."
     },
     {
       question: "Kann ich große Domain-Listen automatisch analysieren?",
@@ -18,19 +26,11 @@ const FAQSection = () => {
     },
     {
       question: "Wie kann ich die Ergebnisse in mein CRM integrieren?",
-      answer: "Der Enterprise Plan bietet vollständigen API-Zugriff und CSV/JSON-Export. Sie können die Audit-Daten direkt in Ihr CRM (HubSpot, Salesforce, etc.) importieren oder über unsere API automatisiert abrufen."
+      answer: "Der Enterprise Plan bietet vollständigen API-Zugriff, Enhanced CSV-Export und PDF-Reports. Sie können alle Daten direkt in Ihr CRM (HubSpot, Salesforce, etc.) importieren oder über unsere API automatisiert abrufen."
     },
     {
-      question: "Was kostet die Nutzung der Google APIs?",
-      answer: "Die API-Kosten sind in den Plänen bereits enthalten. Google PageSpeed Insights ist bis 25.000 Abfragen/Tag kostenlos. Custom Search kostet $5 pro 1.000 Abfragen nach den ersten 100 kostenlosen täglich."
-    },
-    {
-      question: "Kann ich spezifische Branchen oder Regionen targeten?",
-      answer: "Ja, unsere intelligente Domain Discovery kann nach Branchen (z.B. Handwerk, Medizin, Anwälte) und Regionen filtern. Sie können auch eigene Suchkriterien definieren und Multi-TLD-Suchen durchführen."
-    },
-    {
-      question: "Wie aktuell sind die Analyse-Daten?",
-      answer: "Alle Daten werden in Echtzeit beim Scan erhoben. Performance-Daten kommen direkt von Google, SSL-Zertifikate werden live geprüft, und Website-Inhalte werden frisch gecrawlt."
+      question: "Ist das günstiger als SEOptimer oder andere Premium-Tools?",
+      answer: "Ja! SEOptimer kostet $29-99/Monat für ähnliche Features. Unser Enterprise Plan (€19/Monat) bietet vergleichbare PDF-Reports, Enhanced Export und Google API Integration zu einem Bruchteil der Kosten anderer Premium-Audit-Tools."
     },
     {
       question: "Gibt es eine Geld-zurück-Garantie?",

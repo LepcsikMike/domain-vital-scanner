@@ -22,6 +22,7 @@ const PricingSection = () => {
         "Web-Interface Zugriff"
       ],
       limitations: [
+        "Keine PDF-Reports",
         "Kein CSV-Export",
         "Keine API-Integration",
         "Begrenzte Analyse-Tiefe"
@@ -38,17 +39,17 @@ const PricingSection = () => {
       icon: <Crown className="h-6 w-6 text-yellow-400" />,
       badge: "Beliebt",
       features: [
+        "Professional PDF Reports (Executive Summary)",
+        "Technical Deep-Dive Reports (PDF)",
+        "Action Plan Reports mit Prioritäten (PDF)",
+        "Enhanced CSV Export (20+ Datenfelder)",
         "Unbegrenzte Domain-Scans",
         "Google PageSpeed Insights Integration",
         "Vollständige Core Web Vitals",
-        "Erweiterte SEO-Analyse",
-        "CSV & JSON Export",
         "API-Zugriff für CRM Integration",
         "Batch-Analyse (1000+ Domains)",
-        "Priorisierte Risiko-Bewertung",
         "Common Crawl Domain Discovery",
-        "Custom Search API Zugang",
-        "Premium Support"
+        "Premium Support & Beratung"
       ],
       limitations: [],
       cta: "Enterprise sichern",

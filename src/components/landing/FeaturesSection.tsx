@@ -6,6 +6,12 @@ import { Shield, Zap, FileText, Search, Download, Globe, Lock, BarChart3 } from 
 const FeaturesSection = () => {
   const features = [
     {
+      icon: <FileText className="h-8 w-8 text-purple-400" />,
+      title: "Professional PDF Reports",
+      description: "Erstellen Sie hochwertige PDF-Reports wie SEOptimer: Executive Summary, Technical Deep-Dive und Action Plans",
+      highlights: ["Executive Summary PDF", "Technical Deep-Dive Report", "Action Plan mit Prioritäten"]
+    },
+    {
       icon: <Shield className="h-8 w-8 text-green-400" />,
       title: "Sicherheits-Audit",
       description: "Automatische Erkennung von HTTP-Websites, SSL-Problemen und Sicherheitslücken",
@@ -24,12 +30,6 @@ const FeaturesSection = () => {
       highlights: ["Meta-Tags", "Robots.txt", "Schema Markup"]
     },
     {
-      icon: <FileText className="h-8 w-8 text-purple-400" />,
-      title: "Generator-Erkennung",
-      description: "Identifikation veralteter CMS und Website-Generatoren",
-      highlights: ["Dreamweaver", "FrontPage", "Veraltete CMS"]
-    },
-    {
       icon: <Globe className="h-8 w-8 text-cyan-400" />,
       title: "Domain Discovery",
       description: "Intelligente Suche nach Domains mit Google Custom Search API",
@@ -37,9 +37,9 @@ const FeaturesSection = () => {
     },
     {
       icon: <Download className="h-8 w-8 text-orange-400" />,
-      title: "Export & Integration",
-      description: "CSV/JSON Export und API-Zugriff für CRM-Integration",
-      highlights: ["CSV Export", "JSON API", "CRM Integration"]
+      title: "Enhanced Export & Integration",
+      description: "PDF-Reports, Enhanced CSV-Export (20+ Felder) und API-Zugriff für CRM-Integration",
+      highlights: ["PDF Report Export", "Enhanced CSV (20+ Felder)", "JSON API & CRM Integration"]
     }
   ];
 
