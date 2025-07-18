@@ -22,10 +22,14 @@ import {
   XCircle,
   Search,
   Filter,
-  ExternalLink
+  ExternalLink,
+  Cpu,
+  BarChart3,
+  TrendingUp
 } from 'lucide-react';
 import { DomainAnalysisResult } from '@/types/domain-analysis';
 import { getDomainUrl } from '@/utils/urlUtils';
+import { TechnologyStackCard } from './TechnologyStackCard';
 
 interface AnalysisResultsProps {
   results: DomainAnalysisResult[];
@@ -35,6 +39,7 @@ export const AnalysisResults: React.FC<AnalysisResultsProps> = ({ results }) => 
   const [filter, setFilter] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
   const [sortBy, setSortBy] = useState('domain');
+  const [expandedDomain, setExpandedDomain] = useState<string | null>(null);
 
   const filteredResults = results
     .filter(result => {
@@ -136,22 +141,32 @@ export const AnalysisResults: React.FC<AnalysisResultsProps> = ({ results }) => 
           {filteredResults.map((result) => (
             <Card key={result.domain} className="bg-slate-900/50 border-slate-700 backdrop-blur-sm">
               <CardContent className="p-4">
-                <div className="space-y-3">
-                  {/* Domain Header */}
-                  <div className="flex items-center justify-between">
-                    <a 
-                      href={getDomainUrl(result.domain)}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center space-x-1 text-blue-400 hover:text-blue-300 transition-colors font-medium"
-                    >
-                      <span className="truncate">{result.domain}</span>
-                      <ExternalLink className="h-3 w-3 flex-shrink-0" />
-                    </a>
-                    {result.criticalIssues >= 2 && (
-                      <AlertTriangle className="h-4 w-4 text-yellow-400 flex-shrink-0" />
-                    )}
-                  </div>
+                  <div className="space-y-3">
+                    {/* Domain Header */}
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center space-x-2 flex-1">
+                        <a 
+                          href={getDomainUrl(result.domain)}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center space-x-1 text-blue-400 hover:text-blue-300 transition-colors font-medium"
+                        >
+                          <span className="truncate">{result.domain}</span>
+                          <ExternalLink className="h-3 w-3 flex-shrink-0" />
+                        </a>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => setExpandedDomain(expandedDomain === result.domain ? null : result.domain)}
+                          className="h-6 w-6 p-0"
+                        >
+                          <Cpu className="h-3 w-3" />
+                        </Button>
+                      </div>
+                      {result.criticalIssues >= 2 && (
+                        <AlertTriangle className="h-4 w-4 text-yellow-400 flex-shrink-0" />
+                      )}
+                    </div>
 
                   {/* Status Grid */}
                   <div className="grid grid-cols-2 gap-3 text-sm">
@@ -192,6 +207,18 @@ export const AnalysisResults: React.FC<AnalysisResultsProps> = ({ results }) => 
                       )}
                     </div>
                   </div>
+
+                  {/* Enhanced Technology Stack - Expandable */}
+                  {expandedDomain === result.domain && (
+                    <div className="mt-4 pt-4 border-t border-slate-700">
+                      <TechnologyStackCard
+                        technologyDetails={result.technologyDetails}
+                        marketingTools={result.marketingTools}
+                        securityAudit={result.securityAudit}
+                        competitorInsights={result.competitorInsights}
+                      />
+                    </div>
+                  )}
                 </div>
               </CardContent>
             </Card>
@@ -209,8 +236,8 @@ export const AnalysisResults: React.FC<AnalysisResultsProps> = ({ results }) => 
                 <TableHead className="text-slate-300">HTTPS</TableHead>
                 <TableHead className="text-slate-300">Technologie</TableHead>
                 <TableHead className="text-slate-300">PageSpeed</TableHead>
-                <TableHead className="text-slate-300">Core Web Vitals</TableHead>
-                <TableHead className="text-slate-300">SEO</TableHead>
+                <TableHead className="text-slate-300">Security</TableHead>
+                <TableHead className="text-slate-300">Market Position</TableHead>
                 <TableHead className="text-slate-300">Status</TableHead>
               </TableRow>
             </TableHeader>
@@ -228,6 +255,14 @@ export const AnalysisResults: React.FC<AnalysisResultsProps> = ({ results }) => 
                         <span>{result.domain}</span>
                         <ExternalLink className="h-3 w-3" />
                       </a>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => setExpandedDomain(expandedDomain === result.domain ? null : result.domain)}
+                        className="h-6 w-6 p-0"
+                      >
+                        <Cpu className="h-3 w-3" />
+                      </Button>
                       {result.criticalIssues >= 2 && (
                         <AlertTriangle className="h-4 w-4 text-yellow-400" />
                       )}
@@ -267,33 +302,42 @@ export const AnalysisResults: React.FC<AnalysisResultsProps> = ({ results }) => 
                   </TableCell>
                   
                   <TableCell>
-                    <div className="space-y-1 text-xs">
-                      <div className="flex justify-between">
-                        <span className="text-slate-400">LCP:</span>
-                        <span className="text-white">{result.coreWebVitals.lcp || 'N/A'}</span>
+                    <div className="space-y-1">
+                      <div className="flex items-center space-x-2">
+                        <Shield className="h-3 w-3 text-blue-400" />
+                        <Badge variant={result.securityAudit.score >= 80 ? "default" : result.securityAudit.score >= 60 ? "secondary" : "destructive"} className="text-xs">
+                          {result.securityAudit.score}/100
+                        </Badge>
                       </div>
-                      <div className="flex justify-between">
-                        <span className="text-slate-400">CLS:</span>
-                        <span className="text-white">{result.coreWebVitals.cls || 'N/A'}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-slate-400">INP:</span>
-                        <span className="text-white">{result.coreWebVitals.inp || 'N/A'}</span>
+                      <div className="text-xs text-slate-400">
+                        {result.securityAudit.vulnerableLibraries.length > 0 && (
+                          <div className="text-red-400">
+                            {result.securityAudit.vulnerableLibraries.length} vulnerabilities
+                          </div>
+                        )}
                       </div>
                     </div>
                   </TableCell>
                   
                   <TableCell>
-                    <div className="flex flex-col space-y-1">
-                      {result.seoAudit.issues.length === 0 ? (
-                        <Badge className="bg-green-600 text-xs">OK</Badge>
-                      ) : (
-                        result.seoAudit.issues.slice(0, 2).map((issue, index) => (
-                          <Badge key={index} variant="destructive" className="text-xs">
-                            {issue}
-                          </Badge>
-                        ))
-                      )}
+                    <div className="space-y-1">
+                      <div className="flex items-center space-x-2">
+                        <TrendingUp className="h-3 w-3 text-purple-400" />
+                        <Badge 
+                          variant={result.competitorInsights.marketPosition === 'leading' ? "default" : "secondary"} 
+                          className="text-xs"
+                        >
+                          {result.competitorInsights.marketPosition}
+                        </Badge>
+                      </div>
+                      <div className="text-xs text-slate-400">
+                        {result.competitorInsights.industryCategory}
+                      </div>
+                      <div className="text-xs">
+                        <Badge variant="outline" className="text-xs">
+                          {result.competitorInsights.technicalSimilarity}% similar
+                        </Badge>
+                      </div>
                     </div>
                   </TableCell>
                   
@@ -314,6 +358,23 @@ export const AnalysisResults: React.FC<AnalysisResultsProps> = ({ results }) => 
             </TableBody>
           </Table>
         </div>
+        
+        {/* Enhanced Technology Details - Expandable for Desktop */}
+        {expandedDomain && (
+          <div className="mt-6 p-4 bg-slate-800/30 rounded-lg border border-slate-700">
+            {(() => {
+              const expandedResult = results.find(r => r.domain === expandedDomain);
+              return expandedResult ? (
+                <TechnologyStackCard
+                  technologyDetails={expandedResult.technologyDetails}
+                  marketingTools={expandedResult.marketingTools}
+                  securityAudit={expandedResult.securityAudit}
+                  competitorInsights={expandedResult.competitorInsights}
+                />
+              ) : null;
+            })()}
+          </div>
+        )}
       </div>
 
       {filteredResults.length === 0 && (

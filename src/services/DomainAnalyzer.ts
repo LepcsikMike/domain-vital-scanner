@@ -1,6 +1,7 @@
 import { DomainAnalysisResult } from '@/types/domain-analysis';
 import { HtmlParser, ParsedHtmlData } from './HtmlParser';
 import { normalizeUrl } from '@/utils/urlUtils';
+import { MarketIntelligenceService } from './MarketIntelligenceService';
 
 interface AnalysisSettings {
   checkHTTPS: boolean;
@@ -125,9 +126,18 @@ export class DomainAnalyzer {
         result.httpsStatus = await this.checkHTTPSOptimized(cleanDomain);
       }
 
-      // Technology Audit
+      // Technology Audit with enhanced data
       if (this.settings.checkTechnology && parsedData) {
         result.technologyAudit = this.analyzeTechnology(parsedData);
+        result.technologyDetails = parsedData.technologyDetails;
+        result.marketingTools = parsedData.marketingTools;
+        result.securityAudit = parsedData.securityAudit;
+        
+        // Enhanced competitor analysis
+        result.competitorInsights = MarketIntelligenceService.analyzeCompetitors(
+          cleanDomain,
+          parsedData.technologyDetails
+        );
       }
 
       // Basic PageSpeed Check

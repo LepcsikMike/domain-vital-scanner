@@ -1,4 +1,6 @@
 import { getDomainUrl } from '@/utils/urlUtils';
+import { TechnologyIntelligenceService } from './TechnologyIntelligenceService';
+import { TechnologyDetails, MarketingTools, SecurityAudit } from '@/types/domain-analysis';
 
 export interface ParsedHtmlData {
   title: string | null;
@@ -10,6 +12,11 @@ export interface ParsedHtmlData {
   technologies: string[];
   responseTime: number;
   contentSize: number;
+  // Enhanced BuiltWith-style data
+  technologyDetails: TechnologyDetails;
+  marketingTools: MarketingTools;
+  securityAudit: SecurityAudit;
+  headers: Headers;
 }
 
 export class HtmlParser {
@@ -137,7 +144,7 @@ export class HtmlParser {
     }
   }
   
-  private extractDataFromHtml(html: string, responseTime: number): ParsedHtmlData {
+  private extractDataFromHtml(html: string, responseTime: number, headers?: Headers): ParsedHtmlData {
     const parser = new DOMParser();
     const doc = parser.parseFromString(html, 'text/html');
     
@@ -161,6 +168,12 @@ export class HtmlParser {
     
     const contentSize = new Blob([html]).size;
     
+    // Enhanced BuiltWith-style analysis
+    const responseHeaders = headers || new Headers();
+    const technologyDetails = TechnologyIntelligenceService.detectTechnologies(html, responseHeaders);
+    const marketingTools = TechnologyIntelligenceService.detectMarketingTools(html);
+    const securityAudit = TechnologyIntelligenceService.analyzeSecurity(html, responseHeaders);
+    
     return {
       title,
       metaDescription,
@@ -170,7 +183,11 @@ export class HtmlParser {
       robotsDirectives,
       technologies,
       responseTime,
-      contentSize
+      contentSize,
+      technologyDetails,
+      marketingTools,
+      securityAudit,
+      headers: responseHeaders
     };
   }
   
@@ -219,6 +236,8 @@ export class HtmlParser {
   }
   
   private getEmptyParsedData(responseTime: number): ParsedHtmlData {
+    const emptyHeaders = new Headers();
+    
     return {
       title: null,
       metaDescription: null,
@@ -228,7 +247,44 @@ export class HtmlParser {
       robotsDirectives: [],
       technologies: [],
       responseTime,
-      contentSize: 0
+      contentSize: 0,
+      technologyDetails: {
+        jsLibraries: [],
+        cssFrameworks: [],
+        analyticsTools: [],
+        adNetworks: [],
+        cdnProviders: [],
+        serverTech: [],
+        ecommercePlatforms: [],
+        securityTools: [],
+        socialWidgets: [],
+        version: null
+      },
+      marketingTools: {
+        googleAnalytics: [],
+        facebookPixel: [],
+        googleTagManager: [],
+        googleAdSense: [],
+        linkedinInsight: [],
+        twitterAnalytics: [],
+        hotjar: [],
+        mixpanel: [],
+        segment: []
+      },
+      securityAudit: {
+        vulnerableLibraries: [],
+        outdatedVersions: [],
+        securityHeaders: {
+          hsts: false,
+          csp: false,
+          xFrameOptions: false,
+          xContentTypeOptions: false
+        },
+        riskyScripts: [],
+        httpsIssues: [],
+        score: 0
+      },
+      headers: emptyHeaders
     };
   }
   
