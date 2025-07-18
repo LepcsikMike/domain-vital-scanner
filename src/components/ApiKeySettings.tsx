@@ -14,8 +14,14 @@ export const ApiKeySettings: React.FC = () => {
   const [pageSpeedApiKey, setPageSpeedApiKey] = useState('');
   const [searchApiKey, setSearchApiKey] = useState('');
   const [searchEngineId, setSearchEngineId] = useState('');
+  const [yelpApiKey, setYelpApiKey] = useState('');
+  const [placesApiKey, setPlacesApiKey] = useState('');
+  const [hunterApiKey, setHunterApiKey] = useState('');
   const [isTestingPageSpeed, setIsTestingPageSpeed] = useState(false);
   const [isTestingSearch, setIsTestingSearch] = useState(false);
+  const [isTestingYelp, setIsTestingYelp] = useState(false);
+  const [isTestingPlaces, setIsTestingPlaces] = useState(false);
+  const [isTestingHunter, setIsTestingHunter] = useState(false);
 
   const pageSpeedService = new GooglePageSpeedService();
   const searchService = new GoogleCustomSearchService();
@@ -99,8 +105,130 @@ export const ApiKeySettings: React.FC = () => {
     }
   };
 
+  const handleSaveYelpKey = async () => {
+    if (!yelpApiKey.trim()) {
+      toast({
+        title: "API Key fehlt",
+        description: "Bitte geben Sie einen gültigen Yelp API Key ein",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsTestingYelp(true);
+    
+    try {
+      localStorage.setItem('yelp_api_key', yelpApiKey);
+      
+      // Test API with a simple request
+      const response = await fetch('https://api.yelp.com/v3/businesses/search?location=Berlin&term=restaurant&limit=1', {
+        headers: { 'Authorization': `Bearer ${yelpApiKey}` }
+      });
+      
+      if (response.ok) {
+        toast({
+          title: "Yelp API Key gespeichert",
+          description: "API Key erfolgreich getestet und gespeichert",
+        });
+        setYelpApiKey('');
+      } else {
+        throw new Error('API Test fehlgeschlagen');
+      }
+      
+    } catch (error) {
+      toast({
+        title: "Yelp API Key Test fehlgeschlagen",
+        description: "Überprüfen Sie Ihren Yelp API Key",
+        variant: "destructive",
+      });
+    } finally {
+      setIsTestingYelp(false);
+    }
+  };
+
+  const handleSavePlacesKey = async () => {
+    if (!placesApiKey.trim()) {
+      toast({
+        title: "API Key fehlt",
+        description: "Bitte geben Sie einen gültigen Google Places API Key ein",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsTestingPlaces(true);
+    
+    try {
+      localStorage.setItem('google_places_key', placesApiKey);
+      
+      // Test API with a simple request
+      const response = await fetch(`https://maps.googleapis.com/maps/api/place/textsearch/json?query=restaurant+Berlin&key=${placesApiKey}`);
+      
+      if (response.ok) {
+        toast({
+          title: "Google Places API Key gespeichert",
+          description: "API Key erfolgreich getestet und gespeichert",
+        });
+        setPlacesApiKey('');
+      } else {
+        throw new Error('API Test fehlgeschlagen');
+      }
+      
+    } catch (error) {
+      toast({
+        title: "Places API Key Test fehlgeschlagen",
+        description: "Überprüfen Sie Ihren Google Places API Key",
+        variant: "destructive",
+      });
+    } finally {
+      setIsTestingPlaces(false);
+    }
+  };
+
+  const handleSaveHunterKey = async () => {
+    if (!hunterApiKey.trim()) {
+      toast({
+        title: "API Key fehlt",
+        description: "Bitte geben Sie einen gültigen Hunter.io API Key ein",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsTestingHunter(true);
+    
+    try {
+      localStorage.setItem('hunter_api_key', hunterApiKey);
+      
+      // Test API with a simple request
+      const response = await fetch(`https://api.hunter.io/v2/domain-search?domain=example.com&api_key=${hunterApiKey}`);
+      
+      if (response.ok) {
+        toast({
+          title: "Hunter.io API Key gespeichert",
+          description: "API Key erfolgreich getestet und gespeichert",
+        });
+        setHunterApiKey('');
+      } else {
+        throw new Error('API Test fehlgeschlagen');
+      }
+      
+    } catch (error) {
+      toast({
+        title: "Hunter.io API Key Test fehlgeschlagen",
+        description: "Überprüfen Sie Ihren Hunter.io API Key",
+        variant: "destructive",
+      });
+    } finally {
+      setIsTestingHunter(false);
+    }
+  };
+
   const hasPageSpeedKey = pageSpeedService.hasApiKey();
   const hasSearchCredentials = searchService.hasCredentials();
+  const hasYelpKey = !!localStorage.getItem('yelp_api_key');
+  const hasPlacesKey = !!localStorage.getItem('google_places_key');
+  const hasHunterKey = !!localStorage.getItem('hunter_api_key');
 
   return (
     <Card className="bg-slate-900/50 border-slate-700 backdrop-blur-sm">
@@ -204,6 +332,141 @@ export const ApiKeySettings: React.FC = () => {
                rel="noopener noreferrer"
                className="text-cyan-400 hover:underline ml-1">
               Setup-Anleitung <ExternalLink className="h-3 w-3 inline" />
+            </a>
+          </p>
+        </div>
+
+        {/* Yelp API */}
+        <div className="space-y-3">
+          <div className="flex items-center justify-between">
+            <Label className="text-white">Yelp Fusion API</Label>
+            {hasYelpKey ? (
+              <Badge variant="outline" className="border-green-500 text-green-400">
+                <CheckCircle className="h-3 w-3 mr-1" />
+                Konfiguriert
+              </Badge>
+            ) : (
+              <Badge variant="outline" className="border-red-500 text-red-400">
+                <AlertCircle className="h-3 w-3 mr-1" />
+                Nicht konfiguriert
+              </Badge>
+            )}
+          </div>
+          
+          <div className="flex space-x-2">
+            <Input
+              type="password"
+              placeholder="Yelp API Key eingeben..."
+              value={yelpApiKey}
+              onChange={(e) => setYelpApiKey(e.target.value)}
+              className="bg-slate-800 border-slate-600 text-white"
+            />
+            <Button 
+              onClick={handleSaveYelpKey}
+              disabled={isTestingYelp}
+              className="bg-cyan-600 hover:bg-cyan-700"
+            >
+              {isTestingYelp ? 'Teste...' : 'Speichern'}
+            </Button>
+          </div>
+          
+          <p className="text-xs text-slate-400">
+            5000 kostenlose API-Calls/Monat für lokale Business-Suche.
+            <a href="https://docs.developer.yelp.com/docs/fusion-intro" 
+               target="_blank" 
+               rel="noopener noreferrer"
+               className="text-cyan-400 hover:underline ml-1">
+              API Key erstellen <ExternalLink className="h-3 w-3 inline" />
+            </a>
+          </p>
+        </div>
+
+        {/* Google Places API */}
+        <div className="space-y-3">
+          <div className="flex items-center justify-between">
+            <Label className="text-white">Google Places API</Label>
+            {hasPlacesKey ? (
+              <Badge variant="outline" className="border-green-500 text-green-400">
+                <CheckCircle className="h-3 w-3 mr-1" />
+                Konfiguriert
+              </Badge>
+            ) : (
+              <Badge variant="outline" className="border-red-500 text-red-400">
+                <AlertCircle className="h-3 w-3 mr-1" />
+                Nicht konfiguriert
+              </Badge>
+            )}
+          </div>
+          
+          <div className="flex space-x-2">
+            <Input
+              type="password"
+              placeholder="Google Places API Key eingeben..."
+              value={placesApiKey}
+              onChange={(e) => setPlacesApiKey(e.target.value)}
+              className="bg-slate-800 border-slate-600 text-white"
+            />
+            <Button 
+              onClick={handleSavePlacesKey}
+              disabled={isTestingPlaces}
+              className="bg-cyan-600 hover:bg-cyan-700"
+            >
+              {isTestingPlaces ? 'Teste...' : 'Speichern'}
+            </Button>
+          </div>
+          
+          <p className="text-xs text-slate-400">
+            $200 gratis-Guthaben/Monat für lokale Business-Discovery.
+            <a href="https://developers.google.com/maps/documentation/places/web-service/get-api-key" 
+               target="_blank" 
+               rel="noopener noreferrer"
+               className="text-cyan-400 hover:underline ml-1">
+              API Key erstellen <ExternalLink className="h-3 w-3 inline" />
+            </a>
+          </p>
+        </div>
+
+        {/* Hunter.io API */}
+        <div className="space-y-3">
+          <div className="flex items-center justify-between">
+            <Label className="text-white">Hunter.io API</Label>
+            {hasHunterKey ? (
+              <Badge variant="outline" className="border-green-500 text-green-400">
+                <CheckCircle className="h-3 w-3 mr-1" />
+                Konfiguriert
+              </Badge>
+            ) : (
+              <Badge variant="outline" className="border-red-500 text-red-400">
+                <AlertCircle className="h-3 w-3 mr-1" />
+                Nicht konfiguriert
+              </Badge>
+            )}
+          </div>
+          
+          <div className="flex space-x-2">
+            <Input
+              type="password"
+              placeholder="Hunter.io API Key eingeben..."
+              value={hunterApiKey}
+              onChange={(e) => setHunterApiKey(e.target.value)}
+              className="bg-slate-800 border-slate-600 text-white"
+            />
+            <Button 
+              onClick={handleSaveHunterKey}
+              disabled={isTestingHunter}
+              className="bg-cyan-600 hover:bg-cyan-700"
+            >
+              {isTestingHunter ? 'Teste...' : 'Speichern'}
+            </Button>
+          </div>
+          
+          <p className="text-xs text-slate-400">
+            100 kostenlose Abfragen/Monat für Domain-Intelligence.
+            <a href="https://hunter.io/api-documentation" 
+               target="_blank" 
+               rel="noopener noreferrer"
+               className="text-cyan-400 hover:underline ml-1">
+              API Key erstellen <ExternalLink className="h-3 w-3 inline" />
             </a>
           </p>
         </div>

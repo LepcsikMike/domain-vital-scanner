@@ -67,24 +67,21 @@ export class DomainDiscovery {
         }
       }
 
-      // Step 0.5: External APIs (Yelp, Google Places) - parallel execution
-      if (options.location && options.query) {
-        console.log('Using external APIs for enhanced local search');
+      // Step 0.5: Enhanced External APIs (Yelp, Google Places, Hunter.io) - parallel execution
+      if (options.query) {
+        console.log('Using enhanced multi-source API search');
         try {
-          const [yelpResults, placesResults] = await Promise.all([
-            this.externalApi.searchYelp(options),
-            this.externalApi.searchGooglePlaces(options)
-          ]);
+          const externalResults = await this.externalApi.searchAllSources(options);
           
-          [...yelpResults, ...placesResults].forEach(domain => {
+          externalResults.forEach(domain => {
             if (!discoveredDomains.includes(domain)) {
               discoveredDomains.push(domain);
             }
           });
           
-          console.log(`External APIs found ${yelpResults.length + placesResults.length} additional domains`);
+          console.log(`Enhanced external APIs found ${externalResults.length} quality domains`);
         } catch (error) {
-          console.warn('External API search failed:', error);
+          console.warn('Enhanced external API search failed:', error);
         }
       }
 
