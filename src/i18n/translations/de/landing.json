@@ -1,4 +1,16 @@
 {
+  "hero": {
+    "consultation": "Kostenlose Beratung buchen",
+    "badge": "Professionelle Website-Analyse",
+    "headline": "Website-Analyse mit professionellen PDF-Berichten",
+    "description": "Analysieren Sie Domains mit Google PageSpeed, Core Web Vitals und erstellen Sie professionelle PDF-Berichte. Für Agenturen, SEO-Experten und Unternehmen.",
+    "testFree": "Kostenlos testen",
+    "bookDemo": "Demo buchen",
+    "trust1": "Google PageSpeed API",
+    "trust2": "Professionelle PDF-Berichte",
+    "trust3": "Core Web Vitals Monitoring",
+    "trust4": "Erweiterter CSV-Export"
+  },
   "features": {
     "pdf": {
       "title": "Professional PDF Reports",

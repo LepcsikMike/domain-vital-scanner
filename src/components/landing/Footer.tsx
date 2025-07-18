@@ -1,9 +1,50 @@
 
 import React from 'react';
-import { Globe, Mail, Calendar, ExternalLink } from 'lucide-react';
+import { Globe, Mail, Calendar } from 'lucide-react';
 import { Button } from "@/components/ui/button";
+import { useTranslation } from 'react-i18next';
 
 const Footer = () => {
+  const { t, i18n } = useTranslation('landing');
+
+  const footerContent = {
+    de: {
+      description: "Die professionelle Lösung für automatisierte Website-Audits.",
+      contact: "Kontakt",
+      bookDemo: "Demo buchen",
+      legal: {
+        imprint: "Impressum",
+        privacy: "Datenschutz",
+        terms: "AGB",
+        cookies: "Cookie-Einstellungen"
+      }
+    },
+    en: {
+      description: "The professional solution for automated website audits.",
+      contact: "Contact",
+      bookDemo: "Book Demo",
+      legal: {
+        imprint: "Imprint",
+        privacy: "Privacy Policy",
+        terms: "Terms",
+        cookies: "Cookie Settings"
+      }
+    },
+    es: {
+      description: "La solución profesional para auditorías automatizadas de sitios web.",
+      contact: "Contacto",
+      bookDemo: "Reservar Demo",
+      legal: {
+        imprint: "Aviso Legal",
+        privacy: "Política de Privacidad",
+        terms: "Términos y Condiciones",
+        cookies: "Configuración de Cookies"
+      }
+    }
+  };
+
+  const content = footerContent[i18n.language] || footerContent.en;
+
   return (
     <footer className="border-t border-slate-800 bg-slate-950/50 backdrop-blur-sm">
       <div className="container mx-auto px-4 py-12">
@@ -20,101 +61,41 @@ const Footer = () => {
               </div>
             </div>
             <p className="text-slate-300 mb-6 max-w-md leading-relaxed">
-              Die professionelle Lösung für automatisierte Website-Audits. 
-              Identifizieren Sie veraltete Websites und gewinnen Sie neue Kunden 
-              durch datenbasierte Analysen.
+              {content.description}
             </p>
-            <div className="flex flex-col sm:flex-row gap-3">
-              <Button 
-                size="sm"
-                className="bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600"
-                onClick={() => window.location.href = '/app'}
-              >
-                Kostenlos testen
-              </Button>
-              <Button 
-                size="sm"
-                className="bg-gradient-to-r from-orange-500 to-pink-500 hover:from-orange-600 hover:to-pink-600 text-white font-semibold shadow-lg hover:shadow-xl transition-all"
-                onClick={() => window.open('https://calendly.com/hi-inspiroware/30min', '_blank')}
-              >
-                <Calendar className="h-4 w-4 mr-2" />
-                Demo buchen
-              </Button>
-            </div>
           </div>
 
           {/* Contact */}
           <div>
-            <h4 className="text-white font-semibold mb-4">Kontakt</h4>
+            <h4 className="text-white font-semibold mb-4">{content.contact}</h4>
             <div className="space-y-3">
-              <a 
-                href="mailto:hi@inspiroware.com" 
-                className="flex items-center text-slate-300 hover:text-cyan-400 transition-colors group"
-              >
-                <Mail className="h-4 w-4 mr-2 group-hover:scale-110 transition-transform" />
+              <a href="mailto:hi@inspiroware.com" className="flex items-center text-slate-300 hover:text-white transition-colors">
+                <Mail className="h-4 w-4 mr-2" />
                 hi@inspiroware.com
               </a>
-              <a 
-                href="https://calendly.com/hi-inspiroware/30min" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="flex items-center text-slate-300 hover:text-cyan-400 transition-colors group"
-              >
-                <Calendar className="h-4 w-4 mr-2 group-hover:scale-110 transition-transform" />
-                Termin vereinbaren
-                <ExternalLink className="h-3 w-3 ml-1" />
+              <a href="/book-demo" className="flex items-center text-slate-300 hover:text-white transition-colors">
+                <Calendar className="h-4 w-4 mr-2" />
+                {content.bookDemo}
               </a>
             </div>
           </div>
 
-          {/* Features */}
+          {/* Legal */}
           <div>
-            <h4 className="text-white font-semibold mb-4">Features</h4>
-            <ul className="space-y-2 text-slate-300 text-sm">
-              <li>Google PageSpeed Integration</li>
-              <li>SSL & Security Checks</li>
-              <li>SEO-Analyse</li>
-              <li>Batch Domain Scanning</li>
-              <li>CSV/JSON Export</li>
-              <li>API-Zugriff</li>
-            </ul>
-          </div>
-        </div>
-
-        {/* Legal Links Section */}
-        <div className="border-t border-slate-800 mt-8 pt-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div>
-              <h4 className="text-white font-semibold mb-4">Rechtliches</h4>
-              <div className="flex flex-wrap gap-4 text-slate-300 text-sm">
-                <a 
-                  href="/impressum" 
-                  className="hover:text-cyan-400 transition-colors"
-                >
-                  Impressum
-                </a>
-                <a 
-                  href="/datenschutz" 
-                  className="hover:text-cyan-400 transition-colors"
-                >
-                  Datenschutz
-                </a>
-                <a 
-                  href="/agb" 
-                  className="hover:text-cyan-400 transition-colors"
-                >
-                  AGB
-                </a>
-                <a 
-                  href="/cookie-einstellungen" 
-                  className="hover:text-cyan-400 transition-colors"
-                >
-                  Cookie-Einstellungen
-                </a>
-              </div>
-            </div>
-            <div className="text-slate-400 text-sm">
-              <div>© 2025 Inspiroware OÜ. All rights reserved.</div>
+            <h4 className="text-white font-semibold mb-4">Legal</h4>
+            <div className="space-y-3">
+              <a href="/imprint" className="block text-slate-300 hover:text-white transition-colors">
+                {content.legal.imprint}
+              </a>
+              <a href="/privacy" className="block text-slate-300 hover:text-white transition-colors">
+                {content.legal.privacy}
+              </a>
+              <a href="/terms" className="block text-slate-300 hover:text-white transition-colors">
+                {content.legal.terms}
+              </a>
+              <a href="/cookie-settings" className="block text-slate-300 hover:text-white transition-colors">
+                {content.legal.cookies}
+              </a>
             </div>
           </div>
         </div>
