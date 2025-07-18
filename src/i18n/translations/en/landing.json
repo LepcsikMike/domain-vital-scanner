@@ -39,36 +39,147 @@
       "description": "Detection of Google Analytics, Facebook Pixel, marketing automation and other important marketing tools."
     }
   },
+  "howItWorks": {
+    "title": "How it works",
+    "subtitle": "From domain input to actionable report in minutes",
+    "step": "Step",
+    "steps": {
+      "domainInput": {
+        "title": "Domain Input",
+        "description": "Enter individual domains or upload entire lists. Intelligent multi-TLD search available.",
+        "details": ["Single domain scan", "Batch upload", "Industry discovery"]
+      },
+      "automaticAnalysis": {
+        "title": "Automatic Analysis",
+        "description": "Google APIs analyze performance, security and SEO factors in real-time.",
+        "details": ["Google PageSpeed", "SSL checks", "SEO audit"]
+      },
+      "exportAction": {
+        "title": "Export & Action",
+        "description": "Export detailed reports as CSV/JSON and integrate directly into your sales process.",
+        "details": ["CSV/JSON export", "API access", "CRM integration"]
+      }
+    }
+  },
   "pricing": {
-    "title": "Simple, transparent pricing",
-    "subtitle": "Choose the plan that fits your needs",
-    "bookDemo": "Book Demo"
+    "title": "Transparent Pricing",
+    "subtitle": "Start for free or use the full feature set for professional website audits",
+    "bookDemo": "Schedule Personal Demo",
+    "plans": {
+      "free": {
+        "name": "Free Plan",
+        "price": "0",
+        "period": "Forever",
+        "description": "Perfect for testing and occasional audits",
+        "features": [
+          "1 domain scan per day",
+          "Basic security checks (HTTPS, SSL)",
+          "Performance overview",
+          "Meta tags & CMS detection",
+          "Generator tags analysis",
+          "Web interface access"
+        ],
+        "limitations": [
+          "No PDF reports",
+          "No CSV export",
+          "No API integration",
+          "Limited analysis depth"
+        ],
+        "cta": "Test for Free"
+      },
+      "enterprise": {
+        "name": "Enterprise Plan",
+        "price": "19",
+        "period": "per month",
+        "description": "For agencies and professional website audits",
+        "badge": "Popular",
+        "features": [
+          "Professional PDF Reports (Executive Summary)",
+          "Technical Deep-Dive Reports (PDF)",
+          "Action Plan Reports with priorities (PDF)",
+          "Enhanced CSV Export (20+ data fields)",
+          "Unlimited domain scans",
+          "Google PageSpeed Insights integration",
+          "Complete Core Web Vitals",
+          "API access for CRM integration",
+          "Batch analysis (1000+ domains)",
+          "Common Crawl domain discovery",
+          "Premium support & consulting"
+        ],
+        "cta": "Get Enterprise"
+      }
+    },
+    "limitations": "Limitations:"
   },
   "faq": {
     "title": "Frequently Asked Questions",
-    "q1": {
-      "question": "What PDF report formats are available?",
-      "answer": "We offer three professional PDF report formats: Executive Summary (compact overview for decision makers), Technical Deep-Dive (detailed technical analysis) and Action Plan (concrete recommendations with priorities)."
+    "subtitle": "Everything you need to know about DomainAudit Pro",
+    "contact": "More questions? We're happy to help.",
+    "questions": [
+      {
+        "question": "What PDF report formats are available?",
+        "answer": "The Enterprise plan offers three professional PDF report types: Executive Summary (management overview), Technical Deep-Dive (detailed technical analysis), and Action Plan (prioritized recommendations). All reports are optimized for client presentations."
+      },
+      {
+        "question": "How do PDF reports differ from the web view?",
+        "answer": "PDF reports are professionally formatted with corporate design, charts, scores, and structured recommendations. They're perfect for client presentations, proposals, and audit documentation - comparable to SEOptimer or GTmetrix Premium reports."
+      },
+      {
+        "question": "What data does the Enhanced CSV Export contain?",
+        "answer": "The Enhanced CSV Export includes 20+ data fields: Core Web Vitals, performance scores, marketing tools, technology stack, security assessment, SEO metrics, meta tags, and much more. Ideal for CRM integration and data analysis."
+      },
+      {
+        "question": "How exactly does the domain analysis work?",
+        "answer": "DomainAudit Pro uses Google APIs (PageSpeed Insights, Custom Search) and proprietary crawlers to comprehensively analyze websites. We automatically check HTTPS status, performance metrics (Core Web Vitals), SEO factors, outdated technologies, and security aspects."
+      },
+      {
+        "question": "Can I automatically analyze large domain lists?",
+        "answer": "Absolutely. The Enterprise plan supports batch analysis of 1000+ domains in parallel. You can upload CSV lists or use our Domain Discovery to automatically find relevant domains in your target industry."
+      },
+      {
+        "question": "How can I integrate results into my CRM?",
+        "answer": "The Enterprise plan offers full API access, Enhanced CSV export, and PDF reports. You can import all data directly into your CRM (HubSpot, Salesforce, etc.) or retrieve it automatically via our API."
+      },
+      {
+        "question": "Is this cheaper than SEOptimer or other premium tools?",
+        "answer": "Yes! SEOptimer costs $29-99/month for similar features. Our Enterprise plan (€19/month) offers comparable PDF reports, Enhanced export, and Google API integration at a fraction of the cost of other premium audit tools."
+      },
+      {
+        "question": "Is there a money-back guarantee?",
+        "answer": "Yes, we offer a 30-day money-back guarantee for the Enterprise plan. You can cancel anytime, and we'll refund the full amount without questions."
+      }
+    ]
+  },
+  "footer": {
+    "brand": {
+      "title": "DomainAudit Pro",
+      "subtitle": "Powered by Google APIs",
+      "description": "The professional solution for automated website audits. Identify outdated websites and win new customers through data-driven analysis.",
+      "testFree": "Test for Free",
+      "bookDemo": "Book Demo"
     },
-    "q2": {
-      "question": "What is included in the Enhanced CSV Export?",
-      "answer": "The Enhanced CSV Export contains over 20 data fields including Core Web Vitals, Google PageSpeed Scores, Technology Stack, Marketing Tools, Security Assessment, SEO Metrics and detailed performance data."
+    "contact": {
+      "title": "Contact",
+      "schedule": "Schedule appointment"
     },
-    "q3": {
-      "question": "How does the tool differ from SEOptimer or similar platforms?",
-      "answer": "Our tool offers professional PDF reports at a fraction of the cost of SEOptimer (€79/month). You get the same quality analysis with Executive Summaries, detailed technical reports and Action Plans."
+    "features": {
+      "title": "Features",
+      "list": [
+        "Google PageSpeed Integration",
+        "SSL & Security Checks",
+        "SEO Analysis",
+        "Batch Domain Scanning",
+        "CSV/JSON Export",
+        "API Access"
+      ]
     },
-    "q4": {
-      "question": "What data sources are used for analysis?",
-      "answer": "We use Google PageSpeed Insights API, Core Web Vitals Monitoring, DNS lookups, technology detection and comprehensive SEO metrics for accurate and reliable analysis."
+    "legal": {
+      "title": "Legal",
+      "imprint": "Imprint",
+      "privacy": "Privacy",
+      "terms": "Terms",
+      "cookies": "Cookie Settings"
     },
-    "q5": {
-      "question": "Is there an API for integration?",
-      "answer": "Yes, Enterprise customers get access to our API for seamless integration into existing workflows and automated report generation."
-    },
-    "q6": {
-      "question": "How fast are reports generated?",
-      "answer": "Standard analyses are completed in 30-60 seconds. PDF reports are automatically generated and can be downloaded immediately."
-    }
+    "copyright": "© 2025 Inspiroware OÜ. All rights reserved."
   }
 }

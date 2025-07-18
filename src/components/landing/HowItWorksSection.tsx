@@ -2,29 +2,32 @@
 import React from 'react';
 import { Card, CardContent } from "@/components/ui/card";
 import { Search, BarChart3, Download, ArrowRight } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 const HowItWorksSection = () => {
+  const { t } = useTranslation('landing');
+  
   const steps = [
     {
       number: "01",
       icon: <Search className="h-8 w-8 text-cyan-400" />,
-      title: "Domain-Input",
-      description: "Einzelne Domains eingeben oder ganze Listen hochladen. Intelligente Multi-TLD Suche verfügbar.",
-      details: ["Einzeldomain-Scan", "Batch-Upload", "Branchen-Discovery"]
+      title: t('howItWorks.steps.domainInput.title'),
+      description: t('howItWorks.steps.domainInput.description'),
+      details: t('howItWorks.steps.domainInput.details', { returnObjects: true })
     },
     {
       number: "02",
       icon: <BarChart3 className="h-8 w-8 text-green-400" />,
-      title: "Automatische Analyse",
-      description: "Google APIs analysieren Performance, Sicherheit und SEO-Faktoren in Echtzeit.",
-      details: ["Google PageSpeed", "SSL-Checks", "SEO-Audit"]
+      title: t('howItWorks.steps.automaticAnalysis.title'),
+      description: t('howItWorks.steps.automaticAnalysis.description'),
+      details: t('howItWorks.steps.automaticAnalysis.details', { returnObjects: true })
     },
     {
       number: "03",
       icon: <Download className="h-8 w-8 text-blue-400" />,
-      title: "Export & Action",
-      description: "Detaillierte Reports als CSV/JSON exportieren und direkt in Ihren Vertriebsprozess integrieren.",
-      details: ["CSV/JSON Export", "API-Zugriff", "CRM Integration"]
+      title: t('howItWorks.steps.exportAction.title'),
+      description: t('howItWorks.steps.exportAction.description'),
+      details: t('howItWorks.steps.exportAction.details', { returnObjects: true })
     }
   ];
 
@@ -33,13 +36,10 @@ const HowItWorksSection = () => {
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-            So einfach{' '}
-            <span className="bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
-              funktioniert's
-            </span>
+            {t('howItWorks.title')}
           </h2>
           <p className="text-xl text-slate-300 max-w-2xl mx-auto">
-            Von der Domain-Eingabe zum actionable Report in wenigen Minuten
+            {t('howItWorks.subtitle')}
           </p>
         </div>
 
@@ -62,7 +62,7 @@ const HowItWorksSection = () => {
                         {step.icon}
                       </div>
                       <div>
-                        <div className="text-sm text-cyan-400 font-semibold mb-1">Schritt {step.number}</div>
+                        <div className="text-sm text-cyan-400 font-semibold mb-1">{t('howItWorks.step')} {step.number}</div>
                         <h3 className="text-2xl font-bold text-white">{step.title}</h3>
                       </div>
                     </div>

@@ -7,7 +7,7 @@
     "testFree": "Kostenlos testen",
     "bookDemo": "Demo buchen",
     "trust1": "Google PageSpeed API",
-    "trust2": "Professional PDF Reports",
+    "trust2": "Professionelle PDF-Reports",
     "trust3": "Core Web Vitals Monitoring",
     "trust4": "Enhanced CSV Export"
   },
@@ -39,36 +39,147 @@
       "description": "Erkennung von Google Analytics, Facebook Pixel, Marketing-Automatisierung und anderen wichtigen Marketing-Tools."
     }
   },
+  "howItWorks": {
+    "title": "So einfach funktioniert's",
+    "subtitle": "Von der Domain-Eingabe zum actionable Report in wenigen Minuten",
+    "step": "Schritt",
+    "steps": {
+      "domainInput": {
+        "title": "Domain-Input",
+        "description": "Einzelne Domains eingeben oder ganze Listen hochladen. Intelligente Multi-TLD Suche verfügbar.",
+        "details": ["Einzeldomain-Scan", "Batch-Upload", "Branchen-Discovery"]
+      },
+      "automaticAnalysis": {
+        "title": "Automatische Analyse",
+        "description": "Google APIs analysieren Performance, Sicherheit und SEO-Faktoren in Echtzeit.",
+        "details": ["Google PageSpeed", "SSL-Checks", "SEO-Audit"]
+      },
+      "exportAction": {
+        "title": "Export & Action",
+        "description": "Detaillierte Reports als CSV/JSON exportieren und direkt in Ihren Vertriebsprozess integrieren.",
+        "details": ["CSV/JSON Export", "API-Zugriff", "CRM Integration"]
+      }
+    }
+  },
   "pricing": {
-    "title": "Einfache, transparente Preise",
-    "subtitle": "Wählen Sie den Plan, der zu Ihren Bedürfnissen passt",
-    "bookDemo": "Demo buchen"
+    "title": "Transparent Pricing",
+    "subtitle": "Starten Sie kostenlos oder nutzen Sie den vollen Funktionsumfang für professionelle Website-Audits",
+    "bookDemo": "Persönliche Demo vereinbaren",
+    "plans": {
+      "free": {
+        "name": "Kostenloser Plan",
+        "price": "0",
+        "period": "Forever",
+        "description": "Perfekt zum Testen und für gelegentliche Audits",
+        "features": [
+          "1 Domain-Scan pro Tag",
+          "Basis-Sicherheitschecks (HTTPS, SSL)",
+          "Performance-Überblick",
+          "Meta-Tags & CMS Erkennung",
+          "Generator-Tags Analyse",
+          "Web-Interface Zugriff"
+        ],
+        "limitations": [
+          "Keine PDF-Reports",
+          "Kein CSV-Export",
+          "Keine API-Integration",
+          "Begrenzte Analyse-Tiefe"
+        ],
+        "cta": "Kostenlos testen"
+      },
+      "enterprise": {
+        "name": "Enterprise Plan",
+        "price": "19",
+        "period": "pro Monat",
+        "description": "Für Agenturen und professionelle Website-Audits",
+        "badge": "Beliebt",
+        "features": [
+          "Professional PDF Reports (Executive Summary)",
+          "Technical Deep-Dive Reports (PDF)",
+          "Action Plan Reports mit Prioritäten (PDF)",
+          "Enhanced CSV Export (20+ Datenfelder)",
+          "Unbegrenzte Domain-Scans",
+          "Google PageSpeed Insights Integration",
+          "Vollständige Core Web Vitals",
+          "API-Zugriff für CRM Integration",
+          "Batch-Analyse (1000+ Domains)",
+          "Common Crawl Domain Discovery",
+          "Premium Support & Beratung"
+        ],
+        "cta": "Enterprise sichern"
+      }
+    },
+    "limitations": "Einschränkungen:"
   },
   "faq": {
     "title": "Häufig gestellte Fragen",
-    "q1": {
-      "question": "Welche PDF-Report-Formate sind verfügbar?",
-      "answer": "Wir bieten drei professionelle PDF-Report-Formate: Executive Summary (kompakte Übersicht für Entscheidungsträger), Technical Deep-Dive (detaillierte technische Analyse) und Action Plan (konkrete Handlungsempfehlungen mit Prioritäten)."
+    "subtitle": "Alles was Sie über DomainAudit Pro wissen müssen",
+    "contact": "Weitere Fragen? Wir helfen gerne weiter.",
+    "questions": [
+      {
+        "question": "Welche PDF-Reports kann ich erstellen?",
+        "answer": "Der Enterprise Plan bietet drei professionelle PDF-Report-Typen: Executive Summary (Management-Überblick), Technical Deep-Dive (detaillierte technische Analyse) und Action Plan (priorisierte Handlungsempfehlungen). Alle Reports sind für Kundenpräsentationen optimiert."
+      },
+      {
+        "question": "Wie unterscheiden sich die PDF-Reports von der Web-Ansicht?",
+        "answer": "Die PDF-Reports sind professionell formatiert mit Corporate Design, Charts, Scores und strukturierten Empfehlungen. Sie eignen sich perfekt für Kundenpräsentationen, Angebote und Audit-Dokumentation - vergleichbar mit SEOptimer oder GTmetrix Premium-Reports."
+      },
+      {
+        "question": "Welche Daten enthält der Enhanced CSV-Export?",
+        "answer": "Der Enhanced CSV-Export umfasst 20+ Datenfelder: Core Web Vitals, Performance-Scores, Marketing Tools, Technology Stack, Security Assessment, SEO-Metriken, Meta-Tags und vieles mehr. Ideal für CRM-Integration und Datenanalyse."
+      },
+      {
+        "question": "Wie genau funktioniert die Domain-Analyse?",
+        "answer": "DomainAudit Pro nutzt Google APIs (PageSpeed Insights, Custom Search) und eigene Crawler, um Websites umfassend zu analysieren. Wir prüfen HTTPS-Status, Performance-Metriken (Core Web Vitals), SEO-Faktoren, veraltete Technologien und Sicherheitsaspekte automatisch."
+      },
+      {
+        "question": "Kann ich große Domain-Listen automatisch analysieren?",
+        "answer": "Absolut. Der Enterprise Plan unterstützt Batch-Analysen von 1000+ Domains parallel. Sie können CSV-Listen hochladen oder unsere Domain Discovery nutzen, um automatisch relevante Domains in Ihrer Zielbranche zu finden."
+      },
+      {
+        "question": "Wie kann ich die Ergebnisse in mein CRM integrieren?",
+        "answer": "Der Enterprise Plan bietet vollständigen API-Zugriff, Enhanced CSV-Export und PDF-Reports. Sie können alle Daten direkt in Ihr CRM (HubSpot, Salesforce, etc.) importieren oder über unsere API automatisiert abrufen."
+      },
+      {
+        "question": "Ist das günstiger als SEOptimer oder andere Premium-Tools?",
+        "answer": "Ja! SEOptimer kostet $29-99/Monat für ähnliche Features. Unser Enterprise Plan (€19/Monat) bietet vergleichbare PDF-Reports, Enhanced Export und Google API Integration zu einem Bruchteil der Kosten anderer Premium-Audit-Tools."
+      },
+      {
+        "question": "Gibt es eine Geld-zurück-Garantie?",
+        "answer": "Ja, wir bieten eine 30-Tage Geld-zurück-Garantie für den Enterprise Plan. Sie können jederzeit kündigen, und wir erstatten den vollen Betrag ohne Nachfragen."
+      }
+    ]
+  },
+  "footer": {
+    "brand": {
+      "title": "DomainAudit Pro",
+      "subtitle": "Powered by Google APIs",
+      "description": "Die professionelle Lösung für automatisierte Website-Audits. Identifizieren Sie veraltete Websites und gewinnen Sie neue Kunden durch datenbasierte Analysen.",
+      "testFree": "Kostenlos testen",
+      "bookDemo": "Demo buchen"
     },
-    "q2": {
-      "question": "Was ist im Enhanced CSV Export enthalten?",
-      "answer": "Der Enhanced CSV Export enthält über 20 Datenfelder inklusive Core Web Vitals, Google PageSpeed Scores, Technology Stack, Marketing Tools, Security Assessment, SEO Metrics und detaillierte Performance-Daten."
+    "contact": {
+      "title": "Kontakt",
+      "schedule": "Termin vereinbaren"
     },
-    "q3": {
-      "question": "Wie unterscheidet sich das Tool von SEOptimer oder ähnlichen Plattformen?",
-      "answer": "Unser Tool bietet professionelle PDF-Reports zu einem Bruchteil der Kosten von SEOptimer (€79/Monat). Sie erhalten die gleiche Qualität der Analyse mit Executive Summaries, detaillierten technischen Reports und Action Plans."
+    "features": {
+      "title": "Features",
+      "list": [
+        "Google PageSpeed Integration",
+        "SSL & Security Checks",
+        "SEO-Analyse",
+        "Batch Domain Scanning",
+        "CSV/JSON Export",
+        "API-Zugriff"
+      ]
     },
-    "q4": {
-      "question": "Welche Datenquellen werden für die Analyse verwendet?",
-      "answer": "Wir nutzen Google PageSpeed Insights API, Core Web Vitals Monitoring, DNS-Lookups, Technologie-Erkennung und umfassende SEO-Metriken für präzise und verlässliche Analysen."
+    "legal": {
+      "title": "Rechtliches",
+      "imprint": "Impressum",
+      "privacy": "Datenschutz",
+      "terms": "AGB",
+      "cookies": "Cookie-Einstellungen"
     },
-    "q5": {
-      "question": "Gibt es eine API für die Integration?",
-      "answer": "Ja, Enterprise-Kunden erhalten Zugang zu unserer API für die nahtlose Integration in bestehende Workflows und automatisierte Report-Generierung."
-    },
-    "q6": {
-      "question": "Wie schnell werden die Reports generiert?",
-      "answer": "Standard-Analysen werden in 30-60 Sekunden abgeschlossen. PDF-Reports werden automatisch generiert und können sofort heruntergeladen werden."
-    }
+    "copyright": "© 2025 Inspiroware OÜ. All rights reserved."
   }
 }
