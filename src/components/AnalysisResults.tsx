@@ -3,8 +3,9 @@ import React, { useState } from 'react';
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Progress } from "@/components/ui/progress";
 import { 
   Table, 
   TableBody, 
@@ -25,11 +26,19 @@ import {
   ExternalLink,
   Cpu,
   BarChart3,
-  TrendingUp
+  TrendingUp,
+  Clock,
+  Globe,
+  Smartphone,
+  Monitor,
+  Eye,
+  FileText,
+  Download
 } from 'lucide-react';
 import { DomainAnalysisResult } from '@/types/domain-analysis';
 import { getDomainUrl } from '@/utils/urlUtils';
 import { TechnologyStackCard } from './TechnologyStackCard';
+import { ScoreDashboard } from './ScoreDashboard';
 
 interface AnalysisResultsProps {
   results: DomainAnalysisResult[];
@@ -70,18 +79,57 @@ export const AnalysisResults: React.FC<AnalysisResultsProps> = ({ results }) => 
 
   const getStatusIcon = (isValid: boolean) => {
     return isValid ? (
-      <CheckCircle className="h-4 w-4 text-green-400" />
+      <CheckCircle className="h-4 w-4 text-success" />
     ) : (
-      <XCircle className="h-4 w-4 text-red-400" />
+      <XCircle className="h-4 w-4 text-destructive" />
     );
   };
 
   const getScoreBadge = (score: number | null) => {
     if (!score) return <Badge variant="secondary">N/A</Badge>;
     
-    if (score >= 90) return <Badge className="bg-green-600">Gut ({score})</Badge>;
-    if (score >= 50) return <Badge className="bg-yellow-600">Mittel ({score})</Badge>;
-    return <Badge className="bg-red-600">Schlecht ({score})</Badge>;
+    if (score >= 90) return <Badge className="bg-success text-success-foreground">Excellent ({score})</Badge>;
+    if (score >= 70) return <Badge className="bg-warning text-warning-foreground">Good ({score})</Badge>;
+    if (score >= 50) return <Badge className="bg-orange-500 text-white">Fair ({score})</Badge>;
+    return <Badge variant="destructive">Poor ({score})</Badge>;
+  };
+
+  const getScoreColor = (score: number | null) => {
+    if (!score) return 'text-muted-foreground';
+    if (score >= 90) return 'text-success';
+    if (score >= 70) return 'text-warning';
+    if (score >= 50) return 'text-orange-500';
+    return 'text-destructive';
+  };
+
+  const getTechnologyHealthBadge = (outdatedTech: string[]) => {
+    if (outdatedTech.length === 0) {
+      return <Badge className="bg-success text-success-foreground">Modern</Badge>;
+    }
+    if (outdatedTech.length <= 2) {
+      return <Badge className="bg-warning text-warning-foreground">Needs Update</Badge>;
+    }
+    return <Badge variant="destructive">Critical</Badge>;
+  };
+
+  const getCriticalIssues = (result: DomainAnalysisResult) => {
+    const issues: string[] = [];
+    
+    if (!result.httpsStatus.valid) issues.push('HTTPS fehlt');
+    if (result.technologyAudit.outdatedTechnologies.length > 0) {
+      issues.push(`${result.technologyAudit.outdatedTechnologies.length} veraltete Technologien`);
+    }
+    if (result.securityAudit.vulnerableLibraries.length > 0) {
+      issues.push(`${result.securityAudit.vulnerableLibraries.length} Sicherheitslücken`);
+    }
+    if (result.seoAudit.issues.length > 3) {
+      issues.push(`${result.seoAudit.issues.length} SEO Probleme`);
+    }
+    if ((result.pageSpeedScores.mobile || 0) < 50) {
+      issues.push('Schlechte Performance');
+    }
+    
+    return issues;
   };
 
   if (results.length === 0) {
@@ -134,248 +182,196 @@ export const AnalysisResults: React.FC<AnalysisResultsProps> = ({ results }) => 
         </div>
       </div>
 
-      {/* Results - Mobile Card View / Desktop Table */}
-      <div className="block lg:hidden">
-        {/* Mobile Card View */}
-        <div className="space-y-4">
-          {filteredResults.map((result) => (
-            <Card key={result.domain} className="bg-slate-900/50 border-slate-700 backdrop-blur-sm">
-              <CardContent className="p-4">
-                  <div className="space-y-3">
-                    {/* Domain Header */}
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center space-x-2 flex-1">
-                        <a 
-                          href={getDomainUrl(result.domain)}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center space-x-1 text-blue-400 hover:text-blue-300 transition-colors font-medium"
-                        >
-                          <span className="truncate">{result.domain}</span>
-                          <ExternalLink className="h-3 w-3 flex-shrink-0" />
-                        </a>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => setExpandedDomain(expandedDomain === result.domain ? null : result.domain)}
-                          className="h-6 w-6 p-0"
-                        >
-                          <Cpu className="h-3 w-3" />
-                        </Button>
-                      </div>
-                      {result.criticalIssues >= 2 && (
-                        <AlertTriangle className="h-4 w-4 text-yellow-400 flex-shrink-0" />
-                      )}
-                    </div>
+      {/* Enhanced Results Cards */}
+      <div className="space-y-6">
+        {filteredResults.map((result) => {
+          const criticalIssues = getCriticalIssues(result);
+          const overallScore = Math.round(
+            ((result.pageSpeedScores.mobile || 0) + 
+             (result.pageSpeedScores.desktop || 0) + 
+             result.securityAudit.score + 
+             Math.max(0, 100 - result.seoAudit.issues.length * 10)) / 4
+          );
 
-                  {/* Status Grid */}
-                  <div className="grid grid-cols-2 gap-3 text-sm">
-                    <div className="space-y-1">
-                      <div className="text-slate-400 text-xs">HTTPS</div>
-                      <div className="flex items-center space-x-1">
-                        {getStatusIcon(result.httpsStatus.valid)}
-                        <span className="text-xs">{result.httpsStatus.valid ? 'Gültig' : 'Fehler'}</span>
-                      </div>
-                    </div>
-
-                    <div className="space-y-1">
-                      <div className="text-slate-400 text-xs">Tech</div>
-                      {result.technologyAudit.outdatedTechnologies.length > 0 ? (
-                        <Badge variant="destructive" className="text-xs">
-                          {result.technologyAudit.outdatedTechnologies[0]}
-                        </Badge>
-                      ) : (
-                        <Badge variant="secondary" className="text-xs">Modern</Badge>
-                      )}
-                    </div>
-
-                    <div className="space-y-1">
-                      <div className="text-slate-400 text-xs">PageSpeed</div>
-                      <div className="space-y-1">
-                        {getScoreBadge(result.pageSpeedScores.mobile)}
-                      </div>
-                    </div>
-
-                    <div className="space-y-1">
-                      <div className="text-slate-400 text-xs">SEO</div>
-                      {result.seoAudit.issues.length === 0 ? (
-                        <Badge className="bg-green-600 text-xs">OK</Badge>
-                      ) : (
-                        <Badge variant="destructive" className="text-xs">
-                          {result.seoAudit.issues.length} Issues
-                        </Badge>
-                      )}
-                    </div>
-                  </div>
-
-                  {/* Enhanced Technology Stack - Expandable */}
-                  {expandedDomain === result.domain && (
-                    <div className="mt-4 pt-4 border-t border-slate-700">
-                      <TechnologyStackCard
-                        technologyDetails={result.technologyDetails}
-                        marketingTools={result.marketingTools}
-                        securityAudit={result.securityAudit}
-                        competitorInsights={result.competitorInsights}
-                      />
-                    </div>
-                  )}
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      </div>
-
-      {/* Desktop Table View */}
-      <div className="hidden lg:block border border-slate-700 rounded-lg overflow-hidden">
-        <div className="overflow-x-auto">
-          <Table>
-            <TableHeader>
-              <TableRow className="border-slate-700 bg-slate-800/50">
-                <TableHead className="text-slate-300">Domain</TableHead>
-                <TableHead className="text-slate-300">HTTPS</TableHead>
-                <TableHead className="text-slate-300">Technologie</TableHead>
-                <TableHead className="text-slate-300">PageSpeed</TableHead>
-                <TableHead className="text-slate-300">Security</TableHead>
-                <TableHead className="text-slate-300">Market Position</TableHead>
-                <TableHead className="text-slate-300">Status</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {filteredResults.map((result) => (
-                <TableRow key={result.domain} className="border-slate-700 hover:bg-slate-800/30">
-                  <TableCell className="font-medium text-white">
-                    <div className="flex items-center space-x-2">
+          return (
+            <Card key={result.domain} className="bg-card border-border shadow-lg hover:shadow-xl transition-shadow">
+              <CardHeader className="pb-4">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <Globe className="h-5 w-5 text-primary" />
+                    <div>
                       <a 
                         href={getDomainUrl(result.domain)}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center space-x-1 text-blue-400 hover:text-blue-300 transition-colors"
+                        className="text-lg font-semibold text-primary hover:text-primary/80 transition-colors flex items-center gap-2"
                       >
-                        <span>{result.domain}</span>
-                        <ExternalLink className="h-3 w-3" />
+                        {result.domain}
+                        <ExternalLink className="h-4 w-4" />
                       </a>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => setExpandedDomain(expandedDomain === result.domain ? null : result.domain)}
-                        className="h-6 w-6 p-0"
-                      >
-                        <Cpu className="h-3 w-3" />
-                      </Button>
-                      {result.criticalIssues >= 2 && (
-                        <AlertTriangle className="h-4 w-4 text-yellow-400" />
-                      )}
+                      <p className="text-sm text-muted-foreground">
+                        Analysiert am {new Date(result.timestamp).toLocaleDateString()}
+                      </p>
                     </div>
-                  </TableCell>
+                  </div>
                   
-                  <TableCell>
-                    <div className="flex items-center space-x-2">
-                      {getStatusIcon(result.httpsStatus.valid)}
-                      <span className="text-sm text-slate-400">
-                        {result.httpsStatus.valid ? 'Gültig' : 'Fehler'}
-                      </span>
-                    </div>
-                  </TableCell>
-                  
-                  <TableCell>
-                    {result.technologyAudit.outdatedTechnologies.length > 0 ? (
-                      <Badge variant="destructive" className="text-xs">
-                        {result.technologyAudit.outdatedTechnologies[0]}
+                  <div className="flex items-center gap-2">
+                    {criticalIssues.length > 0 && (
+                      <Badge variant="destructive" className="gap-1">
+                        <AlertTriangle className="h-3 w-3" />
+                        {criticalIssues.length} Kritisch
                       </Badge>
-                    ) : (
-                      <Badge variant="secondary" className="text-xs">Modern</Badge>
                     )}
-                  </TableCell>
-                  
-                  <TableCell>
-                    <div className="space-y-1">
-                      <div className="flex items-center space-x-2">
-                        <span className="text-xs text-slate-400">Mobile:</span>
-                        {getScoreBadge(result.pageSpeedScores.mobile)}
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <span className="text-xs text-slate-400">Desktop:</span>
-                        {getScoreBadge(result.pageSpeedScores.desktop)}
-                      </div>
-                    </div>
-                  </TableCell>
-                  
-                  <TableCell>
-                    <div className="space-y-1">
-                      <div className="flex items-center space-x-2">
-                        <Shield className="h-3 w-3 text-blue-400" />
-                        <Badge variant={result.securityAudit.score >= 80 ? "default" : result.securityAudit.score >= 60 ? "secondary" : "destructive"} className="text-xs">
-                          {result.securityAudit.score}/100
-                        </Badge>
-                      </div>
-                      <div className="text-xs text-slate-400">
-                        {result.securityAudit.vulnerableLibraries.length > 0 && (
-                          <div className="text-red-400">
-                            {result.securityAudit.vulnerableLibraries.length} vulnerabilities
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  </TableCell>
-                  
-                  <TableCell>
-                    <div className="space-y-1">
-                      <div className="flex items-center space-x-2">
-                        <TrendingUp className="h-3 w-3 text-purple-400" />
-                        <Badge 
-                          variant={result.competitorInsights.marketPosition === 'leading' ? "default" : "secondary"} 
-                          className="text-xs"
-                        >
-                          {result.competitorInsights.marketPosition}
-                        </Badge>
-                      </div>
-                      <div className="text-xs text-slate-400">
-                        {result.competitorInsights.industryCategory}
-                      </div>
-                      <div className="text-xs">
-                        <Badge variant="outline" className="text-xs">
-                          {result.competitorInsights.technicalSimilarity}% similar
-                        </Badge>
-                      </div>
-                    </div>
-                  </TableCell>
-                  
-                  <TableCell>
-                    <div className="flex items-center space-x-2">
-                      {result.crawlingStatus.hasErrors ? (
-                        <XCircle className="h-4 w-4 text-red-400" />
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => setExpandedDomain(expandedDomain === result.domain ? null : result.domain)}
+                    >
+                      <Eye className="h-4 w-4" />
+                    </Button>
+                  </div>
+                </div>
+              </CardHeader>
+
+              <CardContent className="space-y-6">
+                {/* Score Dashboard */}
+                <ScoreDashboard
+                  pageSpeedMobile={result.pageSpeedScores.mobile}
+                  pageSpeedDesktop={result.pageSpeedScores.desktop}
+                  securityScore={result.securityAudit.score}
+                  seoIssues={result.seoAudit.issues}
+                  securityIssues={result.securityAudit.vulnerableLibraries}
+                  technologyIssues={result.technologyAudit.outdatedTechnologies}
+                  performanceIssues={
+                    (result.pageSpeedScores.mobile || 0) < 50 || (result.pageSpeedScores.desktop || 0) < 50 
+                      ? ['Langsame Ladezeiten'] 
+                      : []
+                  }
+                  overallScore={overallScore}
+                />
+
+                {/* Status Overview */}
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  {/* HTTPS Status */}
+                  <div className="text-center p-3 rounded-lg bg-muted/30">
+                    <div className="flex items-center justify-center mb-2">
+                      {result.httpsStatus.valid ? (
+                        <CheckCircle className="h-6 w-6 text-success" />
                       ) : (
-                        <CheckCircle className="h-4 w-4 text-green-400" />
+                        <XCircle className="h-6 w-6 text-destructive" />
                       )}
-                      <span className="text-xs text-slate-400">
-                        {result.crawlingStatus.hasErrors ? 'Fehler' : 'OK'}
+                    </div>
+                    <div className="text-sm font-medium">HTTPS</div>
+                    <div className="text-xs text-muted-foreground">
+                      {result.httpsStatus.valid ? 'Sicher' : 'Unsicher'}
+                    </div>
+                  </div>
+
+                  {/* Technology Health */}
+                  <div className="text-center p-3 rounded-lg bg-muted/30">
+                    <div className="flex items-center justify-center mb-2">
+                      {result.technologyAudit.outdatedTechnologies.length === 0 ? (
+                        <CheckCircle className="h-6 w-6 text-success" />
+                      ) : result.technologyAudit.outdatedTechnologies.length <= 2 ? (
+                        <AlertTriangle className="h-6 w-6 text-warning" />
+                      ) : (
+                        <XCircle className="h-6 w-6 text-destructive" />
+                      )}
+                    </div>
+                    <div className="text-sm font-medium">Technologie</div>
+                    <div className="text-xs text-muted-foreground">
+                      {getTechnologyHealthBadge(result.technologyAudit.outdatedTechnologies)}
+                    </div>
+                  </div>
+
+                  {/* Performance */}
+                  <div className="text-center p-3 rounded-lg bg-muted/30">
+                    <div className="flex items-center justify-center mb-2">
+                      <Zap className={`h-6 w-6 ${getScoreColor(result.pageSpeedScores.mobile)}`} />
+                    </div>
+                    <div className="text-sm font-medium">Performance</div>
+                    <div className="text-xs">
+                      Mobile: <span className={getScoreColor(result.pageSpeedScores.mobile)}>
+                        {result.pageSpeedScores.mobile || 'N/A'}
                       </span>
                     </div>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </div>
-        
-        {/* Enhanced Technology Details - Expandable for Desktop */}
-        {expandedDomain && (
-          <div className="mt-6 p-4 bg-slate-800/30 rounded-lg border border-slate-700">
-            {(() => {
-              const expandedResult = results.find(r => r.domain === expandedDomain);
-              return expandedResult ? (
-                <TechnologyStackCard
-                  technologyDetails={expandedResult.technologyDetails}
-                  marketingTools={expandedResult.marketingTools}
-                  securityAudit={expandedResult.securityAudit}
-                  competitorInsights={expandedResult.competitorInsights}
-                />
-              ) : null;
-            })()}
-          </div>
-        )}
+                  </div>
+
+                  {/* SEO Health */}
+                  <div className="text-center p-3 rounded-lg bg-muted/30">
+                    <div className="flex items-center justify-center mb-2">
+                      {result.seoAudit.issues.length === 0 ? (
+                        <CheckCircle className="h-6 w-6 text-success" />
+                      ) : result.seoAudit.issues.length <= 3 ? (
+                        <AlertTriangle className="h-6 w-6 text-warning" />
+                      ) : (
+                        <XCircle className="h-6 w-6 text-destructive" />
+                      )}
+                    </div>
+                    <div className="text-sm font-medium">SEO</div>
+                    <div className="text-xs text-muted-foreground">
+                      {result.seoAudit.issues.length === 0 ? 'Optimal' : `${result.seoAudit.issues.length} Issues`}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Critical Issues Summary */}
+                {criticalIssues.length > 0 && (
+                  <div className="bg-destructive/10 border border-destructive/20 rounded-lg p-4">
+                    <div className="flex items-center gap-2 mb-3">
+                      <AlertTriangle className="h-5 w-5 text-destructive" />
+                      <span className="font-medium text-destructive">Sofortiger Handlungsbedarf</span>
+                    </div>
+                    <div className="grid gap-2">
+                      {criticalIssues.slice(0, 3).map((issue, index) => (
+                        <div key={index} className="flex items-center gap-2 text-sm">
+                          <span className="w-2 h-2 bg-destructive rounded-full"></span>
+                          <span>{issue}</span>
+                        </div>
+                      ))}
+                      {criticalIssues.length > 3 && (
+                        <div className="text-xs text-muted-foreground italic">
+                          ... und {criticalIssues.length - 3} weitere Probleme
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                )}
+
+                {/* Quick Actions */}
+                <div className="flex flex-wrap gap-2 pt-4 border-t">
+                  <Button variant="outline" size="sm" className="gap-2">
+                    <Download className="h-4 w-4" />
+                    Report
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    size="sm"
+                    onClick={() => setExpandedDomain(expandedDomain === result.domain ? null : result.domain)}
+                    className="gap-2"
+                  >
+                    <FileText className="h-4 w-4" />
+                    Details
+                  </Button>
+                </div>
+
+                {/* Expandable Details */}
+                {expandedDomain === result.domain && (
+                  <div className="pt-4 border-t">
+                    <TechnologyStackCard
+                      technologyDetails={result.technologyDetails}
+                      marketingTools={result.marketingTools}
+                      securityAudit={result.securityAudit}
+                      competitorInsights={result.competitorInsights}
+                    />
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          );
+        })}
       </div>
+
 
       {filteredResults.length === 0 && (
         <div className="text-center py-8 text-slate-400">
