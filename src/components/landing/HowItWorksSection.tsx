@@ -13,21 +13,21 @@ const HowItWorksSection = () => {
       icon: <Search className="h-8 w-8 text-cyan-400" />,
       title: t('howItWorks.steps.domainInput.title'),
       description: t('howItWorks.steps.domainInput.description'),
-      details: t('howItWorks.steps.domainInput.details', { returnObjects: true })
+      details: t('howItWorks.steps.domainInput.details', { returnObjects: true }) as string[]
     },
     {
       number: "02",
       icon: <BarChart3 className="h-8 w-8 text-green-400" />,
       title: t('howItWorks.steps.automaticAnalysis.title'),
       description: t('howItWorks.steps.automaticAnalysis.description'),
-      details: t('howItWorks.steps.automaticAnalysis.details', { returnObjects: true })
+      details: t('howItWorks.steps.automaticAnalysis.details', { returnObjects: true }) as string[]
     },
     {
       number: "03",
       icon: <Download className="h-8 w-8 text-blue-400" />,
       title: t('howItWorks.steps.exportAction.title'),
       description: t('howItWorks.steps.exportAction.description'),
-      details: t('howItWorks.steps.exportAction.details', { returnObjects: true })
+      details: t('howItWorks.steps.exportAction.details', { returnObjects: true }) as string[]
     }
   ];
 
