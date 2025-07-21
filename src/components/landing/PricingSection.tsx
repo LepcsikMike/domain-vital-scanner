@@ -4,55 +4,34 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Check, Zap, Crown, ArrowRight, Calendar } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 const PricingSection = () => {
+  const { t } = useTranslation('landing');
+
   const plans = [
     {
-      name: "Kostenloser Plan",
-      price: "0",
-      period: "Forever",
-      description: "Perfekt zum Testen und für gelegentliche Audits",
+      name: t('pricing.plans.free.name'),
+      price: t('pricing.plans.free.price'),
+      period: t('pricing.plans.free.period'),
+      description: t('pricing.plans.free.description'),
       icon: <Zap className="h-6 w-6 text-cyan-400" />,
-      features: [
-        "1 Domain-Scan pro Tag",
-        "Basis-Sicherheitschecks (HTTPS, SSL)",
-        "Performance-Überblick",
-        "Meta-Tags & CMS Erkennung",
-        "Generator-Tags Analyse",
-        "Web-Interface Zugriff"
-      ],
-      limitations: [
-        "Keine PDF-Reports",
-        "Kein CSV-Export",
-        "Keine API-Integration",
-        "Begrenzte Analyse-Tiefe"
-      ],
-      cta: "Kostenlos testen",
+      features: t('pricing.plans.free.features', { returnObjects: true }) as string[],
+      limitations: t('pricing.plans.free.limitations', { returnObjects: true }) as string[],
+      cta: t('pricing.plans.free.cta'),
       ctaAction: () => window.location.href = '/app',
       highlight: false
     },
     {
-      name: "Enterprise Plan",
-      price: "19",
-      period: "pro Monat",
-      description: "Für Agenturen und professionelle Website-Audits",
+      name: t('pricing.plans.enterprise.name'),
+      price: t('pricing.plans.enterprise.price'),
+      period: t('pricing.plans.enterprise.period'),
+      description: t('pricing.plans.enterprise.description'),
       icon: <Crown className="h-6 w-6 text-yellow-400" />,
-      badge: "Beliebt",
-      features: [
-        "Professional PDF Reports (Executive Summary)",
-        "Technical Deep-Dive Reports (PDF)",
-        "Action Plan Reports mit Prioritäten (PDF)",
-        "Enhanced CSV Export (20+ Datenfelder)",
-        "Unbegrenzte Domain-Scans",
-        "Google PageSpeed Insights Integration",
-        "Vollständige Core Web Vitals",
-        "API-Zugriff für CRM Integration",
-        "Batch-Analyse (1000+ Domains)",
-        "Common Crawl Domain Discovery",
-        "Premium Support & Beratung"
-      ],
-      limitations: [],
-      cta: "Enterprise sichern",
+      badge: t('pricing.plans.enterprise.badge'),
+      features: t('pricing.plans.enterprise.features', { returnObjects: true }) as string[],
+      limitations: t('pricing.plans.enterprise.limitations', { returnObjects: true }) as string[],
+      cta: t('pricing.plans.enterprise.cta'),
       ctaAction: () => window.open('https://buy.stripe.com/fZuaEY6B91xRaDZbbq8AE07', '_blank'),
       highlight: true
     }
@@ -63,13 +42,13 @@ const PricingSection = () => {
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-            Transparent{' '}
+            {t('pricing.title')}{' '}
             <span className="bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
-              Pricing
+              {t('pricing.titleHighlight')}
             </span>
           </h2>
           <p className="text-xl text-slate-300 max-w-2xl mx-auto mb-8">
-            Starten Sie kostenlos oder nutzen Sie den vollen Funktionsumfang für professionelle Website-Audits
+            {t('pricing.subtitle')}
           </p>
           
           <Button 
@@ -78,7 +57,7 @@ const PricingSection = () => {
             onClick={() => window.open('https://calendly.com/hi-inspiroware/30min', '_blank')}
           >
             <Calendar className="h-5 w-5 mr-2" />
-            Persönliche Demo vereinbaren
+            {t('pricing.bookDemo')}
           </Button>
         </div>
 
@@ -128,7 +107,7 @@ const PricingSection = () => {
                 
                 {plan.limitations.length > 0 && (
                   <div className="border-t border-slate-700 pt-4">
-                    <div className="text-slate-400 text-xs mb-2">Einschränkungen:</div>
+                    <div className="text-slate-400 text-xs mb-2">{t('pricing.limitationsTitle')}</div>
                     <div className="space-y-2">
                       {plan.limitations.map((limitation, idx) => (
                         <div key={idx} className="flex items-center">

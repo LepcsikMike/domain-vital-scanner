@@ -16,6 +16,8 @@ import Datenschutz from "./pages/Datenschutz";
 import Impressum from "./pages/Impressum";
 import AGB from "./pages/AGB";
 import CookieEinstellungen from "./pages/CookieEinstellungen";
+import Imprint from "./pages/Imprint";
+import Privacy from "./pages/Privacy";
 
 const queryClient = new QueryClient();
 
@@ -41,25 +43,26 @@ const App = () => (
                 <Route path="/app" element={<Index />} />
                 <Route path="/enterprise" element={<EnterpriseApp />} />
                 
-                {/* Legal pages with localized URLs */}
+                {/* German legal pages (existing) */}
                 <Route path="/datenschutz" element={<Datenschutz />} />
                 <Route path="/de/datenschutz" element={<Datenschutz />} />
-                <Route path="/en/privacy" element={<Datenschutz />} />
-                <Route path="/es/privacidad" element={<Datenschutz />} />
-                
                 <Route path="/impressum" element={<Impressum />} />
                 <Route path="/de/impressum" element={<Impressum />} />
-                <Route path="/en/imprint" element={<Impressum />} />
-                <Route path="/es/aviso-legal" element={<Impressum />} />
-                
                 <Route path="/agb" element={<AGB />} />
                 <Route path="/de/agb" element={<AGB />} />
-                <Route path="/en/terms" element={<AGB />} />
-                <Route path="/es/terminos" element={<AGB />} />
-                
                 <Route path="/cookie-einstellungen" element={<CookieEinstellungen />} />
                 <Route path="/de/cookie-einstellungen" element={<CookieEinstellungen />} />
+                
+                {/* English legal pages */}
+                <Route path="/en/privacy" element={<Privacy />} />
+                <Route path="/en/imprint" element={<Imprint />} />
+                <Route path="/en/terms" element={<AGB />} />
                 <Route path="/en/cookie-settings" element={<CookieEinstellungen />} />
+                
+                {/* Spanish legal pages */}
+                <Route path="/es/privacidad" element={<Privacy />} />
+                <Route path="/es/aviso-legal" element={<Imprint />} />
+                <Route path="/es/terminos" element={<AGB />} />
                 <Route path="/es/configuracion-cookies" element={<CookieEinstellungen />} />
                 
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

@@ -3,47 +3,36 @@ import React from 'react';
 import { Globe, Mail, Calendar } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { useTranslation } from 'react-i18next';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const Footer = () => {
-  const { t, i18n } = useTranslation('landing');
+  const { t, i18n } = useTranslation(['landing', 'legal']);
+  const { currentLanguage } = useLanguage();
 
-  const footerContent = {
-    de: {
-      description: "Die professionelle Lösung für automatisierte Website-Audits.",
-      contact: "Kontakt",
-      bookDemo: "Demo buchen",
-      legal: {
-        imprint: "Impressum",
-        privacy: "Datenschutz",
-        terms: "AGB",
-        cookies: "Cookie-Einstellungen"
+  const getLocalizedLegalUrl = (page: string) => {
+    const routes = {
+      de: {
+        imprint: '/impressum',
+        privacy: '/datenschutz',
+        terms: '/agb',
+        cookies: '/cookie-einstellungen'
+      },
+      en: {
+        imprint: '/en/imprint',
+        privacy: '/en/privacy',
+        terms: '/en/terms',
+        cookies: '/en/cookie-settings'
+      },
+      es: {
+        imprint: '/es/aviso-legal',
+        privacy: '/es/privacidad',
+        terms: '/es/terminos',
+        cookies: '/es/configuracion-cookies'
       }
-    },
-    en: {
-      description: "The professional solution for automated website audits.",
-      contact: "Contact",
-      bookDemo: "Book Demo",
-      legal: {
-        imprint: "Imprint",
-        privacy: "Privacy Policy",
-        terms: "Terms",
-        cookies: "Cookie Settings"
-      }
-    },
-    es: {
-      description: "La solución profesional para auditorías automatizadas de sitios web.",
-      contact: "Contacto",
-      bookDemo: "Reservar Demo",
-      legal: {
-        imprint: "Aviso Legal",
-        privacy: "Política de Privacidad",
-        terms: "Términos y Condiciones",
-        cookies: "Configuración de Cookies"
-      }
-    }
+    };
+    
+    return routes[currentLanguage as keyof typeof routes]?.[page as keyof typeof routes['de']] || routes.de[page as keyof typeof routes['de']];
   };
-
-  const content = footerContent[i18n.language] || footerContent.en;
 
   return (
     <footer className="border-t border-slate-800 bg-slate-950/50 backdrop-blur-sm">
@@ -61,21 +50,29 @@ const Footer = () => {
               </div>
             </div>
             <p className="text-slate-300 mb-6 max-w-md leading-relaxed">
-              {content.description}
+              {currentLanguage === 'de' && 'Die professionelle Lösung für automatisierte Website-Audits.'}
+              {currentLanguage === 'en' && 'The professional solution for automated website audits.'}
+              {currentLanguage === 'es' && 'La solución profesional para auditorías automatizadas de sitios web.'}
             </p>
           </div>
 
           {/* Contact */}
           <div>
-            <h4 className="text-white font-semibold mb-4">{content.contact}</h4>
+            <h4 className="text-white font-semibold mb-4">
+              {currentLanguage === 'de' && 'Kontakt'}
+              {currentLanguage === 'en' && 'Contact'}
+              {currentLanguage === 'es' && 'Contacto'}
+            </h4>
             <div className="space-y-3">
               <a href="mailto:hi@inspiroware.com" className="flex items-center text-slate-300 hover:text-white transition-colors">
                 <Mail className="h-4 w-4 mr-2" />
                 hi@inspiroware.com
               </a>
-              <a href="/book-demo" className="flex items-center text-slate-300 hover:text-white transition-colors">
+              <a href="https://calendly.com/hi-inspiroware/30min" target="_blank" rel="noopener noreferrer" className="flex items-center text-slate-300 hover:text-white transition-colors">
                 <Calendar className="h-4 w-4 mr-2" />
-                {content.bookDemo}
+                {currentLanguage === 'de' && 'Demo buchen'}
+                {currentLanguage === 'en' && 'Book Demo'}
+                {currentLanguage === 'es' && 'Reservar Demo'}
               </a>
             </div>
           </div>
@@ -84,17 +81,29 @@ const Footer = () => {
           <div>
             <h4 className="text-white font-semibold mb-4">Legal</h4>
             <div className="space-y-3">
-              <a href="/imprint" className="block text-slate-300 hover:text-white transition-colors">
-                {content.legal.imprint}
+              <a href={getLocalizedLegalUrl('imprint')} className="block text-slate-300 hover:text-white transition-colors">
+                {t('legal:common.imprint', { 
+                  defaultValue: currentLanguage === 'de' ? 'Impressum' : 
+                              currentLanguage === 'en' ? 'Imprint' : 'Aviso Legal' 
+                })}
               </a>
-              <a href="/privacy" className="block text-slate-300 hover:text-white transition-colors">
-                {content.legal.privacy}
+              <a href={getLocalizedLegalUrl('privacy')} className="block text-slate-300 hover:text-white transition-colors">
+                {t('legal:common.privacy', { 
+                  defaultValue: currentLanguage === 'de' ? 'Datenschutz' : 
+                              currentLanguage === 'en' ? 'Privacy Policy' : 'Política de Privacidad' 
+                })}
               </a>
-              <a href="/terms" className="block text-slate-300 hover:text-white transition-colors">
-                {content.legal.terms}
+              <a href={getLocalizedLegalUrl('terms')} className="block text-slate-300 hover:text-white transition-colors">
+                {t('legal:common.terms', { 
+                  defaultValue: currentLanguage === 'de' ? 'AGB' : 
+                              currentLanguage === 'en' ? 'Terms' : 'Términos' 
+                })}
               </a>
-              <a href="/cookie-settings" className="block text-slate-300 hover:text-white transition-colors">
-                {content.legal.cookies}
+              <a href={getLocalizedLegalUrl('cookies')} className="block text-slate-300 hover:text-white transition-colors">
+                {t('legal:common.cookies', { 
+                  defaultValue: currentLanguage === 'de' ? 'Cookie-Einstellungen' : 
+                              currentLanguage === 'en' ? 'Cookie Settings' : 'Configuración de Cookies' 
+                })}
               </a>
             </div>
           </div>

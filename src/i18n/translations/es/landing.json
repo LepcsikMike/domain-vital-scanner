@@ -1,3 +1,4 @@
+
 {
   "hero": {
     "consultation": "Reservar Consulta Gratuita",
@@ -10,6 +11,93 @@
     "trust2": "Informes PDF Profesionales",
     "trust3": "Monitoreo Core Web Vitals",
     "trust4": "Exportación CSV Mejorada"
+  },
+  "howItWorks": {
+    "title": "Cómo Funciona",
+    "subtitle": "Simple, rápido y profesional",
+    "steps": {
+      "domainInput": {
+        "title": "Ingresar Dominio",
+        "description": "Ingresa un dominio o sube un archivo CSV con múltiples dominios",
+        "details": [
+          "Análisis de dominio único",
+          "Carga masiva vía CSV",
+          "Validación automática"
+        ]
+      },
+      "automaticAnalysis": {
+        "title": "Análisis Automático",
+        "description": "Nuestro sistema analiza el/los sitio(s) web con más de 20 métricas diferentes",
+        "details": [
+          "Integración Google PageSpeed",
+          "Verificaciones SSL y Seguridad",
+          "Análisis SEO y Meta Tags",
+          "Monitoreo de Rendimiento"
+        ]
+      },
+      "exportAction": {
+        "title": "Exportar y Actuar",
+        "description": "Obtén informes detallados y recomendaciones de acción concretas",
+        "details": [
+          "Resumen Ejecutivo PDF",
+          "Informe Técnico Detallado",
+          "Exportación CSV para CRM",
+          "Plan de Acción Priorizado"
+        ]
+      }
+    }
+  },
+  "pricing": {
+    "title": "Precios",
+    "titleHighlight": "Transparentes",
+    "subtitle": "Comienza gratis o utiliza el conjunto completo de funciones para auditorías profesionales de sitios web",
+    "bookDemo": "Reservar Demo Personal",
+    "plans": {
+      "free": {
+        "name": "Plan Gratuito",
+        "price": "0",
+        "period": "Para Siempre",
+        "description": "Perfecto para pruebas y auditorías ocasionales",
+        "cta": "Probar Gratis",
+        "features": [
+          "1 escaneo de dominio por día",
+          "Verificaciones básicas de seguridad (HTTPS, SSL)",
+          "Resumen de rendimiento",
+          "Detección de meta tags y CMS",
+          "Análisis de generator tags",
+          "Acceso a interfaz web"
+        ],
+        "limitations": [
+          "Sin informes PDF",
+          "Sin exportación CSV",
+          "Sin integración API",
+          "Profundidad de análisis limitada"
+        ]
+      },
+      "enterprise": {
+        "name": "Plan Enterprise",
+        "price": "19",
+        "period": "por mes",
+        "description": "Para agencias y auditorías profesionales de sitios web",
+        "badge": "Popular",
+        "cta": "Obtener Enterprise",
+        "features": [
+          "Informes PDF Profesionales (Resumen Ejecutivo)",
+          "Informes Técnicos Detallados (PDF)",
+          "Informes de Plan de Acción con Prioridades (PDF)",
+          "Exportación CSV Mejorada (20+ campos de datos)",
+          "Escaneos de dominio ilimitados",
+          "Integración Google PageSpeed Insights",
+          "Core Web Vitals Completos",
+          "Acceso API para integración CRM",
+          "Análisis en lote (1000+ dominios)",
+          "Descubrimiento de Dominios Common Crawl",
+          "Soporte premium y consultoría"
+        ],
+        "limitations": []
+      }
+    },
+    "limitationsTitle": "Limitaciones:"
   },
   "features": {
     "pdf": {

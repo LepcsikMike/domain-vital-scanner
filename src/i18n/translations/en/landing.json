@@ -1,3 +1,4 @@
+
 {
   "hero": {
     "consultation": "Book Free Consultation",
@@ -10,6 +11,93 @@
     "trust2": "Professional PDF Reports",
     "trust3": "Core Web Vitals Monitoring",
     "trust4": "Enhanced CSV Export"
+  },
+  "howItWorks": {
+    "title": "How It Works",
+    "subtitle": "Simple, fast and professional",
+    "steps": {
+      "domainInput": {
+        "title": "Enter Domain",
+        "description": "Enter a domain or upload a CSV file with multiple domains",
+        "details": [
+          "Single domain analysis",
+          "Batch upload via CSV",
+          "Automatic validation"
+        ]
+      },
+      "automaticAnalysis": {
+        "title": "Automatic Analysis",
+        "description": "Our system analyzes the website(s) with over 20 different metrics",
+        "details": [
+          "Google PageSpeed Integration",
+          "SSL & Security Checks",
+          "SEO & Meta Tag Analysis",
+          "Performance Monitoring"
+        ]
+      },
+      "exportAction": {
+        "title": "Export & Action",
+        "description": "Get detailed reports and concrete action recommendations",
+        "details": [
+          "Executive Summary PDF",
+          "Technical Deep-Dive Report",
+          "CSV Export for CRM",
+          "Prioritized Action Plan"
+        ]
+      }
+    }
+  },
+  "pricing": {
+    "title": "Transparent",
+    "titleHighlight": "Pricing",
+    "subtitle": "Start for free or use the full feature set for professional website audits",
+    "bookDemo": "Book Personal Demo",
+    "plans": {
+      "free": {
+        "name": "Free Plan",
+        "price": "0",
+        "period": "Forever",
+        "description": "Perfect for testing and occasional audits",
+        "cta": "Test Free",
+        "features": [
+          "1 domain scan per day",
+          "Basic security checks (HTTPS, SSL)",
+          "Performance overview",
+          "Meta tags & CMS detection",
+          "Generator tags analysis",
+          "Web interface access"
+        ],
+        "limitations": [
+          "No PDF reports",
+          "No CSV export",
+          "No API integration",
+          "Limited analysis depth"
+        ]
+      },
+      "enterprise": {
+        "name": "Enterprise Plan",
+        "price": "19",
+        "period": "per month",
+        "description": "For agencies and professional website audits",
+        "badge": "Popular",
+        "cta": "Get Enterprise",
+        "features": [
+          "Professional PDF Reports (Executive Summary)",
+          "Technical Deep-Dive Reports (PDF)",
+          "Action Plan Reports with Priorities (PDF)",
+          "Enhanced CSV Export (20+ data fields)",
+          "Unlimited domain scans",
+          "Google PageSpeed Insights Integration",
+          "Complete Core Web Vitals",
+          "API access for CRM integration",
+          "Batch analysis (1000+ domains)",
+          "Common Crawl Domain Discovery",
+          "Premium support & consulting"
+        ],
+        "limitations": []
+      }
+    },
+    "limitationsTitle": "Limitations:"
   },
   "features": {
     "pdf": {
