@@ -100,7 +100,9 @@
     "limitationsTitle": "Limitations:"
   },
   "features": {
-    "pdf": {
+    "title": "Powerful Features",
+    "subtitle": "Everything you need for professional website analysis",
+    "pdfReports": {
       "title": "Professional PDF Reports",
       "description": "Comprehensive PDF reports with executive summary and action plan",
       "highlights": {
@@ -117,6 +119,46 @@
         "ssl": "SSL Certificate Check",
         "headers": "Security Headers"
       }
+    },
+    "performance": {
+      "title": "Performance Analysis",
+      "description": "Detailed website performance analysis with Google PageSpeed Insights",
+      "highlights": {
+        "metrics": "Core Web Vitals",
+        "devices": "Desktop & Mobile",
+        "score": "Performance Score"
+      }
+    },
+    "seo": {
+      "title": "SEO Optimization",
+      "description": "Comprehensive SEO analysis with meta tags, robots.txt and schema markup",
+      "highlights": {
+        "meta": "Meta Tags Analysis",
+        "robots": "Robots.txt Check",
+        "schema": "Schema Markup"
+      }
+    },
+    "discovery": {
+      "title": "Domain Discovery",
+      "description": "Discover new domains and competitors in your industry",
+      "highlights": {
+        "industry": "Industry Search",
+        "tld": "TLD Analysis",
+        "crawl": "Common Crawl Data"
+      }
+    },
+    "export": {
+      "title": "Export & Integration",
+      "description": "Various export options for seamless integration into your workflows",
+      "highlights": {
+        "pdf": "PDF Reports",
+        "csv": "CSV/JSON Export",
+        "api": "API Integration"
+      }
+    },
+    "trust": {
+      "secureAnalysis": "Secure Analysis",
+      "realData": "Real Data"
     }
   }
 }

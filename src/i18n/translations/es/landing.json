@@ -100,7 +100,9 @@
     "limitationsTitle": "Limitaciones:"
   },
   "features": {
-    "pdf": {
+    "title": "Características Potentes",
+    "subtitle": "Todo lo que necesitas para análisis profesional de sitios web",
+    "pdfReports": {
       "title": "Informes PDF Profesionales",
       "description": "Informes PDF completos con resumen ejecutivo y plan de acción",
       "highlights": {
@@ -117,6 +119,46 @@
         "ssl": "Verificación de Certificado SSL",
         "headers": "Cabeceras de Seguridad"
       }
+    },
+    "performance": {
+      "title": "Análisis de Rendimiento",
+      "description": "Análisis detallado del rendimiento del sitio web con Google PageSpeed Insights",
+      "highlights": {
+        "metrics": "Core Web Vitals",
+        "devices": "Escritorio y Móvil",
+        "score": "Puntuación de Rendimiento"
+      }
+    },
+    "seo": {
+      "title": "Optimización SEO",
+      "description": "Análisis SEO completo con meta tags, robots.txt y schema markup",
+      "highlights": {
+        "meta": "Análisis de Meta Tags",
+        "robots": "Verificación Robots.txt",
+        "schema": "Schema Markup"
+      }
+    },
+    "discovery": {
+      "title": "Descubrimiento de Dominios",
+      "description": "Descubre nuevos dominios y competidores en tu industria",
+      "highlights": {
+        "industry": "Búsqueda por Industria",
+        "tld": "Análisis TLD",
+        "crawl": "Datos Common Crawl"
+      }
+    },
+    "export": {
+      "title": "Exportación e Integración",
+      "description": "Varias opciones de exportación para integración perfecta en tus flujos de trabajo",
+      "highlights": {
+        "pdf": "Informes PDF",
+        "csv": "Exportación CSV/JSON",
+        "api": "Integración API"
+      }
+    },
+    "trust": {
+      "secureAnalysis": "Análisis Seguro",
+      "realData": "Datos Reales"
     }
   }
 }

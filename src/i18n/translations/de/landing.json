@@ -100,7 +100,9 @@
     "limitationsTitle": "Einschränkungen:"
   },
   "features": {
-    "pdf": {
+    "title": "Leistungsstarke Features",
+    "subtitle": "Alles was Sie für professionelle Website-Analysen benötigen",
+    "pdfReports": {
       "title": "Professionelle PDF-Reports",
       "description": "Umfassende PDF-Reports mit Executive Summary und Action Plan",
       "highlights": {
@@ -117,6 +119,46 @@
         "ssl": "SSL-Zertifikat Prüfung",
         "headers": "Sicherheits-Headers"
       }
+    },
+    "performance": {
+      "title": "Performance-Analyse",
+      "description": "Detaillierte Analyse der Website-Performance mit Google PageSpeed Insights",
+      "highlights": {
+        "metrics": "Core Web Vitals",
+        "devices": "Desktop & Mobile",
+        "score": "Performance Score"
+      }
+    },
+    "seo": {
+      "title": "SEO-Optimierung",
+      "description": "Umfassende SEO-Analyse mit Meta-Tags, Robots.txt und Schema Markup",
+      "highlights": {
+        "meta": "Meta-Tags Analyse",
+        "robots": "Robots.txt Check",
+        "schema": "Schema Markup"
+      }
+    },
+    "discovery": {
+      "title": "Domain-Discovery",
+      "description": "Entdecken Sie neue Domains und Wettbewerber in Ihrer Branche",
+      "highlights": {
+        "industry": "Branchen-Suche",
+        "tld": "TLD-Analyse",
+        "crawl": "Common Crawl Daten"
+      }
+    },
+    "export": {
+      "title": "Export & Integration",
+      "description": "Vielfältige Export-Optionen für nahtlose Integration in Ihre Workflows",
+      "highlights": {
+        "pdf": "PDF-Reports",
+        "csv": "CSV/JSON Export",
+        "api": "API-Integration"
+      }
+    },
+    "trust": {
+      "secureAnalysis": "Sichere Analyse",
+      "realData": "Echte Daten"
     }
   }
 }
