@@ -16,9 +16,12 @@ import { ApiKeySettings } from '@/components/ApiKeySettings';
 import { FeatureGate } from '@/components/FeatureGate';
 import { UpgradeBanner } from '@/components/UpgradeBanner';
 import { PlanBadge } from '@/components/PlanBadge';
+import LanguageSwitcher from '@/components/LanguageSwitcher';
 import { usePlan } from '@/contexts/PlanContext';
 import { toast } from '@/hooks/use-toast';
+import { useTranslation } from 'react-i18next';
 const Index = () => {
+  const { t } = useTranslation('app');
   const {
     domains,
     isAnalyzing,
@@ -49,8 +52,8 @@ const Index = () => {
   const handleSearchStart = (domainList: string[], searchType: string, searchOptions?: any) => {
     if (!canScan) {
       toast({
-        title: "Tägliches Limit erreicht",
-        description: `Sie haben Ihr Limit von ${dailyScansLimit} Scan(s) pro Tag erreicht. Upgraden Sie auf Enterprise für unbegrenzte Scans.`,
+        title: t('alerts.limitReached.title'),
+        description: t('alerts.limitReached.description', { limit: dailyScansLimit }),
         variant: "destructive"
       });
       return;
@@ -70,9 +73,9 @@ const Index = () => {
                 <Globe className="h-6 w-6 text-white" />
               </div>
               <div>
-                <h1 className="text-2xl font-bold text-white">DomainAudit Pro - Kostenlos</h1>
+                <h1 className="text-2xl font-bold text-white">{t('header.free.title')}</h1>
                 <p className="text-slate-400 text-sm">
-                  Basis Domain-Analyse mit täglichen Limits
+                  {t('header.free.subtitle')}
                 </p>
               </div>
             </div>
@@ -80,10 +83,10 @@ const Index = () => {
               <PlanBadge />
               
               <Badge variant="outline" className="border-slate-600 text-slate-400">
-                Basis-Version
+                {t('header.free.badge')}
               </Badge>
               
-              
+              <LanguageSwitcher />
             </div>
           </div>
         </div>
@@ -102,7 +105,7 @@ const Index = () => {
                 <CardTitle className="text-white flex items-center justify-between">
                   <span className="flex items-center">
                     <Search className="h-5 w-5 mr-2 text-cyan-400" />
-                    Domain-Suche (Kostenlos)
+                    {t('navigation.domainSearchFree')}
                   </span>
                   <Badge variant="outline" className="border-slate-600 text-slate-400 text-xs">
                     {dailyScansUsed}/{dailyScansLimit}
@@ -113,7 +116,7 @@ const Index = () => {
                 {!canScan && <div className="mb-4 p-3 bg-red-500/10 border border-red-500/30 rounded-lg">
                     <div className="flex items-center text-red-400 text-sm">
                       <AlertCircle className="h-4 w-4 mr-2" />
-                      Tägliches Limit erreicht
+                      {t('alerts.limitReached.title')}
                     </div>
                   </div>}
                 <DomainSearchForm onSearchStart={handleSearchStart} isAnalyzing={isAnalyzing} />
@@ -125,43 +128,43 @@ const Index = () => {
               <CardHeader>
                 <CardTitle className="text-white flex items-center">
                   <Zap className="h-5 w-5 mr-2 text-yellow-400" />
-                  Kostenloser Plan Features
+                  {t('features.free.title')}
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
                 <div className="space-y-2 text-sm">
                   <div className="flex items-center text-green-400">
                     <span className="mr-2">✓</span>
-                    <span>1 Domain-Scan pro Tag</span>
+                    <span>{t('features.free.domainScan')}</span>
                   </div>
                   <div className="flex items-center text-green-400">
                     <span className="mr-2">✓</span>
-                    <span>HTTPS & SSL Checks</span>
+                    <span>{t('features.free.httpsCheck')}</span>
                   </div>
                   <div className="flex items-center text-green-400">
                     <span className="mr-2">✓</span>
-                    <span>Performance-Überblick</span>
+                    <span>{t('features.free.performance')}</span>
                   </div>
                   <div className="flex items-center text-green-400">
                     <span className="mr-2">✓</span>
-                    <span>Meta-Tags & CMS Erkennung</span>
+                    <span>{t('features.free.metaTags')}</span>
                   </div>
                   <div className="flex items-center text-red-400">
                     <span className="mr-2">✗</span>
-                    <span>CSV-Export</span>
+                    <span>{t('features.free.csvExport')}</span>
                   </div>
                   <div className="flex items-center text-red-400">
                     <span className="mr-2">✗</span>
-                    <span>API-Integration</span>
+                    <span>{t('features.free.apiIntegration')}</span>
                   </div>
                   <div className="flex items-center text-red-400">
                     <span className="mr-2">✗</span>
-                    <span>Erweiterte Analyse</span>
+                    <span>{t('features.free.advancedAnalysis')}</span>
                   </div>
                 </div>
                 <Button onClick={() => window.open('/enterprise', '_blank')} className="w-full bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 mt-4">
                   <Crown className="h-4 w-4 mr-2" />
-                  Auf Enterprise upgraden
+                  {t('features.free.upgradeButton')}
                 </Button>
               </CardContent>
             </Card>
@@ -174,7 +177,7 @@ const Index = () => {
               <CardHeader>
                 <CardTitle className="text-white flex items-center">
                   <Zap className="h-5 w-5 mr-2 text-yellow-400" />
-                  Basis-Einstellungen
+                  {t('features.settings.basic')}
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -194,7 +197,7 @@ const Index = () => {
                   <CardTitle className="text-white flex items-center justify-between">
                     <span className="flex items-center">
                       <Shield className="h-5 w-5 mr-2 text-green-400" />
-                      Basis Live-Analyse
+                      {t('analysis.progress.basic')}
                     </span>
                     <Button size="sm" variant="outline" onClick={pauseAnalysis} className="border-slate-600 text-slate-300 hover:bg-slate-800">
                       <Pause className="h-4 w-4" />
@@ -205,7 +208,7 @@ const Index = () => {
                   <div className="space-y-3">
                     <Progress value={progress} className="w-full" />
                     <p className="text-sm text-slate-400">
-                      {Math.round(progress)}% abgeschlossen - Basis-Sicherheitschecks
+                      {Math.round(progress)}% {t('analysis.progress.basicComplete')}
                     </p>
                   </div>
                 </CardContent>
@@ -216,7 +219,7 @@ const Index = () => {
               <CardHeader>
                 <CardTitle className="text-white flex items-center">
                   <FileText className="h-5 w-5 mr-2 text-blue-400" />
-                  Basis Analyse-Ergebnisse
+                  {t('analysis.results.basic')}
                 </CardTitle>
               </CardHeader>
               <CardContent>

@@ -42,5 +42,63 @@
     "dailyScans": "Tägliche Scans",
     "upgradeRequired": "Upgrade erforderlich",
     "limitReached": "Limit erreicht"
+  },
+  "header": {
+    "free": {
+      "title": "DomainAudit Pro - Kostenlos",
+      "subtitle": "Basis Domain-Analyse mit täglichen Limits",
+      "badge": "Basis-Version"
+    },
+    "enterprise": {
+      "title": "DomainAudit Pro Enterprise",
+      "titleShort": "DomainAudit Enterprise",
+      "subtitle": "Vollständige Domain-Analyse mit Google APIs & Erweiterten Features",
+      "subtitleShort": "API-Enhanced Domain-Analyse",
+      "badge": "Enterprise",
+      "badgeShort": "Pro",
+      "apiBadge": "API-Enhanced"
+    }
+  },
+  "navigation": {
+    "domainSearch": "Domain-Suche",
+    "domainSearchFree": "Domain-Suche (Kostenlos)",
+    "domainSearchEnterprise": "Enterprise Domain-Suche",
+    "exportCsv": "Export CSV",
+    "export": "Export"
+  },
+  "features": {
+    "free": {
+      "title": "Kostenloser Plan Features",
+      "domainScan": "1 Domain-Scan pro Tag",
+      "httpsCheck": "HTTPS & SSL Checks",
+      "performance": "Performance-Überblick",
+      "metaTags": "Meta-Tags & CMS Erkennung",
+      "csvExport": "CSV-Export",
+      "apiIntegration": "API-Integration",
+      "advancedAnalysis": "Erweiterte Analyse",
+      "upgradeButton": "Auf Enterprise upgraden"
+    },
+    "settings": {
+      "basic": "Basis-Einstellungen",
+      "advanced": "Erweiterte Einstellungen"
+    }
+  },
+  "analysis": {
+    "progress": {
+      "basic": "Basis Live-Analyse",
+      "enterprise": "Enterprise API-Enhanced Live-Analyse",
+      "basicComplete": "abgeschlossen - Basis-Sicherheitschecks",
+      "enterpriseComplete": "abgeschlossen - Google APIs & intelligente Analyse aktiv"
+    },
+    "results": {
+      "basic": "Basis Analyse-Ergebnisse",
+      "enterprise": "Enterprise Analyse-Ergebnisse"
+    }
+  },
+  "alerts": {
+    "limitReached": {
+      "title": "Tägliches Limit erreicht",
+      "description": "Sie haben Ihr Limit von {{limit}} Scan(s) pro Tag erreicht. Upgraden Sie auf Enterprise für unbegrenzte Scans."
+    }
   }
 }

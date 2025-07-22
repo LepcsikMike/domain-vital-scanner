@@ -11,9 +11,12 @@ import { AnalysisSettings } from '@/components/AnalysisSettings';
 import { CostTracker } from '@/components/CostTracker';
 import { useDomainAnalysis } from '@/hooks/useDomainAnalysis';
 import { ApiKeySettings } from '@/components/ApiKeySettings';
+import LanguageSwitcher from '@/components/LanguageSwitcher';
 import { usePlan } from '@/contexts/PlanContext';
 import { useSearchParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 const EnterpriseApp = () => {
+  const { t } = useTranslation('app');
   const [searchParams] = useSearchParams();
   const {
     activateEnterprisePlan
@@ -59,15 +62,15 @@ const EnterpriseApp = () => {
               </div>
               <div className="min-w-0">
                 <h1 className="text-lg lg:text-2xl font-bold text-white flex items-center">
-                  <span className="hidden sm:inline">DomainAudit Pro Enterprise</span>
-                  <span className="sm:hidden">DomainAudit Enterprise</span>
+                  <span className="hidden sm:inline">{t('header.enterprise.title')}</span>
+                  <span className="sm:hidden">{t('header.enterprise.titleShort')}</span>
                   <Crown className="h-4 w-4 lg:h-5 lg:w-5 ml-2 text-yellow-500 flex-shrink-0" />
                 </h1>
                 <p className="text-slate-400 text-xs lg:text-sm hidden sm:block">
-                  Vollständige Domain-Analyse mit Google APIs & Erweiterten Features
+                  {t('header.enterprise.subtitle')}
                 </p>
                 <p className="text-slate-400 text-xs sm:hidden">
-                  API-Enhanced Domain-Analyse
+                  {t('header.enterprise.subtitleShort')}
                 </p>
               </div>
             </div>
@@ -75,14 +78,16 @@ const EnterpriseApp = () => {
               <div className="flex items-center gap-2">
                 <Badge className="bg-gradient-to-r from-yellow-500 to-orange-500 text-white border-0 text-xs">
                   <Crown className="h-3 w-3 mr-1" />
-                  <span className="hidden sm:inline">Enterprise</span>
-                  <span className="sm:hidden">Pro</span>
+                  <span className="hidden sm:inline">{t('header.enterprise.badge')}</span>
+                  <span className="sm:hidden">{t('header.enterprise.badgeShort')}</span>
                 </Badge>
                 
                 <Badge variant="outline" className="border-green-500 text-green-400 text-xs hidden sm:flex">
-                  API-Enhanced
+                  {t('header.enterprise.apiBadge')}
                 </Badge>
               </div>
+              
+              <LanguageSwitcher />
               
               <Button 
                 onClick={exportResults} 
@@ -92,8 +97,8 @@ const EnterpriseApp = () => {
                 className="border-primary/50 hover:bg-primary/10 text-primary hover:text-primary"
               >
                 <Download className="h-4 w-4 mr-1 lg:mr-2" />
-                <span className="hidden sm:inline">Export CSV</span>
-                <span className="sm:hidden">Export</span>
+                <span className="hidden sm:inline">{t('navigation.exportCsv')}</span>
+                <span className="sm:hidden">{t('navigation.export')}</span>
               </Button>
             </div>
           </div>
@@ -109,7 +114,7 @@ const EnterpriseApp = () => {
               <CardHeader>
                 <CardTitle className="text-white flex items-center">
                   <Search className="h-5 w-5 mr-2 text-cyan-400" />
-                  Enterprise Domain-Suche
+                  {t('navigation.domainSearchEnterprise')}
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -128,7 +133,7 @@ const EnterpriseApp = () => {
               <CardHeader>
                 <CardTitle className="text-white flex items-center">
                   <Zap className="h-5 w-5 mr-2 text-yellow-400" />
-                  Erweiterte Einstellungen
+                  {t('features.settings.advanced')}
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -148,7 +153,7 @@ const EnterpriseApp = () => {
                   <CardTitle className="text-white flex items-center justify-between">
                     <span className="flex items-center">
                       <Shield className="h-5 w-5 mr-2 text-green-400" />
-                      Enterprise API-Enhanced Live-Analyse
+                      {t('analysis.progress.enterprise')}
                     </span>
                     <Button size="sm" variant="outline" onClick={pauseAnalysis} className="border-slate-600 text-slate-300 hover:bg-slate-800">
                       <Pause className="h-4 w-4" />
@@ -159,7 +164,7 @@ const EnterpriseApp = () => {
                   <div className="space-y-3">
                     <Progress value={progress} className="w-full" />
                     <p className="text-sm text-slate-400">
-                      {Math.round(progress)}% abgeschlossen - Google APIs & intelligente Analyse aktiv
+                      {Math.round(progress)}% {t('analysis.progress.enterpriseComplete')}
                     </p>
                   </div>
                 </CardContent>
@@ -170,7 +175,7 @@ const EnterpriseApp = () => {
               <CardHeader>
                 <CardTitle className="text-white flex items-center">
                   <FileText className="h-5 w-5 mr-2 text-blue-400" />
-                  Enterprise Analyse-Ergebnisse
+                  {t('analysis.results.enterprise')}
                 </CardTitle>
               </CardHeader>
               <CardContent>

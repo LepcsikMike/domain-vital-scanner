@@ -42,5 +42,63 @@
     "dailyScans": "Escaneos Diarios",
     "upgradeRequired": "Actualización Requerida",
     "limitReached": "Límite Alcanzado"
+  },
+  "header": {
+    "free": {
+      "title": "DomainAudit Pro - Gratis",
+      "subtitle": "Análisis básico de dominio con límites diarios",
+      "badge": "Versión Básica"
+    },
+    "enterprise": {
+      "title": "DomainAudit Pro Enterprise",
+      "titleShort": "DomainAudit Enterprise",
+      "subtitle": "Análisis completo de dominio con APIs de Google y funciones avanzadas",
+      "subtitleShort": "Análisis de dominio mejorado por API",
+      "badge": "Enterprise",
+      "badgeShort": "Pro",
+      "apiBadge": "API-Mejorado"
+    }
+  },
+  "navigation": {
+    "domainSearch": "Búsqueda de Dominio",
+    "domainSearchFree": "Búsqueda de Dominio (Gratis)",
+    "domainSearchEnterprise": "Búsqueda de Dominio Enterprise",
+    "exportCsv": "Exportar CSV",
+    "export": "Exportar"
+  },
+  "features": {
+    "free": {
+      "title": "Funciones del Plan Gratuito",
+      "domainScan": "1 escaneo de dominio por día",
+      "httpsCheck": "Verificaciones HTTPS y SSL",
+      "performance": "Resumen de rendimiento",
+      "metaTags": "Etiquetas meta y detección de CMS",
+      "csvExport": "Exportar CSV",
+      "apiIntegration": "Integración API",
+      "advancedAnalysis": "Análisis avanzado",
+      "upgradeButton": "Actualizar a Enterprise"
+    },
+    "settings": {
+      "basic": "Configuración Básica",
+      "advanced": "Configuración Avanzada"
+    }
+  },
+  "analysis": {
+    "progress": {
+      "basic": "Análisis en Vivo Básico",
+      "enterprise": "Análisis en Vivo Enterprise Mejorado por API",
+      "basicComplete": "completado - Verificaciones básicas de seguridad",
+      "enterpriseComplete": "completado - APIs de Google y análisis inteligente activo"
+    },
+    "results": {
+      "basic": "Resultados de Análisis Básico",
+      "enterprise": "Resultados de Análisis Enterprise"
+    }
+  },
+  "alerts": {
+    "limitReached": {
+      "title": "Límite Diario Alcanzado",
+      "description": "Has alcanzado tu límite de {{limit}} escaneo(s) por día. Actualiza a Enterprise para escaneos ilimitados."
+    }
   }
 }

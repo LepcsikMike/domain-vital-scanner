@@ -42,5 +42,63 @@
     "dailyScans": "Daily Scans",
     "upgradeRequired": "Upgrade Required",
     "limitReached": "Limit Reached"
+  },
+  "header": {
+    "free": {
+      "title": "DomainAudit Pro - Free",
+      "subtitle": "Basic domain analysis with daily limits",
+      "badge": "Basic Version"
+    },
+    "enterprise": {
+      "title": "DomainAudit Pro Enterprise",
+      "titleShort": "DomainAudit Enterprise",
+      "subtitle": "Complete domain analysis with Google APIs & Advanced Features",
+      "subtitleShort": "API-Enhanced Domain Analysis",
+      "badge": "Enterprise",
+      "badgeShort": "Pro",
+      "apiBadge": "API-Enhanced"
+    }
+  },
+  "navigation": {
+    "domainSearch": "Domain Search",
+    "domainSearchFree": "Domain Search (Free)",
+    "domainSearchEnterprise": "Enterprise Domain Search",
+    "exportCsv": "Export CSV",
+    "export": "Export"
+  },
+  "features": {
+    "free": {
+      "title": "Free Plan Features",
+      "domainScan": "1 domain scan per day",
+      "httpsCheck": "HTTPS & SSL checks",
+      "performance": "Performance overview",
+      "metaTags": "Meta tags & CMS detection",
+      "csvExport": "CSV export",
+      "apiIntegration": "API integration",
+      "advancedAnalysis": "Advanced analysis",
+      "upgradeButton": "Upgrade to Enterprise"
+    },
+    "settings": {
+      "basic": "Basic Settings",
+      "advanced": "Advanced Settings"
+    }
+  },
+  "analysis": {
+    "progress": {
+      "basic": "Basic Live Analysis",
+      "enterprise": "Enterprise API-Enhanced Live Analysis",
+      "basicComplete": "completed - Basic security checks",
+      "enterpriseComplete": "completed - Google APIs & intelligent analysis active"
+    },
+    "results": {
+      "basic": "Basic Analysis Results",
+      "enterprise": "Enterprise Analysis Results"
+    }
+  },
+  "alerts": {
+    "limitReached": {
+      "title": "Daily Limit Reached",
+      "description": "You have reached your limit of {{limit}} scan(s) per day. Upgrade to Enterprise for unlimited scans."
+    }
   }
 }
