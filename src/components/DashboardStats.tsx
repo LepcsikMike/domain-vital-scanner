@@ -10,12 +10,14 @@ import {
   TrendingUp
 } from 'lucide-react';
 import { DomainAnalysisResult } from '@/types/domain-analysis';
+import { useTranslation } from 'react-i18next';
 
 interface DashboardStatsProps {
   results: DomainAnalysisResult[];
 }
 
 export const DashboardStats: React.FC<DashboardStatsProps> = ({ results }) => {
+  const { t } = useTranslation('app');
   const totalDomains = results.length;
   const httpsIssues = results.filter(r => !r.httpsStatus.valid).length;
   const criticalIssues = results.filter(r => r.criticalIssues >= 2).length;
@@ -27,46 +29,46 @@ export const DashboardStats: React.FC<DashboardStatsProps> = ({ results }) => {
 
   const stats = [
     {
-      title: 'Analysierte Domains',
+      title: t('dashboardStats.titles.analyzedDomains'),
       value: totalDomains,
       icon: Globe,
       color: 'blue',
-      description: 'Gesamt durchgeführte Analysen'
+      description: t('dashboardStats.descriptions.totalAnalyses')
     },
     {
-      title: 'HTTPS Probleme',
+      title: t('dashboardStats.titles.httpsProblems'),
       value: httpsIssues,
       icon: Shield,
       color: 'red',
-      description: 'Domains ohne gültiges SSL'
+      description: t('dashboardStats.descriptions.noValidSSL')
     },
     {
-      title: 'Kritische Fälle',
+      title: t('dashboardStats.titles.criticalCases'),
       value: criticalIssues,
       icon: AlertTriangle,
       color: 'yellow',
-      description: '2+ kritische Probleme'
+      description: t('dashboardStats.descriptions.criticalIssues')
     },
     {
-      title: 'Veraltete Technologien',
+      title: t('dashboardStats.titles.outdatedTechnologies'),
       value: outdatedTech,
       icon: ShieldAlert,
       color: 'orange',
-      description: 'Veraltete CMS/Frameworks'
+      description: t('dashboardStats.descriptions.outdatedCMS')
     },
     {
-      title: 'SEO Probleme',
+      title: t('dashboardStats.titles.seoProblems'),
       value: seoIssues,
       icon: TrendingUp,
       color: 'purple',
-      description: 'SEO-optimierungsbedürftig'
+      description: t('dashboardStats.descriptions.seoOptimization')
     },
     {
-      title: 'Ø PageSpeed',
+      title: t('dashboardStats.titles.avgPageSpeed'),
       value: avgPageSpeed,
       icon: Zap,
       color: avgPageSpeed >= 90 ? 'green' : avgPageSpeed >= 50 ? 'yellow' : 'red',
-      description: 'Durchschnittlicher Mobile Score'
+      description: t('dashboardStats.descriptions.avgMobileScore')
     }
   ];
 

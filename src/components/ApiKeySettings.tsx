@@ -9,8 +9,10 @@ import { Key, CheckCircle, AlertCircle, ExternalLink } from 'lucide-react';
 import { GooglePageSpeedService } from '@/services/GooglePageSpeedService';
 import { GoogleCustomSearchService } from '@/services/GoogleCustomSearchService';
 import { toast } from '@/hooks/use-toast';
+import { useTranslation } from 'react-i18next';
 
 export const ApiKeySettings: React.FC = () => {
+  const { t } = useTranslation('app');
   const [pageSpeedApiKey, setPageSpeedApiKey] = useState('');
   const [searchApiKey, setSearchApiKey] = useState('');
   const [searchEngineId, setSearchEngineId] = useState('');
@@ -29,8 +31,8 @@ export const ApiKeySettings: React.FC = () => {
   const handleSavePageSpeedKey = async () => {
     if (!pageSpeedApiKey.trim()) {
       toast({
-        title: "API Key fehlt",
-        description: "Bitte geben Sie einen gültigen PageSpeed API Key ein",
+        title: t('apiSettings.toast.keyMissing'),
+        description: t('apiSettings.toast.descriptions.pageSpeedMissing'),
         variant: "destructive",
       });
       return;
@@ -46,8 +48,8 @@ export const ApiKeySettings: React.FC = () => {
       
       if (testResult) {
         toast({
-          title: "PageSpeed API Key gespeichert",
-          description: "API Key erfolgreich getestet und gespeichert",
+          title: t('apiSettings.toast.keySaved'),
+          description: t('apiSettings.toast.descriptions.pageSpeedSaved'),
         });
         setPageSpeedApiKey('');
       } else {
@@ -56,8 +58,8 @@ export const ApiKeySettings: React.FC = () => {
       
     } catch (error) {
       toast({
-        title: "API Key Test fehlgeschlagen",
-        description: "Überprüfen Sie Ihren PageSpeed API Key",
+        title: t('apiSettings.toast.keyTestFailed'),
+        description: t('apiSettings.toast.descriptions.pageSpeedFailed'),
         variant: "destructive",
       });
     } finally {
@@ -68,8 +70,8 @@ export const ApiKeySettings: React.FC = () => {
   const handleSaveSearchCredentials = async () => {
     if (!searchApiKey.trim() || !searchEngineId.trim()) {
       toast({
-        title: "Credentials fehlen",
-        description: "Bitte geben Sie API Key und Search Engine ID ein",
+        title: t('apiSettings.toast.credentialsMissing'),
+        description: t('apiSettings.toast.descriptions.searchMissing'),
         variant: "destructive",
       });
       return;
@@ -85,8 +87,8 @@ export const ApiKeySettings: React.FC = () => {
       
       if (testResult.domains.length >= 0) { // Even 0 results is a successful API call
         toast({
-          title: "Search API Credentials gespeichert",
-          description: "Credentials erfolgreich getestet und gespeichert",
+          title: t('apiSettings.toast.credentialsSaved'),
+          description: t('apiSettings.toast.descriptions.searchSaved'),
         });
         setSearchApiKey('');
         setSearchEngineId('');
@@ -96,8 +98,8 @@ export const ApiKeySettings: React.FC = () => {
       
     } catch (error) {
       toast({
-        title: "Credentials Test fehlgeschlagen",
-        description: "Überprüfen Sie Ihre Search API Credentials",
+        title: t('apiSettings.toast.credentialsTestFailed'),
+        description: t('apiSettings.toast.descriptions.searchFailed'),
         variant: "destructive",
       });
     } finally {
@@ -235,23 +237,23 @@ export const ApiKeySettings: React.FC = () => {
       <CardHeader>
         <CardTitle className="text-white flex items-center">
           <Key className="h-5 w-5 mr-2 text-cyan-400" />
-          API-Integration Einstellungen
+          {t('apiSettings.title')}
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
         {/* Google PageSpeed Insights API */}
         <div className="space-y-3">
           <div className="flex items-center justify-between">
-            <Label className="text-white">Google PageSpeed Insights API</Label>
+            <Label className="text-white">{t('apiSettings.apis.pageSpeed.title')}</Label>
             {hasPageSpeedKey ? (
               <Badge variant="outline" className="border-green-500 text-green-400">
                 <CheckCircle className="h-3 w-3 mr-1" />
-                Konfiguriert
+                {t('apiSettings.status.configured')}
               </Badge>
             ) : (
               <Badge variant="outline" className="border-red-500 text-red-400">
                 <AlertCircle className="h-3 w-3 mr-1" />
-                Nicht konfiguriert
+                {t('apiSettings.status.notConfigured')}
               </Badge>
             )}
           </div>
@@ -259,7 +261,7 @@ export const ApiKeySettings: React.FC = () => {
           <div className="flex space-x-2">
             <Input
               type="password"
-              placeholder="API Key eingeben..."
+              placeholder={t('apiSettings.apis.pageSpeed.placeholder')}
               value={pageSpeedApiKey}
               onChange={(e) => setPageSpeedApiKey(e.target.value)}
               className="bg-slate-800 border-slate-600 text-white"
@@ -269,17 +271,17 @@ export const ApiKeySettings: React.FC = () => {
               disabled={isTestingPageSpeed}
               className="bg-cyan-600 hover:bg-cyan-700"
             >
-              {isTestingPageSpeed ? 'Teste...' : 'Speichern'}
+              {isTestingPageSpeed ? t('apiSettings.buttons.testing') : t('apiSettings.buttons.save')}
             </Button>
           </div>
           
           <p className="text-xs text-slate-400">
-            Kostenlos bis 25.000 Abfragen/Tag. 
+            {t('apiSettings.apis.pageSpeed.description')}
             <a href="https://developers.google.com/speed/docs/insights/v5/get-started" 
                target="_blank" 
                rel="noopener noreferrer"
                className="text-cyan-400 hover:underline ml-1">
-              API Key erstellen <ExternalLink className="h-3 w-3 inline" />
+              {t('apiSettings.apis.pageSpeed.link')} <ExternalLink className="h-3 w-3 inline" />
             </a>
           </p>
         </div>
@@ -473,8 +475,7 @@ export const ApiKeySettings: React.FC = () => {
 
         <div className="pt-4 border-t border-slate-700">
           <p className="text-xs text-slate-500">
-            Common Crawl API ist kostenlos und benötigt keine Konfiguration.
-            API Keys werden sicher im Browser gespeichert.
+            {t('apiSettings.footer.note')}
           </p>
         </div>
       </CardContent>

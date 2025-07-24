@@ -3,7 +3,9 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Crown, Zap, ArrowRight, ExternalLink } from 'lucide-react';
 import { usePlan } from '@/contexts/PlanContext';
+import { useTranslation } from 'react-i18next';
 export const UpgradeBanner = () => {
+  const { t } = useTranslation('app');
   const {
     isEnterprise,
     upgradeToPro,
@@ -24,21 +26,21 @@ export const UpgradeBanner = () => {
               <Crown className="h-5 w-5 text-white" />
             </div>
             <div>
-              <h3 className="text-white font-semibold">Enterprise Plan</h3>
+              <h3 className="text-white font-semibold">{t('upgradeBanner.title')}</h3>
               <p className="text-slate-300 text-sm">
-                Unbegrenzte Scans • CSV Export • API-Integration • Erweiterte Analyse
+                {t('upgradeBanner.description')}
               </p>
             </div>
           </div>
           <div className="flex items-center space-x-4">
             <div className="text-right">
-              <div className="text-slate-400 text-xs">Heute verwendet</div>
+              <div className="text-slate-400 text-xs">{t('upgradeBanner.todayUsed')}</div>
               <div className="text-white font-bold">{dailyScansUsed}/{dailyScansLimit}</div>
             </div>
             <div className="flex space-x-2">
               
               <Button onClick={upgradeToPro} className="bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600">
-                Kaufen
+                {t('upgradeBanner.buyButton')}
                 <ArrowRight className="h-4 w-4 ml-2" />
               </Button>
             </div>

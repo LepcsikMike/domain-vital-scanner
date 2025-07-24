@@ -3,6 +3,7 @@ import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { DollarSign, Activity, Globe, Zap } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 interface CostTrackerProps {
   analysisCount: number;
@@ -13,34 +14,36 @@ export const CostTracker: React.FC<CostTrackerProps> = ({
   analysisCount, 
   successRate 
 }) => {
+  const { t } = useTranslation('app');
+  
   const stats = [
     {
-      title: 'Aktuelle Kosten',
-      value: '0,00€',
+      title: t('costTracker.stats.currentCosts'),
+      value: t('costTracker.values.free'),
       icon: DollarSign,
       color: 'green',
-      description: 'Komplett kostenlos'
+      description: t('costTracker.descriptions.completelyFree')
     },
     {
-      title: 'API Calls',
-      value: `${analysisCount}/∞`,
+      title: t('costTracker.stats.apiCalls'),
+      value: `${analysisCount}/${t('costTracker.values.unlimited')}`,
       icon: Activity,
       color: 'blue',
-      description: 'Unbegrenzt verfügbar'
+      description: t('costTracker.descriptions.unlimitedAvailable')
     },
     {
-      title: 'Erfolgsrate',
+      title: t('costTracker.stats.successRate'),
       value: `${successRate}%`,
       icon: Globe,
       color: 'purple',
-      description: 'Letzte 100 Analysen'
+      description: t('costTracker.descriptions.last100')
     },
     {
-      title: 'Resource Usage',
-      value: 'Minimal',
+      title: t('costTracker.stats.resourceUsage'),
+      value: t('costTracker.values.minimal'),
       icon: Zap,
       color: 'yellow',
-      description: 'Browser-basiert'
+      description: t('costTracker.descriptions.browserBased')
     }
   ];
 
@@ -60,9 +63,9 @@ export const CostTracker: React.FC<CostTrackerProps> = ({
         <CardTitle className="text-white flex items-center justify-between">
           <span className="flex items-center">
             <DollarSign className="h-5 w-5 mr-2 text-green-400" />
-            Kostenübersicht
+            {t('costTracker.title')}
           </span>
-          <Badge className="bg-green-600">Kostenlos</Badge>
+          <Badge className="bg-green-600">{t('costTracker.badge')}</Badge>
         </CardTitle>
       </CardHeader>
       <CardContent>
@@ -88,23 +91,23 @@ export const CostTracker: React.FC<CostTrackerProps> = ({
         </div>
         
         <div className="mt-4 p-3 bg-slate-800/50 rounded-lg">
-          <h4 className="text-sm font-medium text-white mb-2">Verfügbare Services</h4>
+          <h4 className="text-sm font-medium text-white mb-2">{t('costTracker.services.title')}</h4>
           <div className="space-y-2 text-xs text-slate-300">
             <div className="flex justify-between">
-              <span>• Common Crawl Domain Discovery</span>
-              <Badge variant="secondary" className="text-xs">Kostenlos</Badge>
+              <span>• {t('costTracker.services.commonCrawl')}</span>
+              <Badge variant="secondary" className="text-xs">{t('costTracker.badge')}</Badge>
             </div>
             <div className="flex justify-between">
-              <span>• AllOrigins CORS Proxy</span>
-              <Badge variant="secondary" className="text-xs">Kostenlos</Badge>
+              <span>• {t('costTracker.services.corsProxy')}</span>
+              <Badge variant="secondary" className="text-xs">{t('costTracker.badge')}</Badge>
             </div>
             <div className="flex justify-between">
-              <span>• HTML Parsing & SEO Analysis</span>
-              <Badge variant="secondary" className="text-xs">Kostenlos</Badge>
+              <span>• {t('costTracker.services.htmlParsing')}</span>
+              <Badge variant="secondary" className="text-xs">{t('costTracker.badge')}</Badge>
             </div>
             <div className="flex justify-between">
-              <span>• SSL/HTTPS Validation</span>
-              <Badge variant="secondary" className="text-xs">Kostenlos</Badge>
+              <span>• {t('costTracker.services.sslValidation')}</span>
+              <Badge variant="secondary" className="text-xs">{t('costTracker.badge')}</Badge>
             </div>
           </div>
         </div>

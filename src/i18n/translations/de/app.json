@@ -100,5 +100,198 @@
       "title": "Tägliches Limit erreicht",
       "description": "Sie haben Ihr Limit von {{limit}} Scan(s) pro Tag erreicht. Upgraden Sie auf Enterprise für unbegrenzte Scans."
     }
+  },
+  "domainSearch": {
+    "tabs": {
+      "manual": "Manuell",
+      "automated": "Automatisch"
+    },
+    "manual": {
+      "label": "Domain-Liste (eine pro Zeile)",
+      "placeholder": "beispiel.de\nmeine-website.com\ntest-domain.org"
+    },
+    "automated": {
+      "searchTerm": "Suchbegriff",
+      "searchTermPlaceholder": "medizin, handwerker, restaurant...",
+      "industry": "Branche",
+      "industryPlaceholder": "Branche wählen",
+      "location": "Ort/Region",
+      "locationPlaceholder": "Berlin, München, NRW...",
+      "tld": "Top-Level-Domain (TLD)",
+      "industries": {
+        "medizin": "Medizin & Gesundheit",
+        "handwerk": "Handwerk & Bau",
+        "gastronomie": "Gastronomie & Hotel",
+        "einzelhandel": "Einzelhandel & E-Commerce",
+        "dienstleistung": "Dienstleistung & Beratung",
+        "technologie": "IT & Technologie",
+        "bildung": "Bildung & Ausbildung",
+        "immobilien": "Immobilien"
+      },
+      "tlds": {
+        "de": "🇩🇪 .de (Deutschland)",
+        "com": "🌍 .com (International)",
+        "org": "🏛️ .org (Organisation)",
+        "net": "🌐 .net (Netzwerk)",
+        "at": "🇦🇹 .at (Österreich)",
+        "ch": "🇨🇭 .ch (Schweiz)",
+        "eu": "🇪🇺 .eu (Europa)",
+        "info": "ℹ️ .info (Information)",
+        "biz": "💼 .biz (Business)"
+      }
+    },
+    "buttons": {
+      "startAnalysis": "Analyse starten",
+      "analyzing": "Analysiere..."
+    }
+  },
+  "analysisSettings": {
+    "title": "Analyse-Module",
+    "modules": {
+      "httpsCheck": "HTTPS & SSL Prüfung",
+      "technologyAudit": "Technologie-Audit",
+      "pageSpeedInsights": "PageSpeed Insights",
+      "seoAudit": "SEO-Audit",
+      "crawlingStatus": "Crawling-Status"
+    },
+    "performance": {
+      "title": "Performance",
+      "batchSize": "Batch-Größe",
+      "timeout": "Timeout (Sekunden)",
+      "batchSizes": {
+        "5": "5 Domains",
+        "10": "10 Domains",
+        "20": "20 Domains",
+        "50": "50 Domains"
+      }
+    },
+    "additional": {
+      "title": "Zusätzliche Optionen",
+      "includeSubdomains": "Subdomains einbeziehen"
+    }
+  },
+  "apiSettings": {
+    "title": "API-Integration Einstellungen",
+    "status": {
+      "configured": "Konfiguriert",
+      "notConfigured": "Nicht konfiguriert"
+    },
+    "apis": {
+      "pageSpeed": {
+        "title": "Google PageSpeed Insights API",
+        "placeholder": "API Key eingeben...",
+        "description": "Kostenlos bis 25.000 Abfragen/Tag.",
+        "link": "API Key erstellen"
+      },
+      "customSearch": {
+        "title": "Google Custom Search API",
+        "keyPlaceholder": "API Key eingeben...",
+        "enginePlaceholder": "Search Engine ID eingeben...",
+        "description": "100 kostenlose Abfragen/Tag, dann $5/1000 Abfragen.",
+        "link": "Setup-Anleitung"
+      },
+      "yelp": {
+        "title": "Yelp Fusion API",
+        "placeholder": "Yelp API Key eingeben...",
+        "description": "5000 kostenlose API-Calls/Monat für lokale Business-Suche.",
+        "link": "API Key erstellen"
+      },
+      "places": {
+        "title": "Google Places API",
+        "placeholder": "Google Places API Key eingeben...",
+        "description": "$200 gratis-Guthaben/Monat für lokale Business-Discovery.",
+        "link": "API Key erstellen"
+      },
+      "hunter": {
+        "title": "Hunter.io API",
+        "placeholder": "Hunter.io API Key eingeben...",
+        "description": "100 kostenlose Abfragen/Monat für Domain-Intelligence.",
+        "link": "API Key erstellen"
+      }
+    },
+    "buttons": {
+      "save": "Speichern",
+      "testing": "Teste..."
+    },
+    "footer": {
+      "note": "Common Crawl API ist kostenlos und benötigt keine Konfiguration. API Keys werden sicher im Browser gespeichert."
+    },
+    "toast": {
+      "keyMissing": "API Key fehlt",
+      "credentialsMissing": "Credentials fehlen",
+      "keySaved": "API Key gespeichert",
+      "keyTestFailed": "API Key Test fehlgeschlagen",
+      "credentialsSaved": "Credentials gespeichert",
+      "credentialsTestFailed": "Credentials Test fehlgeschlagen",
+      "descriptions": {
+        "pageSpeedMissing": "Bitte geben Sie einen gültigen PageSpeed API Key ein",
+        "pageSpeedSaved": "API Key erfolgreich getestet und gespeichert",
+        "pageSpeedFailed": "Überprüfen Sie Ihren PageSpeed API Key",
+        "searchMissing": "Bitte geben Sie API Key und Search Engine ID ein",
+        "searchSaved": "Credentials erfolgreich getestet und gespeichert",
+        "searchFailed": "Überprüfen Sie Ihre Search API Credentials",
+        "yelpMissing": "Bitte geben Sie einen gültigen Yelp API Key ein",
+        "yelpSaved": "API Key erfolgreich getestet und gespeichert",
+        "yelpFailed": "Überprüfen Sie Ihren Yelp API Key",
+        "placesMissing": "Bitte geben Sie einen gültigen Google Places API Key ein",
+        "placesSaved": "API Key erfolgreich getestet und gespeichert",
+        "placesFailed": "Überprüfen Sie Ihren Google Places API Key",
+        "hunterMissing": "Bitte geben Sie einen gültigen Hunter.io API Key ein",
+        "hunterSaved": "API Key erfolgreich getestet und gespeichert",
+        "hunterFailed": "Überprüfen Sie Ihren Hunter.io API Key"
+      }
+    }
+  },
+  "costTracker": {
+    "title": "Kostenübersicht",
+    "badge": "Kostenlos",
+    "stats": {
+      "currentCosts": "Aktuelle Kosten",
+      "apiCalls": "API Calls",
+      "successRate": "Erfolgsrate",
+      "resourceUsage": "Resource Usage"
+    },
+    "values": {
+      "free": "0,00€",
+      "unlimited": "∞",
+      "minimal": "Minimal"
+    },
+    "descriptions": {
+      "completelyFree": "Komplett kostenlos",
+      "unlimitedAvailable": "Unbegrenzt verfügbar",
+      "last100": "Letzte 100 Analysen",
+      "browserBased": "Browser-basiert"
+    },
+    "services": {
+      "title": "Verfügbare Services",
+      "commonCrawl": "Common Crawl Domain Discovery",
+      "corsProxy": "AllOrigins CORS Proxy",
+      "htmlParsing": "HTML Parsing & SEO Analysis",
+      "sslValidation": "SSL/HTTPS Validation"
+    }
+  },
+  "dashboardStats": {
+    "titles": {
+      "analyzedDomains": "Analysierte Domains",
+      "httpsProblems": "HTTPS Probleme",
+      "criticalCases": "Kritische Fälle",
+      "outdatedTechnologies": "Veraltete Technologien",
+      "seoProblems": "SEO Probleme",
+      "avgPageSpeed": "Ø PageSpeed"
+    },
+    "descriptions": {
+      "totalAnalyses": "Gesamt durchgeführte Analysen",
+      "noValidSSL": "Domains ohne gültiges SSL",
+      "criticalIssues": "2+ kritische Probleme",
+      "outdatedCMS": "Veraltete CMS/Frameworks",
+      "seoOptimization": "SEO-optimierungsbedürftig",
+      "avgMobileScore": "Durchschnittlicher Mobile Score"
+    }
+  },
+  "upgradeBanner": {
+    "title": "Enterprise Plan",
+    "description": "Unbegrenzte Scans • CSV Export • API-Integration • Erweiterte Analyse",
+    "todayUsed": "Heute verwendet",
+    "buyButton": "Kaufen"
   }
 }

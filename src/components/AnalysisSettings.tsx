@@ -5,6 +5,7 @@ import { Switch } from "@/components/ui/switch";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
+import { useTranslation } from 'react-i18next';
 
 interface AnalysisSettings {
   checkHTTPS: boolean;
@@ -26,6 +27,7 @@ export const AnalysisSettings: React.FC<AnalysisSettingsProps> = ({
   settings, 
   onSettingsChange 
 }) => {
+  const { t } = useTranslation('app');
   const updateSetting = (key: keyof AnalysisSettings, value: any) => {
     onSettingsChange({
       ...settings,
@@ -37,11 +39,11 @@ export const AnalysisSettings: React.FC<AnalysisSettingsProps> = ({
     <div className="space-y-6">
       {/* Analysis Modules */}
       <div>
-        <h4 className="text-sm font-medium text-slate-300 mb-3">Analyse-Module</h4>
+        <h4 className="text-sm font-medium text-slate-300 mb-3">{t('analysisSettings.title')}</h4>
         <div className="space-y-3">
           <div className="flex items-center justify-between">
             <Label htmlFor="https-check" className="text-slate-400 cursor-pointer">
-              HTTPS & SSL Prüfung
+              {t('analysisSettings.modules.httpsCheck')}
             </Label>
             <Switch
               id="https-check"
@@ -52,7 +54,7 @@ export const AnalysisSettings: React.FC<AnalysisSettingsProps> = ({
           
           <div className="flex items-center justify-between">
             <Label htmlFor="tech-check" className="text-slate-400 cursor-pointer">
-              Technologie-Audit
+              {t('analysisSettings.modules.technologyAudit')}
             </Label>
             <Switch
               id="tech-check"
@@ -63,7 +65,7 @@ export const AnalysisSettings: React.FC<AnalysisSettingsProps> = ({
           
           <div className="flex items-center justify-between">
             <Label htmlFor="speed-check" className="text-slate-400 cursor-pointer">
-              PageSpeed Insights
+              {t('analysisSettings.modules.pageSpeedInsights')}
             </Label>
             <Switch
               id="speed-check"
@@ -74,7 +76,7 @@ export const AnalysisSettings: React.FC<AnalysisSettingsProps> = ({
           
           <div className="flex items-center justify-between">
             <Label htmlFor="seo-check" className="text-slate-400 cursor-pointer">
-              SEO-Audit
+              {t('analysisSettings.modules.seoAudit')}
             </Label>
             <Switch
               id="seo-check"
@@ -85,7 +87,7 @@ export const AnalysisSettings: React.FC<AnalysisSettingsProps> = ({
           
           <div className="flex items-center justify-between">
             <Label htmlFor="crawl-check" className="text-slate-400 cursor-pointer">
-              Crawling-Status
+              {t('analysisSettings.modules.crawlingStatus')}
             </Label>
             <Switch
               id="crawl-check"
@@ -100,11 +102,11 @@ export const AnalysisSettings: React.FC<AnalysisSettingsProps> = ({
 
       {/* Performance Settings */}
       <div>
-        <h4 className="text-sm font-medium text-slate-300 mb-3">Performance</h4>
+        <h4 className="text-sm font-medium text-slate-300 mb-3">{t('analysisSettings.performance.title')}</h4>
         <div className="space-y-3">
           <div>
             <Label htmlFor="batch-size" className="text-slate-400">
-              Batch-Größe
+              {t('analysisSettings.performance.batchSize')}
             </Label>
             <Select 
               value={settings.batchSize.toString()} 
@@ -114,17 +116,17 @@ export const AnalysisSettings: React.FC<AnalysisSettingsProps> = ({
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="5">5 Domains</SelectItem>
-                <SelectItem value="10">10 Domains</SelectItem>
-                <SelectItem value="20">20 Domains</SelectItem>
-                <SelectItem value="50">50 Domains</SelectItem>
+                <SelectItem value="5">{t('analysisSettings.performance.batchSizes.5')}</SelectItem>
+                <SelectItem value="10">{t('analysisSettings.performance.batchSizes.10')}</SelectItem>
+                <SelectItem value="20">{t('analysisSettings.performance.batchSizes.20')}</SelectItem>
+                <SelectItem value="50">{t('analysisSettings.performance.batchSizes.50')}</SelectItem>
               </SelectContent>
             </Select>
           </div>
           
           <div>
             <Label htmlFor="timeout" className="text-slate-400">
-              Timeout (Sekunden)
+              {t('analysisSettings.performance.timeout')}
             </Label>
             <Input
               id="timeout"
@@ -143,10 +145,10 @@ export const AnalysisSettings: React.FC<AnalysisSettingsProps> = ({
 
       {/* Additional Options */}
       <div>
-        <h4 className="text-sm font-medium text-slate-300 mb-3">Zusätzliche Optionen</h4>
+        <h4 className="text-sm font-medium text-slate-300 mb-3">{t('analysisSettings.additional.title')}</h4>
         <div className="flex items-center justify-between">
           <Label htmlFor="subdomains" className="text-slate-400 cursor-pointer">
-            Subdomains einbeziehen
+            {t('analysisSettings.additional.includeSubdomains')}
           </Label>
           <Switch
             id="subdomains"
