@@ -66,5 +66,132 @@
     "rightsContact": "Para ejercer sus derechos, contáctenos en:",
     "contactSection": "Contacto",
     "contactText": "Para preguntas sobre protección de datos, contáctenos en:"
+  },
+  "terms": {
+    "title": "Términos y Condiciones",
+    "validFrom": "Válido desde: Enero 2025",
+    "scope": {
+      "title": "§ 1 Alcance",
+      "text1": "Estos Términos y Condiciones Generales (Términos) se aplican a todos los contratos entre Inspiroware OÜ (en adelante \"Proveedor\") y los usuarios de la plataforma DomainAudit Pro (en adelante \"Usuario\") sobre el uso de servicios de análisis de sitios web.",
+      "text2": "Las condiciones conflictivas o divergentes del usuario no son reconocidas a menos que su validez sea expresamente confirmada por escrito."
+    },
+    "services": {
+      "title": "§ 2 Objeto del Contrato",
+      "text": "El proveedor ofrece una plataforma web que permite:",
+      "feature1": "Análisis técnico de sitios web (SSL, rendimiento, SEO)",
+      "feature2": "Procesamiento por lotes de listas de dominios",
+      "feature3": "Exportación de resultados de análisis",
+      "feature4": "Acceso API para consultas automatizadas (Plan Enterprise)",
+      "plans": "Los servicios se ofrecen en diferentes planes (Gratuito, Enterprise)."
+    },
+    "usage": {
+      "title": "§ 3 Derechos y Obligaciones de Uso",
+      "allowedTitle": "Uso Permitido:",
+      "allowed1": "Uso comercial y privado dentro de los límites del plan seleccionado",
+      "allowed2": "Análisis de sitios web que está autorizado a analizar o que son públicamente accesibles",
+      "allowed3": "Exportación y reutilización de resultados de análisis",
+      "prohibitedTitle": "Uso Prohibido:",
+      "prohibited1": "Mal uso de la plataforma para propósitos ilegales",
+      "prohibited2": "Sobrecarga del servidor a través de solicitudes excesivas",
+      "prohibited3": "Ingeniería inversa o copia del software",
+      "prohibited4": "Reventa o sublicencia sin consentimiento"
+    },
+    "pricing": {
+      "title": "§ 4 Precios y Términos de Pago",
+      "freePlanTitle": "Plan Gratuito:",
+      "free1": "Gratuito",
+      "free2": "1 escaneo de dominio por día",
+      "free3": "Características básicas",
+      "enterpriseTitle": "Plan Enterprise:",
+      "enterprise1": "Precios según lista actual de precios",
+      "enterprise2": "Escaneos ilimitados",
+      "enterprise3": "Todas las características premium",
+      "enterprise4": "Facturación mensual o anual",
+      "vatNote": "Todos los precios están sujetos al IVA aplicable. El pago se realiza por adelantado mediante tarjeta de crédito o débito directo SEPA."
+    },
+    "termination": {
+      "title": "§ 5 Duración y Terminación",
+      "freePlan": "Plan Gratuito: Puede terminarse en cualquier momento sin aviso.",
+      "enterprisePlan": "Plan Enterprise: El término mínimo es de un mes. El contrato se renueva automáticamente por el período seleccionado a menos que se termine con 30 días de aviso antes del final del término.",
+      "notice": "Las terminaciones deben hacerse por escrito (el correo electrónico es suficiente) a hi@inspiroware.com."
+    },
+    "availability": {
+      "title": "§ 6 Disponibilidad y Garantía",
+      "uptime": "El proveedor apunta a una disponibilidad del 99% pero no puede garantizarla. El trabajo de mantenimiento se anunciará cuando sea posible.",
+      "dataAccuracy": "Los resultados del análisis se basan en datos públicamente disponibles y APIs externas. No se da garantía por la precisión y completitud.",
+      "defects": "Los defectos deben reportarse inmediatamente por escrito. Para quejas justificadas, el proveedor remediará el defecto o reducirá la compensación en consecuencia."
+    },
+    "liability": {
+      "title": "§ 7 Responsabilidad",
+      "limitation": "La responsabilidad del proveedor está limitada a intención y negligencia grave. No hay responsabilidad por daños indirectos, pérdida de ganancias o daños consecuentes, excepto en caso de incumplimiento de obligaciones contractuales esenciales.",
+      "cap": "La responsabilidad está limitada a daños típicamente previsibles, pero no excediendo la compensación pagada en los últimos 12 meses."
+    },
+    "dataProtection": {
+      "title": "§ 8 Protección de Datos",
+      "text": "El procesamiento de datos personales se lleva a cabo de acuerdo con la Política de Privacidad, que es parte de estos Términos.",
+      "privacyLink": "Política de Privacidad"
+    },
+    "changes": {
+      "title": "§ 9 Cambios en los Términos",
+      "text": "El proveedor puede cambiar estos Términos con 30 días de aviso. Si el usuario no objeta dentro de 30 días de recibir la notificación de cambio, los cambios se consideran aprobados."
+    },
+    "final": {
+      "title": "§ 10 Disposiciones Finales",
+      "law": "Se aplica la ley de Estonia, excluyendo la Convención de las Naciones Unidas sobre los Contratos de Compraventa Internacional de Mercaderías.",
+      "jurisdiction": "El lugar de jurisdicción es Tallinn, Estonia.",
+      "severability": "Si las disposiciones individuales de estos Términos son inválidas, la validez de las disposiciones restantes permanece inalterada."
+    },
+    "contactTitle": "Contacto",
+    "contactText": "Para preguntas sobre estos Términos, contáctenos en:"
+  },
+  "cookies": {
+    "title": "Configuración de Cookies",
+    "description": "Aquí puede gestionar sus preferencias de cookies. Respetamos su privacidad y le damos control total sobre qué cookies se almacenan en su dispositivo.",
+    "categories": {
+      "necessary": {
+        "title": "Cookies Necesarias",
+        "description": "Estas cookies son esenciales para el funcionamiento adecuado del sitio web. Permiten funciones básicas como navegación de páginas y acceso a áreas seguras del sitio web.",
+        "detail1": "Gestión de sesiones",
+        "detail2": "Características de seguridad",
+        "detail3": "Funcionalidad básica del sitio web",
+        "duration": "Sesión / 1 año"
+      },
+      "analytics": {
+        "title": "Cookies de Análisis",
+        "description": "Estas cookies recopilan información sobre cómo los visitantes usan nuestro sitio web. Toda la información se anonimiza y nos ayuda a mejorar el rendimiento del sitio web.",
+        "detail1": "Estadísticas de uso del sitio web",
+        "detail2": "Métricas de rendimiento",
+        "detail3": "Reporte de errores",
+        "duration": "2 años"
+      },
+      "marketing": {
+        "title": "Cookies de Marketing",
+        "description": "Estas cookies se utilizan para hacer que la publicidad sea más relevante y medir la efectividad de las campañas publicitarias.",
+        "detail1": "Publicidad personalizada",
+        "detail2": "Seguimiento de campañas",
+        "detail3": "Retargeting",
+        "duration": "1 año"
+      },
+      "preferences": {
+        "title": "Cookies de Preferencias",
+        "description": "Estas cookies permiten al sitio web recordar sus elecciones y proporcionarle características mejoradas y más personalizadas.",
+        "detail1": "Preferencias de idioma y región",
+        "detail2": "Configuraciones de UI",
+        "detail3": "Contenido personalizado",
+        "duration": "1 año"
+      }
+    },
+    "required": "Requerido",
+    "purposesTitle": "Propósitos:",
+    "durationTitle": "Duración de almacenamiento:",
+    "saveChanges": "Guardar Cambios",
+    "saveButton": "Guardar Configuración",
+    "saveDescription": "Haga clic en \"Guardar\" para actualizar sus preferencias de cookies.",
+    "savedToast": "Configuración guardada",
+    "savedDescription": "Sus preferencias de cookies han sido actualizadas exitosamente.",
+    "additionalInfo": "Información Adicional",
+    "contactInfo": "Si tiene preguntas sobre nuestras políticas de cookies, contáctenos en",
+    "privacyInfo": "Más información se puede encontrar en nuestra",
+    "privacyLink": "Política de Privacidad"
   }
 }

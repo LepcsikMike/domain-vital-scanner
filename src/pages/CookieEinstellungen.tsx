@@ -7,71 +7,73 @@ import { useCookies } from '@/contexts/CookieContext';
 import { Cookie, Shield, BarChart, Target, User, ArrowLeft, Save } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { toast } from '@/hooks/use-toast';
+import { useTranslation } from 'react-i18next';
 
 const CookieEinstellungen = () => {
+  const { t } = useTranslation('legal');
   const { preferences, updatePreferences } = useCookies();
   const [tempPreferences, setTempPreferences] = useState(preferences);
 
   const handleSave = () => {
     updatePreferences(tempPreferences);
     toast({
-      title: "Einstellungen gespeichert",
-      description: "Ihre Cookie-Präferenzen wurden erfolgreich aktualisiert.",
+      title: t('cookies.savedToast'),
+      description: t('cookies.savedDescription'),
     });
   };
 
   const cookieCategories = [
     {
       id: 'necessary',
-      title: 'Notwendige Cookies',
-      description: 'Diese Cookies sind für das ordnungsgemäße Funktionieren der Website unerlässlich. Sie ermöglichen grundlegende Funktionen wie Seitennavigation und Zugriff auf sichere Bereiche der Website.',
+      title: t('cookies.categories.necessary.title'),
+      description: t('cookies.categories.necessary.description'),
       icon: Shield,
       required: true,
       details: [
-        'Session-Management',
-        'Sicherheitsfeatures',
-        'Grundlegende Website-Funktionalität',
+        t('cookies.categories.necessary.detail1'),
+        t('cookies.categories.necessary.detail2'),
+        t('cookies.categories.necessary.detail3'),
       ],
-      duration: 'Session / 1 Jahr',
+      duration: t('cookies.categories.necessary.duration'),
     },
     {
       id: 'analytics',
-      title: 'Analyse-Cookies',
-      description: 'Diese Cookies sammeln Informationen darüber, wie Besucher unsere Website nutzen. Alle Informationen werden anonymisiert und helfen uns, die Website-Leistung zu verbessern.',
+      title: t('cookies.categories.analytics.title'),
+      description: t('cookies.categories.analytics.description'),
       icon: BarChart,
       required: false,
       details: [
-        'Website-Nutzungsstatistiken',
-        'Leistungsmetriken',
-        'Fehlerberichterstattung',
+        t('cookies.categories.analytics.detail1'),
+        t('cookies.categories.analytics.detail2'),
+        t('cookies.categories.analytics.detail3'),
       ],
-      duration: '2 Jahre',
+      duration: t('cookies.categories.analytics.duration'),
     },
     {
       id: 'marketing',
-      title: 'Marketing-Cookies',
-      description: 'Diese Cookies werden verwendet, um Werbung relevanter zu machen und die Effektivität von Werbekampagnen zu messen.',
+      title: t('cookies.categories.marketing.title'),
+      description: t('cookies.categories.marketing.description'),
       icon: Target,
       required: false,
       details: [
-        'Personalisierte Werbung',
-        'Kampagnen-Tracking',
-        'Retargeting',
+        t('cookies.categories.marketing.detail1'),
+        t('cookies.categories.marketing.detail2'),
+        t('cookies.categories.marketing.detail3'),
       ],
-      duration: '1 Jahr',
+      duration: t('cookies.categories.marketing.duration'),
     },
     {
       id: 'preferences',
-      title: 'Präferenz-Cookies',
-      description: 'Diese Cookies ermöglichen es der Website, sich an Ihre Entscheidungen zu erinnern und Ihnen erweiterte, personalisiertere Funktionen zu bieten.',
+      title: t('cookies.categories.preferences.title'),
+      description: t('cookies.categories.preferences.description'),
       icon: User,
       required: false,
       details: [
-        'Sprach- und Regionspräferenzen',
-        'UI-Einstellungen',
-        'Personalisierte Inhalte',
+        t('cookies.categories.preferences.detail1'),
+        t('cookies.categories.preferences.detail2'),
+        t('cookies.categories.preferences.detail3'),
       ],
-      duration: '1 Jahr',
+      duration: t('cookies.categories.preferences.duration'),
     },
   ];
 
@@ -85,17 +87,16 @@ const CookieEinstellungen = () => {
             className="inline-flex items-center text-cyan-400 hover:text-cyan-300 transition-colors mb-4"
           >
             <ArrowLeft className="h-4 w-4 mr-2" />
-            Zurück zur Startseite
+            {t('common.backToHome')}
           </Link>
           
           <div className="flex items-center gap-3 mb-4">
             <Cookie className="h-8 w-8 text-cyan-400" />
-            <h1 className="text-3xl font-bold text-white">Cookie-Einstellungen</h1>
+            <h1 className="text-3xl font-bold text-white">{t('cookies.title')}</h1>
           </div>
           
           <p className="text-slate-300 max-w-3xl">
-            Hier können Sie Ihre Cookie-Präferenzen verwalten. Wir respektieren Ihre Privatsphäre 
-            und geben Ihnen die volle Kontrolle darüber, welche Cookies auf Ihrem Gerät gespeichert werden.
+            {t('cookies.description')}
           </p>
         </div>
 
@@ -120,7 +121,7 @@ const CookieEinstellungen = () => {
                     <div className="flex items-center gap-3">
                       {category.required && (
                         <span className="px-2 py-1 bg-cyan-500/20 text-cyan-400 text-xs rounded">
-                          Erforderlich
+                          {t('cookies.required')}
                         </span>
                       )}
                       <Switch
@@ -142,7 +143,7 @@ const CookieEinstellungen = () => {
                 <CardContent>
                   <div className="grid md:grid-cols-2 gap-4">
                     <div>
-                      <h4 className="text-white font-medium mb-2">Verwendungszwecke:</h4>
+                      <h4 className="text-white font-medium mb-2">{t('cookies.purposesTitle')}</h4>
                       <ul className="text-slate-400 text-sm space-y-1">
                         {category.details.map((detail, index) => (
                           <li key={index}>• {detail}</li>
@@ -151,7 +152,7 @@ const CookieEinstellungen = () => {
                     </div>
                     
                     <div>
-                      <h4 className="text-white font-medium mb-2">Speicherdauer:</h4>
+                      <h4 className="text-white font-medium mb-2">{t('cookies.durationTitle')}</h4>
                       <p className="text-slate-400 text-sm">{category.duration}</p>
                     </div>
                   </div>
@@ -166,9 +167,9 @@ const CookieEinstellungen = () => {
           <CardContent className="p-6">
             <div className="flex flex-col sm:flex-row gap-4 items-center justify-between">
               <div>
-                <h3 className="text-white font-semibold mb-1">Änderungen speichern</h3>
+                <h3 className="text-white font-semibold mb-1">{t('cookies.saveChanges')}</h3>
                 <p className="text-slate-400 text-sm">
-                  Klicken Sie auf "Speichern", um Ihre Cookie-Präferenzen zu aktualisieren.
+                  {t('cookies.saveDescription')}
                 </p>
               </div>
               
@@ -177,7 +178,7 @@ const CookieEinstellungen = () => {
                 className="bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white"
               >
                 <Save className="h-4 w-4 mr-2" />
-                Einstellungen speichern
+                {t('cookies.saveButton')}
               </Button>
             </div>
           </CardContent>
@@ -186,18 +187,18 @@ const CookieEinstellungen = () => {
         {/* Additional Information */}
         <Card className="mt-6 bg-slate-800/30 border-slate-700">
           <CardContent className="p-6">
-            <h3 className="text-white font-semibold mb-3">Weitere Informationen</h3>
+            <h3 className="text-white font-semibold mb-3">{t('cookies.additionalInfo')}</h3>
             <div className="text-slate-300 text-sm space-y-2">
               <p>
-                Wenn Sie Fragen zu unseren Cookie-Richtlinien haben, kontaktieren Sie uns unter{' '}
-                <a href="mailto:hi@inspiroware.com" className="text-cyan-400 hover:text-cyan-300">
-                  hi@inspiroware.com
+                {t('cookies.contactInfo')}{' '}
+                <a href={`mailto:${t('common.email')}`} className="text-cyan-400 hover:text-cyan-300">
+                  {t('common.email')}
                 </a>
               </p>
               <p>
-                Weitere Informationen finden Sie in unserer{' '}
-                <Link to="/datenschutz" className="text-cyan-400 hover:text-cyan-300">
-                  Datenschutzerklärung
+                {t('cookies.privacyInfo')}{' '}
+                <Link to="/privacy" className="text-cyan-400 hover:text-cyan-300">
+                  {t('cookies.privacyLink')}
                 </Link>
               </p>
             </div>

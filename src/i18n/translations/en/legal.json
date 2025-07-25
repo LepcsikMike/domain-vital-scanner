@@ -66,5 +66,132 @@
     "rightsContact": "To exercise your rights, contact us at:",
     "contactSection": "Contact",
     "contactText": "For questions about data protection, contact us at:"
+  },
+  "terms": {
+    "title": "Terms and Conditions",
+    "validFrom": "Valid from: January 2025",
+    "scope": {
+      "title": "§ 1 Scope",
+      "text1": "These General Terms and Conditions (Terms) apply to all contracts between Inspiroware OÜ (hereinafter \"Provider\") and users of the DomainAudit Pro platform (hereinafter \"User\") regarding the use of website analysis services.",
+      "text2": "Conflicting or deviating conditions of the user are not recognized unless their validity is expressly confirmed in writing."
+    },
+    "services": {
+      "title": "§ 2 Subject Matter",
+      "text": "The provider offers a web platform that enables:",
+      "feature1": "Technical analysis of websites (SSL, performance, SEO)",
+      "feature2": "Batch processing of domain lists",
+      "feature3": "Export of analysis results",
+      "feature4": "API access for automated queries (Enterprise Plan)",
+      "plans": "Services are offered in different plans (Free, Enterprise)."
+    },
+    "usage": {
+      "title": "§ 3 Usage Rights and Obligations",
+      "allowedTitle": "Permitted Use:",
+      "allowed1": "Commercial and private use within the limits of the selected plan",
+      "allowed2": "Analysis of websites you are authorized to analyze or that are publicly accessible",
+      "allowed3": "Export and reuse of analysis results",
+      "prohibitedTitle": "Prohibited Use:",
+      "prohibited1": "Misuse of the platform for illegal purposes",
+      "prohibited2": "Server overload through excessive requests",
+      "prohibited3": "Reverse engineering or copying of the software",
+      "prohibited4": "Resale or sublicensing without consent"
+    },
+    "pricing": {
+      "title": "§ 4 Prices and Payment Terms",
+      "freePlanTitle": "Free Plan:",
+      "free1": "Free of charge",
+      "free2": "1 domain scan per day",
+      "free3": "Basic features",
+      "enterpriseTitle": "Enterprise Plan:",
+      "enterprise1": "Prices according to current price list",
+      "enterprise2": "Unlimited scans",
+      "enterprise3": "All premium features",
+      "enterprise4": "Monthly or annual billing",
+      "vatNote": "All prices are subject to applicable VAT. Payment is made in advance by credit card or SEPA direct debit."
+    },
+    "termination": {
+      "title": "§ 5 Term and Termination",
+      "freePlan": "Free Plan: Can be terminated at any time without notice.",
+      "enterprisePlan": "Enterprise Plan: The minimum term is one month. The contract renews automatically for the selected period unless terminated with 30 days' notice before the end of the term.",
+      "notice": "Terminations must be made in writing (email is sufficient) to hi@inspiroware.com."
+    },
+    "availability": {
+      "title": "§ 6 Availability and Warranty",
+      "uptime": "The provider aims for 99% availability but cannot guarantee it. Maintenance work will be announced when possible.",
+      "dataAccuracy": "Analysis results are based on publicly available data and external APIs. No warranty is given for accuracy and completeness.",
+      "defects": "Defects must be reported immediately in writing. For justified complaints, the provider will remedy the defect or reduce compensation accordingly."
+    },
+    "liability": {
+      "title": "§ 7 Liability",
+      "limitation": "The provider's liability is limited to intent and gross negligence. No liability for indirect damages, lost profits, or consequential damages, except in case of breach of essential contractual obligations.",
+      "cap": "Liability is limited to typically foreseeable damages, but not exceeding the compensation paid in the last 12 months."
+    },
+    "dataProtection": {
+      "title": "§ 8 Data Protection",
+      "text": "The processing of personal data is carried out in accordance with the Privacy Policy, which is part of these Terms.",
+      "privacyLink": "Privacy Policy"
+    },
+    "changes": {
+      "title": "§ 9 Changes to Terms",
+      "text": "The provider may change these Terms with 30 days' notice. If the user does not object within 30 days of receiving the change notification, the changes are deemed approved."
+    },
+    "final": {
+      "title": "§ 10 Final Provisions",
+      "law": "Estonian law applies, excluding the UN Convention on Contracts for the International Sale of Goods.",
+      "jurisdiction": "The place of jurisdiction is Tallinn, Estonia.",
+      "severability": "Should individual provisions of these Terms be invalid, the validity of the remaining provisions remains unaffected."
+    },
+    "contactTitle": "Contact",
+    "contactText": "For questions about these Terms, contact us at:"
+  },
+  "cookies": {
+    "title": "Cookie Settings",
+    "description": "Here you can manage your cookie preferences. We respect your privacy and give you full control over which cookies are stored on your device.",
+    "categories": {
+      "necessary": {
+        "title": "Necessary Cookies",
+        "description": "These cookies are essential for the proper functioning of the website. They enable basic functions such as page navigation and access to secure areas of the website.",
+        "detail1": "Session management",
+        "detail2": "Security features",
+        "detail3": "Basic website functionality",
+        "duration": "Session / 1 year"
+      },
+      "analytics": {
+        "title": "Analytics Cookies",
+        "description": "These cookies collect information about how visitors use our website. All information is anonymized and helps us improve website performance.",
+        "detail1": "Website usage statistics",
+        "detail2": "Performance metrics",
+        "detail3": "Error reporting",
+        "duration": "2 years"
+      },
+      "marketing": {
+        "title": "Marketing Cookies",
+        "description": "These cookies are used to make advertising more relevant and measure the effectiveness of advertising campaigns.",
+        "detail1": "Personalized advertising",
+        "detail2": "Campaign tracking",
+        "detail3": "Retargeting",
+        "duration": "1 year"
+      },
+      "preferences": {
+        "title": "Preference Cookies",
+        "description": "These cookies enable the website to remember your choices and provide you with enhanced, more personalized features.",
+        "detail1": "Language and region preferences",
+        "detail2": "UI settings",
+        "detail3": "Personalized content",
+        "duration": "1 year"
+      }
+    },
+    "required": "Required",
+    "purposesTitle": "Purposes:",
+    "durationTitle": "Storage duration:",
+    "saveChanges": "Save Changes",
+    "saveButton": "Save Settings",
+    "saveDescription": "Click \"Save\" to update your cookie preferences.",
+    "savedToast": "Settings saved",
+    "savedDescription": "Your cookie preferences have been successfully updated.",
+    "additionalInfo": "Additional Information",
+    "contactInfo": "If you have questions about our cookie policies, contact us at",
+    "privacyInfo": "More information can be found in our",
+    "privacyLink": "Privacy Policy"
   }
 }

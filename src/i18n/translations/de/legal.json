@@ -66,5 +66,132 @@
     "rightsContact": "Zur Ausübung Ihrer Rechte kontaktieren Sie uns unter:",
     "contactSection": "Kontakt",
     "contactText": "Bei Fragen zum Datenschutz kontaktieren Sie uns unter:"
+  },
+  "terms": {
+    "title": "Allgemeine Geschäftsbedingungen",
+    "validFrom": "Gültig ab: Januar 2025",
+    "scope": {
+      "title": "§ 1 Geltungsbereich",
+      "text1": "Diese Allgemeinen Geschäftsbedingungen (AGB) gelten für alle Verträge zwischen der Inspiroware OÜ (nachfolgend \"Anbieter\") und den Nutzern der DomainAudit Pro Plattform (nachfolgend \"Nutzer\") über die Nutzung der Website-Analyse-Services.",
+      "text2": "Entgegenstehende oder abweichende Bedingungen des Nutzers werden nicht anerkannt, es sei denn, ihre Geltung wird ausdrücklich schriftlich bestätigt."
+    },
+    "services": {
+      "title": "§ 2 Vertragsgegenstand",
+      "text": "Der Anbieter stellt eine Web-Plattform zur Verfügung, die es ermöglicht:",
+      "feature1": "Technische Analyse von Websites (SSL, Performance, SEO)",
+      "feature2": "Batch-Verarbeitung von Domain-Listen",
+      "feature3": "Export von Analyseergebnissen",
+      "feature4": "API-Zugriff für automatisierte Abfragen (Enterprise Plan)",
+      "plans": "Die Leistungen werden in verschiedenen Tarifen angeboten (Free, Enterprise)."
+    },
+    "usage": {
+      "title": "§ 3 Nutzungsrechte und -pflichten",
+      "allowedTitle": "Erlaubte Nutzung:",
+      "allowed1": "Kommerzielle und private Nutzung im Rahmen der gewählten Tariflimits",
+      "allowed2": "Analyse von Websites, für die Sie berechtigt sind oder öffentlich zugänglich sind",
+      "allowed3": "Export und Weiterverwendung der Analyseergebnisse",
+      "prohibitedTitle": "Verbotene Nutzung:",
+      "prohibited1": "Missbrauch der Plattform für illegale Zwecke",
+      "prohibited2": "Überlastung der Server durch exzessive Anfragen",
+      "prohibited3": "Reverse Engineering oder Kopieren der Software",
+      "prohibited4": "Weiterverkauf oder Unterlizenzierung ohne Zustimmung"
+    },
+    "pricing": {
+      "title": "§ 4 Preise und Zahlungsbedingungen",
+      "freePlanTitle": "Free Plan:",
+      "free1": "Kostenlos",
+      "free2": "1 Domain-Scan pro Tag",
+      "free3": "Basis-Features",
+      "enterpriseTitle": "Enterprise Plan:",
+      "enterprise1": "Preise nach aktueller Preisliste",
+      "enterprise2": "Unbegrenzte Scans",
+      "enterprise3": "Alle Premium-Features",
+      "enterprise4": "Monatliche oder jährliche Abrechnung",
+      "vatNote": "Alle Preise verstehen sich zzgl. der gesetzlichen Umsatzsteuer. Die Zahlung erfolgt im Voraus per Kreditkarte oder SEPA-Lastschrift."
+    },
+    "termination": {
+      "title": "§ 5 Laufzeit und Kündigung",
+      "freePlan": "Free Plan: Jederzeit ohne Fristen kündbar.",
+      "enterprisePlan": "Enterprise Plan: Die Mindestlaufzeit beträgt einen Monat. Der Vertrag verlängert sich automatisch um die gewählte Periode, wenn er nicht mit einer Frist von 30 Tagen zum Ende der Laufzeit gekündigt wird.",
+      "notice": "Kündigungen müssen schriftlich (E-Mail genügt) an hi@inspiroware.com erfolgen."
+    },
+    "availability": {
+      "title": "§ 6 Verfügbarkeit und Gewährleistung",
+      "uptime": "Der Anbieter strebt eine Verfügbarkeit von 99% an, kann diese jedoch nicht garantieren. Wartungsarbeiten werden nach Möglichkeit angekündigt.",
+      "dataAccuracy": "Die Analyseergebnisse basieren auf öffentlich verfügbaren Daten und externen APIs. Für die Richtigkeit und Vollständigkeit wird keine Gewähr übernommen.",
+      "defects": "Mängel sind unverzüglich schriftlich anzuzeigen. Bei berechtigten Mängelrügen wird der Anbieter nachbessern oder die Vergütung entsprechend mindern."
+    },
+    "liability": {
+      "title": "§ 7 Haftung",
+      "limitation": "Die Haftung des Anbieters ist auf Vorsatz und grobe Fahrlässigkeit beschränkt. Für indirekte Schäden, entgangenen Gewinn oder Folgeschäden wird nicht gehaftet, es sei denn bei Verletzung wesentlicher Vertragspflichten.",
+      "cap": "Die Haftung ist der Höhe nach auf die typischerweise vorhersehbaren Schäden begrenzt, höchstens jedoch auf die in den letzten 12 Monaten gezahlte Vergütung."
+    },
+    "dataProtection": {
+      "title": "§ 8 Datenschutz",
+      "text": "Die Verarbeitung personenbezogener Daten erfolgt gemäß der Datenschutzerklärung, die Bestandteil dieser AGB ist.",
+      "privacyLink": "Datenschutzerklärung"
+    },
+    "changes": {
+      "title": "§ 9 Änderungen der AGB",
+      "text": "Der Anbieter kann diese AGB mit einer Frist von 30 Tagen ändern. Widerspricht der Nutzer nicht innerhalb von 30 Tagen nach Zugang der Änderungsmitteilung, gelten die Änderungen als genehmigt."
+    },
+    "final": {
+      "title": "§ 10 Schlussbestimmungen",
+      "law": "Es gilt das Recht der Republik Estland unter Ausschluss des UN-Kaufrechts.",
+      "jurisdiction": "Gerichtsstand ist Tallinn, Estland.",
+      "severability": "Sollten einzelne Bestimmungen dieser AGB unwirksam sein, bleibt die Wirksamkeit der übrigen Bestimmungen unberührt."
+    },
+    "contactTitle": "Kontakt",
+    "contactText": "Bei Fragen zu diesen AGB kontaktieren Sie uns unter:"
+  },
+  "cookies": {
+    "title": "Cookie-Einstellungen",
+    "description": "Hier können Sie Ihre Cookie-Präferenzen verwalten. Wir respektieren Ihre Privatsphäre und geben Ihnen die volle Kontrolle darüber, welche Cookies auf Ihrem Gerät gespeichert werden.",
+    "categories": {
+      "necessary": {
+        "title": "Notwendige Cookies",
+        "description": "Diese Cookies sind für das ordnungsgemäße Funktionieren der Website unerlässlich. Sie ermöglichen grundlegende Funktionen wie Seitennavigation und Zugriff auf sichere Bereiche der Website.",
+        "detail1": "Session-Management",
+        "detail2": "Sicherheitsfeatures",
+        "detail3": "Grundlegende Website-Funktionalität",
+        "duration": "Session / 1 Jahr"
+      },
+      "analytics": {
+        "title": "Analyse-Cookies",
+        "description": "Diese Cookies sammeln Informationen darüber, wie Besucher unsere Website nutzen. Alle Informationen werden anonymisiert und helfen uns, die Website-Leistung zu verbessern.",
+        "detail1": "Website-Nutzungsstatistiken",
+        "detail2": "Leistungsmetriken",
+        "detail3": "Fehlerberichterstattung",
+        "duration": "2 Jahre"
+      },
+      "marketing": {
+        "title": "Marketing-Cookies",
+        "description": "Diese Cookies werden verwendet, um Werbung relevanter zu machen und die Effektivität von Werbekampagnen zu messen.",
+        "detail1": "Personalisierte Werbung",
+        "detail2": "Kampagnen-Tracking",
+        "detail3": "Retargeting",
+        "duration": "1 Jahr"
+      },
+      "preferences": {
+        "title": "Präferenz-Cookies",
+        "description": "Diese Cookies ermöglichen es der Website, sich an Ihre Entscheidungen zu erinnern und Ihnen erweiterte, personalisiertere Funktionen zu bieten.",
+        "detail1": "Sprach- und Regionspräferenzen",
+        "detail2": "UI-Einstellungen",
+        "detail3": "Personalisierte Inhalte",
+        "duration": "1 Jahr"
+      }
+    },
+    "required": "Erforderlich",
+    "purposesTitle": "Verwendungszwecke:",
+    "durationTitle": "Speicherdauer:",
+    "saveChanges": "Änderungen speichern",
+    "saveButton": "Einstellungen speichern",
+    "saveDescription": "Klicken Sie auf \"Speichern\", um Ihre Cookie-Präferenzen zu aktualisieren.",
+    "savedToast": "Einstellungen gespeichert",
+    "savedDescription": "Ihre Cookie-Präferenzen wurden erfolgreich aktualisiert.",
+    "additionalInfo": "Weitere Informationen",
+    "contactInfo": "Wenn Sie Fragen zu unseren Cookie-Richtlinien haben, kontaktieren Sie uns unter",
+    "privacyInfo": "Weitere Informationen finden Sie in unserer",
+    "privacyLink": "Datenschutzerklärung"
   }
 }
