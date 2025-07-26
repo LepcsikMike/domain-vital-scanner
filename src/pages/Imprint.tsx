@@ -103,7 +103,7 @@ const Imprint = () => {
       <div className="container mx-auto px-4 py-12">
         <div className="max-w-4xl mx-auto">
           {/* Header */}
-          <div className="mb-8">
+          <div className="mb-8 text-inherit">
             <Button variant="outline" onClick={() => window.history.back()} className="mb-4 border-slate-600 hover:bg-slate-800 text-white">
               <ArrowLeft className="h-4 w-4 mr-2" />
               {t('common.back')}
