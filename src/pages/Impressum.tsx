@@ -1,18 +1,34 @@
 import React from 'react';
 import { ArrowLeft } from 'lucide-react';
 import { Button } from "@/components/ui/button";
+import { useTranslation } from 'react-i18next';
+import { useLanguage } from "@/contexts/LanguageContext";
 const Impressum = () => {
+  const { t } = useTranslation('legal');
+  const { currentLanguage } = useLanguage();
+
+  // Use German content for German language, translated content for others
+  const useGermanContent = currentLanguage === 'de';
+
   return <div className="min-h-screen bg-gradient-to-br from-slate-950 via-blue-950 to-slate-900">
       <div className="container mx-auto px-4 py-12">
         <div className="max-w-4xl mx-auto">
           {/* Header */}
           <div className="mb-8">
-            <Button variant="outline" onClick={() => window.history.back()} className="mb-4 border-slate-600 hover:bg-slate-800 text-slate-50">
+            <Button 
+              variant="outline" 
+              onClick={() => window.history.back()} 
+              className="mb-4 border-cyan-400 hover:bg-cyan-400/10 text-cyan-400 hover:text-cyan-300 hover:border-cyan-300 transition-all duration-200 shadow-lg hover:shadow-cyan-400/20"
+            >
               <ArrowLeft className="h-4 w-4 mr-2" />
-              Zurück
+              {t('common.back')}
             </Button>
-            <h1 className="text-4xl font-bold text-white mb-4">Impressum</h1>
-            <p className="text-slate-300">Angaben gemäß § 5 TMG</p>
+            <h1 className="text-4xl font-bold text-white mb-4">
+              {useGermanContent ? 'Impressum' : t('imprint.title')}
+            </h1>
+            <p className="text-slate-300">
+              {useGermanContent ? 'Angaben gemäß § 5 TMG' : t('imprint.subtitle')}
+            </p>
           </div>
 
           {/* Content */}

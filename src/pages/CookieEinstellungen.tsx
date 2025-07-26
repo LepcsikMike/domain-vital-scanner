@@ -82,13 +82,14 @@ const CookieEinstellungen = () => {
       <div className="container mx-auto px-4 py-12">
         {/* Header */}
         <div className="mb-8">
-          <Link 
-            to="/" 
-            className="inline-flex items-center text-cyan-400 hover:text-cyan-300 transition-colors mb-4"
+          <Button 
+            variant="outline" 
+            onClick={() => window.history.back()} 
+            className="mb-4 border-cyan-400 hover:bg-cyan-400/10 text-cyan-400 hover:text-cyan-300 hover:border-cyan-300 transition-all duration-200 shadow-lg hover:shadow-cyan-400/20"
           >
             <ArrowLeft className="h-4 w-4 mr-2" />
-            {t('common.backToHome')}
-          </Link>
+            {t('common.back')}
+          </Button>
           
           <div className="flex items-center gap-3 mb-4">
             <Cookie className="h-8 w-8 text-cyan-400" />
