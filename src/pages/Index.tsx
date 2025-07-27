@@ -20,6 +20,7 @@ import LanguageSwitcher from '@/components/LanguageSwitcher';
 import { usePlan } from '@/contexts/PlanContext';
 import { toast } from '@/hooks/use-toast';
 import { useTranslation } from 'react-i18next';
+import SEOHelmet from '@/components/SEOHelmet';
 const Index = () => {
   const { t } = useTranslation('app');
   const {
@@ -64,6 +65,11 @@ const Index = () => {
     startAnalysis(domainList, searchType, searchOptions);
   };
   return <div className="min-h-screen bg-gradient-to-br from-slate-950 via-blue-950 to-slate-900">
+      <SEOHelmet 
+        title={t('app.meta.title')}
+        description={t('app.meta.description')}
+        keywords={t('app.meta.keywords')}
+      />
       {/* Header */}
       <div className="border-b border-slate-800 bg-slate-950/50 backdrop-blur-sm">
         <div className="container mx-auto px-4 py-6">

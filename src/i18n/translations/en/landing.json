@@ -1,5 +1,10 @@
 
 {
+  "meta": {
+    "title": "DomainAudit Pro - Professional Domain Analysis & SEO Audit for Websites",
+    "description": "Analyze domains professionally: HTTPS check, SEO audit, Core Web Vitals, technology detection, security analysis. Free testing available!",
+    "keywords": "Domain Analysis, SEO Audit, Website Check, HTTPS Test, Core Web Vitals, Technology Detection, Website Security, Domain Scanner"
+  },
   "hero": {
     "consultation": "Book Free Consultation",
     "badge": "Professional Website Analysis",

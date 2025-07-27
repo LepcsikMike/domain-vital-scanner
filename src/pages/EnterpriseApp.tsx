@@ -15,6 +15,7 @@ import LanguageSwitcher from '@/components/LanguageSwitcher';
 import { usePlan } from '@/contexts/PlanContext';
 import { useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import SEOHelmet from '@/components/SEOHelmet';
 const EnterpriseApp = () => {
   const { t } = useTranslation('app');
   const [searchParams] = useSearchParams();
@@ -52,6 +53,11 @@ const EnterpriseApp = () => {
     startAnalysis(domainList, searchType, searchOptions);
   };
   return <div className="min-h-screen bg-gradient-to-br from-slate-950 via-blue-950 to-slate-900">
+      <SEOHelmet 
+        title={t('enterprise.meta.title')}
+        description={t('enterprise.meta.description')}
+        keywords={t('enterprise.meta.keywords')}
+      />
       {/* Enterprise Header */}
       <div className="border-b border-slate-800 bg-slate-950/50 backdrop-blur-sm">
         <div className="container mx-auto px-4 py-4 lg:py-6">

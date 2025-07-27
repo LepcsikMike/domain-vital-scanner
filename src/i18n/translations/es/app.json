@@ -1,4 +1,16 @@
 {
+  "meta": {
+    "title": "DomainAudit Pro - Análisis Gratuito de Dominios y Herramienta de Verificación Web",
+    "description": "Análisis gratuito de dominios con verificación HTTPS, test de rendimiento, auditoría SEO. Analiza hasta 1 dominio diario - ¡empieza ahora!",
+    "keywords": "análisis gratuito de dominios, verificador HTTPS, test rendimiento web, herramienta auditoría SEO, escáner dominios"
+  },
+  "enterprise": {
+    "meta": {
+      "title": "DomainAudit Pro Enterprise - Análisis Ilimitado de Dominios para Agencias",
+      "description": "Análisis de dominios Enterprise para agencias: Escaneos ilimitados, informes PDF, acceso API, análisis en lote. Auditorías profesionales de sitios web.",
+      "keywords": "análisis enterprise dominios, herramientas SEO agencias, auditoría profesional sitios web, escáner API dominios, análisis lote dominios"
+    }
+  },
   "search": {
     "placeholder": "Ingresar dominio (ej. example.com)",
     "analyze": "Analizar",

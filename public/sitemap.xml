@@ -2,73 +2,240 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
-  <!-- Hauptseite -->
+  <!-- Hauptseite Deutsch -->
   <url>
     <loc>https://domainauditpro.com/</loc>
-    <lastmod>2024-01-15</lastmod>
+    <lastmod>2024-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="de" href="https://domainauditpro.com/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://domainauditpro.com/en/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://domainauditpro.com/es/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://domainauditpro.com/" />
   </url>
   
-  <!-- Domain-Analyse Tool -->
+  <!-- Hauptseite Englisch -->
+  <url>
+    <loc>https://domainauditpro.com/en/</loc>
+    <lastmod>2024-12-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://domainauditpro.com/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://domainauditpro.com/en/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://domainauditpro.com/es/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://domainauditpro.com/" />
+  </url>
+  
+  <!-- Hauptseite Spanisch -->
+  <url>
+    <loc>https://domainauditpro.com/es/</loc>
+    <lastmod>2024-12-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://domainauditpro.com/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://domainauditpro.com/en/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://domainauditpro.com/es/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://domainauditpro.com/" />
+  </url>
+  
+  <!-- Domain-Analyse Tool Deutsch -->
   <url>
     <loc>https://domainauditpro.com/app</loc>
-    <lastmod>2024-01-15</lastmod>
+    <lastmod>2024-12-18</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="de" href="https://domainauditpro.com/app" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://domainauditpro.com/en/app" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://domainauditpro.com/es/app" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://domainauditpro.com/app" />
   </url>
   
-  <!-- Enterprise Lösungen -->
+  <!-- Domain-Analyse Tool Englisch -->
+  <url>
+    <loc>https://domainauditpro.com/en/app</loc>
+    <lastmod>2024-12-18</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://domainauditpro.com/app" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://domainauditpro.com/en/app" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://domainauditpro.com/es/app" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://domainauditpro.com/app" />
+  </url>
+  
+  <!-- Domain-Analyse Tool Spanisch -->
+  <url>
+    <loc>https://domainauditpro.com/es/app</loc>
+    <lastmod>2024-12-18</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://domainauditpro.com/app" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://domainauditpro.com/en/app" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://domainauditpro.com/es/app" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://domainauditpro.com/app" />
+  </url>
+  
+  <!-- Enterprise Lösungen Deutsch -->
   <url>
     <loc>https://domainauditpro.com/enterprise</loc>
-    <lastmod>2024-01-15</lastmod>
+    <lastmod>2024-12-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="de" href="https://domainauditpro.com/enterprise" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://domainauditpro.com/en/enterprise" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://domainauditpro.com/es/enterprise" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://domainauditpro.com/enterprise" />
   </url>
   
-  <!-- Enterprise App -->
+  <!-- Enterprise Lösungen Englisch -->
+  <url>
+    <loc>https://domainauditpro.com/en/enterprise</loc>
+    <lastmod>2024-12-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://domainauditpro.com/enterprise" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://domainauditpro.com/en/enterprise" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://domainauditpro.com/es/enterprise" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://domainauditpro.com/enterprise" />
+  </url>
+  
+  <!-- Enterprise Lösungen Spanisch -->
+  <url>
+    <loc>https://domainauditpro.com/es/enterprise</loc>
+    <lastmod>2024-12-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://domainauditpro.com/enterprise" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://domainauditpro.com/en/enterprise" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://domainauditpro.com/es/enterprise" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://domainauditpro.com/enterprise" />
+  </url>
+  
+  <!-- Enterprise App Deutsch -->
   <url>
     <loc>https://domainauditpro.com/enterprise-app</loc>
-    <lastmod>2024-01-15</lastmod>
+    <lastmod>2024-12-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="de" href="https://domainauditpro.com/enterprise-app" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://domainauditpro.com/en/enterprise-app" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://domainauditpro.com/es/enterprise-app" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://domainauditpro.com/enterprise-app" />
   </url>
   
-  <!-- Rechtliche Seiten -->
+  <!-- Enterprise App Englisch -->
+  <url>
+    <loc>https://domainauditpro.com/en/enterprise-app</loc>
+    <lastmod>2024-12-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://domainauditpro.com/enterprise-app" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://domainauditpro.com/en/enterprise-app" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://domainauditpro.com/es/enterprise-app" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://domainauditpro.com/enterprise-app" />
+  </url>
+  
+  <!-- Enterprise App Spanisch -->
+  <url>
+    <loc>https://domainauditpro.com/es/enterprise-app</loc>
+    <lastmod>2024-12-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://domainauditpro.com/enterprise-app" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://domainauditpro.com/en/enterprise-app" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://domainauditpro.com/es/enterprise-app" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://domainauditpro.com/enterprise-app" />
+  </url>
+  
+  <!-- Datenschutz Deutsch -->
   <url>
     <loc>https://domainauditpro.com/datenschutz</loc>
-    <lastmod>2024-01-15</lastmod>
+    <lastmod>2024-12-18</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
     <xhtml:link rel="alternate" hreflang="de" href="https://domainauditpro.com/datenschutz" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://domainauditpro.com/en/privacy" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://domainauditpro.com/es/privacy" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://domainauditpro.com/datenschutz" />
   </url>
   
+  <!-- Privacy Englisch -->
+  <url>
+    <loc>https://domainauditpro.com/en/privacy</loc>
+    <lastmod>2024-12-18</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://domainauditpro.com/datenschutz" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://domainauditpro.com/en/privacy" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://domainauditpro.com/es/privacy" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://domainauditpro.com/datenschutz" />
+  </url>
+  
+  <!-- Privacy Spanisch -->
+  <url>
+    <loc>https://domainauditpro.com/es/privacy</loc>
+    <lastmod>2024-12-18</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://domainauditpro.com/datenschutz" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://domainauditpro.com/en/privacy" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://domainauditpro.com/es/privacy" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://domainauditpro.com/datenschutz" />
+  </url>
+  
+  <!-- Impressum Deutsch -->
   <url>
     <loc>https://domainauditpro.com/impressum</loc>
-    <lastmod>2024-01-15</lastmod>
+    <lastmod>2024-12-18</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
     <xhtml:link rel="alternate" hreflang="de" href="https://domainauditpro.com/impressum" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://domainauditpro.com/en/imprint" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://domainauditpro.com/es/imprint" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://domainauditpro.com/impressum" />
   </url>
   
+  <!-- Imprint Englisch -->
+  <url>
+    <loc>https://domainauditpro.com/en/imprint</loc>
+    <lastmod>2024-12-18</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://domainauditpro.com/impressum" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://domainauditpro.com/en/imprint" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://domainauditpro.com/es/imprint" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://domainauditpro.com/impressum" />
+  </url>
+  
+  <!-- Imprint Spanisch -->
+  <url>
+    <loc>https://domainauditpro.com/es/imprint</loc>
+    <lastmod>2024-12-18</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="de" href="https://domainauditpro.com/impressum" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://domainauditpro.com/en/imprint" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://domainauditpro.com/es/imprint" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://domainauditpro.com/impressum" />
+  </url>
+  
+  <!-- AGB Deutsch -->
   <url>
     <loc>https://domainauditpro.com/agb</loc>
-    <lastmod>2024-01-15</lastmod>
+    <lastmod>2024-12-18</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
     <xhtml:link rel="alternate" hreflang="de" href="https://domainauditpro.com/agb" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://domainauditpro.com/agb" />
   </url>
   
+  <!-- Cookie-Einstellungen Deutsch -->
   <url>
     <loc>https://domainauditpro.com/cookie-einstellungen</loc>
-    <lastmod>2024-01-15</lastmod>
+    <lastmod>2024-12-18</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
     <xhtml:link rel="alternate" hreflang="de" href="https://domainauditpro.com/cookie-einstellungen" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://domainauditpro.com/cookie-einstellungen" />
   </url>
   
 </urlset>

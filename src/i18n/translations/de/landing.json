@@ -1,5 +1,10 @@
 
 {
+  "meta": {
+    "title": "DomainAudit Pro - Professionelle Domain-Analyse & SEO-Audit für deutsche Websites",
+    "description": "Analysieren Sie deutsche Domains professionell: HTTPS-Check, SEO-Audit, Core Web Vitals, Technologie-Erkennung, Sicherheitsanalyse. Kostenlos testen!",
+    "keywords": "Domain Analyse, SEO Audit, Website Check, HTTPS Test, Core Web Vitals, Technologie Erkennung, Website Sicherheit, Domain Check Deutschland"
+  },
   "hero": {
     "consultation": "Kostenlose Beratung buchen",
     "badge": "Professionelle Website-Analyse",

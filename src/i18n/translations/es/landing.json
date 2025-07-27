@@ -1,5 +1,10 @@
 
 {
+  "meta": {
+    "title": "DomainAudit Pro - Análisis Profesional de Dominios y Auditoría SEO",
+    "description": "Analiza dominios profesionalmente: Verificación HTTPS, auditoría SEO, Core Web Vitals, detección de tecnología, análisis de seguridad. ¡Prueba gratis!",
+    "keywords": "Análisis de Dominio, Auditoría SEO, Verificación de Sitio Web, Test HTTPS, Core Web Vitals, Detección de Tecnología, Seguridad Web"
+  },
   "hero": {
     "consultation": "Reservar Consulta Gratuita",
     "badge": "Análisis Profesional de Sitios Web",

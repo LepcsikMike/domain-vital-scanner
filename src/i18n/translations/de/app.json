@@ -1,4 +1,16 @@
 {
+  "meta": {
+    "title": "DomainAudit Pro - Kostenlose Domain-Analyse & Website-Check Tool",
+    "description": "Kostenlose Domain-Analyse mit HTTPS-Check, Performance-Test, SEO-Audit. Bis zu 1 Domain täglich analysieren - starten Sie jetzt!",
+    "keywords": "kostenlose Domain-Analyse, HTTPS Check, Website Performance Test, SEO Audit Tool, Domain Scanner"
+  },
+  "enterprise": {
+    "meta": {
+      "title": "DomainAudit Pro Enterprise - Unbegrenzte Domain-Analyse für Agenturen",
+      "description": "Enterprise Domain-Analyse für Agenturen: Unbegrenzte Scans, PDF-Reports, API-Zugang, Batch-Analyse. Professional Website-Audits.",
+      "keywords": "Enterprise Domain-Analyse, Agentur SEO Tools, Professional Website Audit, API Domain Scanner, Batch Domain-Analyse"
+    }
+  },
   "search": {
     "placeholder": "Domain eingeben (z.B. example.com)",
     "analyze": "Analysieren",
